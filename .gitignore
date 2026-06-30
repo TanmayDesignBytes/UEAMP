@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+*.log
+.env*
+android/.gradle
+android/build
+android/app/build
+ios/DerivedData
+ios/App/build

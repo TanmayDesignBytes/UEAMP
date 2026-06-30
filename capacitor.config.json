@@ -1,0 +1,8 @@
+{
+  "appId": "com.kirloskar.umpie",
+  "appName": "UMPIE",
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https"
+  }
+}

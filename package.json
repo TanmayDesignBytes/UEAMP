@@ -1,0 +1,38 @@
+{
+  "name": "umpie-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "mobile:build": "next build",
+    "android:add": "cap add android",
+    "android:sync": "npm run mobile:build && cap sync android",
+    "android:open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/barcode-scanner": "^2.2.6",
+    "@capacitor/browser": "^7.0.5",
+    "@capacitor/camera": "^7.0.5",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.6.6",
+    "@capacitor/preferences": "^7.0.4",
+    "@ionic/pwa-elements": "^3.4.0",
+    "next": "^16.2.9",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
+    "@types/node": "^25.0.2",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3"
+  }
+}
