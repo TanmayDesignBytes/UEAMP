@@ -1383,7 +1383,7 @@ img { display: block; max-width: 100%; }
 
 .solar-dc-side-card {
   display: flex;
-  width: 100%;
+  width: 361px;
   max-width: 361px;
   height: 515px;
   margin-top: 8px;
@@ -1406,12 +1406,22 @@ img { display: block; max-width: 100%; }
   line-height: normal;
 }
 
-.solar-dc-side-card__tabs {
-  display: grid;
+.solar-dc-side-card__body {
+  display: flex;
   width: 331px;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.solar-dc-side-card__tabs {
+  display: flex;
+  width: 331px;
+  max-width: 100%;
   height: 36px;
   margin-top: 0;
-  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
   overflow: hidden;
   border: 0;
   border-radius: 24px;
@@ -1419,71 +1429,85 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-dc-side-card__tabs button {
+  position: relative;
+  display: flex;
+  height: 36px;
+  flex: 1 1 0;
   min-width: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
   border: 0;
-  border-right: 1px solid rgba(255, 255, 255, .12);
   background: transparent;
-  color: rgba(255, 255, 255, .52);
-  font-family: Poppins, sans-serif;
-  font-size: 12px;
+  color: #c1c1c1;
+  opacity: .85;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 10px;
   font-weight: 400;
-  line-height: 100%;
+  line-height: normal;
+  white-space: nowrap;
 }
 
-.solar-dc-side-card__tabs button:last-child {
-  border-right: 0;
+.solar-dc-side-card__tabs button:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1px;
+  height: 13px;
+  border-radius: 100px;
+  background: rgba(217, 217, 217, .15);
 }
 
 .solar-dc-side-card__tabs .is-active {
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .18);
+  flex: 0 0 105.34px;
+  border-radius: 24px;
+  background: rgba(217, 217, 217, .15);
   color: #fff;
+  font-weight: 500;
 }
 
-.solar-dc-side-card > p {
-  align-self: flex-start;
+.solar-dc-side-card__body > p {
+  width: 331px;
+  max-width: 100%;
+  min-height: 34px;
+  align-self: stretch;
   margin: 0;
   color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   line-height: 140%;
 }
 
-.solar-dc-side-card > p strong {
+.solar-dc-side-card__body > p strong {
   font-size: 24px;
   font-weight: 700;
 }
 
-.solar-dc-side-card > p span {
+.solar-dc-side-card__body > p span {
   margin-left: 4px;
   font-size: 12px;
   font-weight: 700;
 }
 
 .solar-dc-power-grid {
-  display: grid;
-  width: 266px;
+  display: flex;
+  width: 296px;
   max-width: 100%;
   align-self: center;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px 10px;
-  padding: 10px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, .1);
+  padding: 12px 5px;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 5px;
+  background: #232735;
 }
 
-.solar-dc-power-grid span {
+.solar-dc-power-grid img {
   display: block;
-  height: 74px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #2f7fff 0%, #1e56b8 100%);
-}
-
-.solar-dc-power-grid span:nth-child(n + 6):nth-child(-n + 10) {
-  background: linear-gradient(180deg, #5da4ff 0%, #85b9ff 100%);
-}
-
-.solar-dc-power-grid span.is-muted {
-  background: rgba(255, 255, 255, .42);
+  width: 50px;
+  height: 97px;
+  flex: 0 0 50px;
 }
 
 .genset-energy-metric:nth-of-type(2) {
@@ -5903,12 +5927,17 @@ img { display: block; max-width: 100%; }
     align-self: stretch;
   }
 
+  .solar-energy-content .solar-dc-side-card__body {
+    width: 100%;
+    align-self: stretch;
+  }
+
   .solar-energy-content .solar-dc-side-card__tabs {
     width: 100%;
     flex: 0 0 36px;
   }
 
-  .solar-energy-content > .solar-dc-side-card > p {
+  .solar-energy-content .solar-dc-side-card__body > p {
     align-self: stretch;
   }
 
@@ -5918,7 +5947,7 @@ img { display: block; max-width: 100%; }
     min-height: 0;
     flex: 1 1 auto;
     align-self: center;
-    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
   }
 
   .solar-energy-content .solar-dc-power-grid span {
@@ -6021,5 +6050,3 @@ img { display: block; max-width: 100%; }
     flex: 0 0 auto;
   }
 }
-
-

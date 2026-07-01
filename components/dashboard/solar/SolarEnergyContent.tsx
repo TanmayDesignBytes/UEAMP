@@ -5,6 +5,23 @@ import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 import { PowerOutputChart } from "@/components/dashboard/energy/PowerOutputContent";
 
 const specificYieldBars = Array.from({ length: 30 }, (_, index) => index < 12);
+const dcPowerTileSources = [
+  "/assets/solar/dc-power-tiles/tile-blue-primary.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-primary.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-dark.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-dark.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-dark.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-light.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-soft.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-light.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-mid.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-mid.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-soft.svg",
+  "/assets/solar/dc-power-tiles/tile-blue-soft.svg",
+  "/assets/solar/dc-power-tiles/tile-muted.svg",
+  "/assets/solar/dc-power-tiles/tile-muted.svg",
+  "/assets/solar/dc-power-tiles/tile-muted.svg",
+];
 
 export function SolarEnergyContent() {
   useDevLifecycleLog(11);
@@ -150,14 +167,18 @@ function DcSideCard() {
   return (
     <article className="solar-dc-side-card">
       <h2>DC Side (PV Array)</h2>
-      <div className="solar-dc-side-card__tabs" aria-label="DC side metrics">
-        <button type="button">PV Voltage (V)</button>
-        <button type="button">PV Current (Amps)</button>
-        <button className="is-active" type="button">DC Power (kW)</button>
-      </div>
-      <p><strong>42.3</strong> <span>kW</span></p>
-      <div className="solar-dc-power-grid" aria-hidden="true">
-        {Array.from({ length: 20 }, (_, index) => <span key={index} className={index > 11 ? "is-muted" : undefined} />)}
+      <div className="solar-dc-side-card__body">
+        <div className="solar-dc-side-card__tabs" aria-label="DC side metrics">
+          <button type="button">PV Voltage (V)</button>
+          <button type="button">PV Current (Amps)</button>
+          <button className="is-active" type="button">DC Power (kW)</button>
+        </div>
+        <p><strong>42.3</strong> <span>kW</span></p>
+        <div className="solar-dc-power-grid" aria-hidden="true">
+          {dcPowerTileSources.map((src, index) => (
+            <img key={`${src}-${index}`} src={src} alt="" />
+          ))}
+        </div>
       </div>
     </article>
   );
