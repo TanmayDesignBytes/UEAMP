@@ -742,7 +742,7 @@ img { display: block; max-width: 100%; }
 .genset-energy-content {
   --cardborder: rgba(255, 255, 255, 0.42);
   --cardfill: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%);
-  padding-bottom: calc(133px + env(safe-area-inset-bottom));
+  padding-bottom: calc(45px + env(safe-area-inset-bottom));
 }
 
 .genset-energy-title {
