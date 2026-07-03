@@ -25,8 +25,8 @@ export function LoginScreen({ onLogin }: { onLogin: () => void }) {
 
   return (
     <section className="login-screen screen-background screen-enter min-h-dvh w-full bg-page-gradient pb-[max(40px,env(safe-area-inset-bottom))] pt-[39px] md:grid md:grid-cols-[minmax(0,1.08fr)_minmax(360px,.92fr)] md:items-center md:p-0">
-      <div className="login-hero relative aspect-[393/264] w-full overflow-hidden md:h-dvh md:aspect-auto" aria-hidden="true">
-        <img className="size-full object-cover" src="/assets/images/login_microgrid.png" alt="" />
+      <div className="login-hero relative aspect-[171/128] w-full overflow-hidden md:h-dvh md:aspect-auto" aria-hidden="true">
+        <img className="size-full object-cover" src="/assets/images/overview-login-microgrid.gif" alt="" />
       </div>
       <div className="login-content w-full px-6 pb-0 pt-[clamp(44px,8.1vh,69px)] md:w-full md:max-w-[520px] md:justify-self-center md:p-12">
         <h1 className="m-0 font-poppins text-[28px] font-semibold leading-[42px] text-white">Welcome Back ...</h1>

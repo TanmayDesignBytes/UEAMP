@@ -91,7 +91,7 @@ function GensetStatus() {
 function MicrogridHero() {
   return (
     <div className="overview-hero relative w-full overflow-hidden">
-      <img className="size-full object-cover" src="/assets/genset/microgrid.gif" alt="Live microgrid" />
+      <img className="size-full object-cover" src="/assets/images/overview-login-microgrid.gif" alt="Live microgrid" />
       <HeroMetric className="hero-metric--load" label="Load" />
       <HeroMetric className="hero-metric--export" label="Exported" />
     </div>
