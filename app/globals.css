@@ -5390,6 +5390,120 @@ img { display: block; max-width: 100%; }
     height: 88px;
   }
 
+  .settings-card::before {
+    display: none;
+  }
+
+  .settings-card {
+    isolation: isolate;
+    overflow: hidden;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 20px;
+    background: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.039) 70.38%);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .settings-card::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    padding: 2px;
+    border-radius: inherit;
+    background: radial-gradient(99% 62% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .settings-card > * {
+    z-index: 2;
+  }
+
+  .settings-card span {
+    min-width: 0;
+  }
+
+  .report-content {
+    width: min(100%, 980px);
+    max-width: 980px;
+    padding: 40px 32px calc(132px + env(safe-area-inset-bottom));
+  }
+
+  .report-header {
+    margin-top: 0;
+  }
+
+  .report-fields {
+    display: grid;
+    width: 100%;
+    margin-top: 40px;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+
+  .report-parameter-chips {
+    grid-column: 1 / -1;
+  }
+
+  .report-field > button::before {
+    display: none;
+  }
+
+  .report-field > button {
+    height: 72px;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 20px;
+    background: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.039) 70.38%);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .report-field > button::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    padding: 2px;
+    border-radius: inherit;
+    background: radial-gradient(99% 62% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .report-field > button > * {
+    z-index: 2;
+  }
+
+  .report-download {
+    position: static;
+    width: min(100%, 480px);
+    margin: clamp(96px, 18vh, 220px) auto 0;
+  }
+
   .power-content {
     display: grid;
     width: min(100%, 1500px);

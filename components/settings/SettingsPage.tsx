@@ -35,15 +35,7 @@ const reportParameters = [
 const timePeriods = ["Today", "Yesterday", "Last 7 days", "This Month", "Last Month", "Custom Range"];
 
 function StatusBar() {
-  return (
-    <div className="figma-statusbar flex h-[35px] items-center justify-between font-inter text-xs font-medium text-[#e2ebf4]" aria-label="Device status">
-      <span>9:41</span>
-      <div className="flex items-center gap-[18px]">
-        <img src="/assets/overview/status_battery.svg" alt="Battery" />
-        <img src="/assets/overview/status_wifi.svg" alt="Wi-Fi" />
-      </div>
-    </div>
-  );
+  return <div className="figma-statusbar flex h-[35px] items-center justify-between font-inter text-xs font-medium text-[#e2ebf4]" aria-hidden="true" />;
 }
 
 export default function SettingsPage({ onOpenReport }: { onOpenReport: () => void }) {
