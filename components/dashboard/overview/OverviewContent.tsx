@@ -14,10 +14,11 @@ export function OverviewContent() {
         <MicrogridHero />
         <div className="dashboard-grid w-full md:grid md:grid-cols-2 md:gap-4 xl:grid-cols-3 xl:gap-[18px]">
           <div className="energy-grid grid grid-cols-2 gap-2 md:col-span-full xl:col-span-2">
-            <EnergyCard title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" barAccent="#ffffff" bars={[36, 58, 46, 70, 78, 49, 30, 67, 82, 62, 74]} />
-            <EnergyCard title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#ff7e53" bars={[34, 55, 43, 74, 50, 79, 42, 70, 51, 63, 37]} />
+            <EnergyCard title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" arrowAccent="#35FFC9" barAccent="#ffffff" bars={[36, 58, 46, 70, 100, 49, 60, 70, 82, 100, 74]} />
+            <EnergyCard title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#FF7E53" bars={[34, 55, 43, 70, 50, 79, 45, 70, 100, 80, 37]} />
           </div>
           <GlassCard className="economics-card">
+            <img className="economics-card-bg" src="/assets/Rectangle 52.svg" alt="" aria-hidden="true" />
             <h2>Energy Economics</h2>
             <div className="economics-values">
               <Metric label="Saving" labelDetail="(by day)" value="234" />
@@ -27,6 +28,7 @@ export function OverviewContent() {
             </div>
           </GlassCard>
           <GlassCard className="performance-card md:col-span-2">
+            <img className="performance-card-bg" src="/assets/Device 6.svg" alt="" aria-hidden="true" />
             <h2>Performance of Assets</h2>
             <div className="performance-body">
               <ul className="performance-list">
@@ -40,6 +42,7 @@ export function OverviewContent() {
             </div>
           </GlassCard>
           <GlassCard className="co2-card relative flex h-[134px] w-full items-center px-[22px] py-[15px]">
+          <img className="co2-card-bg" src="/assets/Rectangle 52.svg" alt="" aria-hidden="true" />
           <div>
             <h2>CO2 Emission Avoided</h2>
             <strong>1,248 Tons</strong>
@@ -50,7 +53,8 @@ export function OverviewContent() {
           </div>
             <img src={overviewAssets + "/co2_leaf.svg"} alt="" />
           </GlassCard>
-          <GlassCard className="maintenance-card flex h-[211px] w-full flex-col items-start justify-center gap-6 px-[15px] py-[15px] pl-[22px]">
+          <GlassCard className="maintenance-card">
+            <img className="maintenance-card-bg" src="/assets/maintenance-card-frame.svg" alt="" aria-hidden="true" />
             <h2>Maintenance</h2>
             <div className="maintenance-line relative flex w-full gap-[6.724px]">
               <span /><span /><span /><span />
@@ -62,9 +66,9 @@ export function OverviewContent() {
                 <small>61</small>
               </i>
             </div>
-            <div className="maintenance-dates grid w-full grid-cols-2">
-              <Metric label="Upcoming" value="26.02.24" detail="12:45 Hrs" />
-              <Metric label="Last" value="26.02.22" detail="10:20 Hrs" />
+            <div className="maintenance-dates">
+              <Metric label="Upcoming" value="26.02.24" detail="124 Hrs" />
+              <Metric label="Last" value="26.02.22" detail="102 Hrs" />
             </div>
           </GlassCard>
         </div>

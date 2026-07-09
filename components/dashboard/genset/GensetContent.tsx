@@ -45,39 +45,40 @@ export function GensetContent() {
           <p className="relative z-[1] m-0 mt-2 text-center text-xs">18 kWh Yesterday</p>
         </article>
 
-        <GensetCard className="h-[100px] px-[17px] py-5">
+        <GensetCard className="genset-small-stat-card h-[100px] px-[17px] py-5">
           <div className="flex h-full items-center justify-between gap-2">
             <div><h2 className="m-0 text-sm font-bold">Saving <small className="text-[10px] font-normal">(By Day)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">234</strong></div>
             <div className="grid size-10 place-items-center rounded-full bg-[#79869b]/20 text-[30px] font-semibold leading-none text-[#187bf0]">₹</div>
           </div>
         </GensetCard>
 
-        <GensetCard className="h-[100px] px-[17px] py-5">
+        <GensetCard className="genset-small-stat-card h-[100px] px-[17px] py-5">
           <div className="flex h-full items-center justify-between gap-2">
             <div><h2 className="m-0 text-sm font-bold">DEF <small className="text-[10px] font-normal">(Healthy)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">25%</strong></div>
             <ProgressRing />
           </div>
         </GensetCard>
 
-        <GensetCard className="h-[100px] px-3 py-3">
-          <div className="flex h-full items-center justify-between gap-2">
-            <div><h2 className="m-0 text-sm font-bold">Fuel Level</h2><small className="block text-[10px]">(Low)</small><strong className="mt-2 block font-inter text-2xl font-semibold leading-[30px]">25%</strong></div>
+        <GensetCard className="genset-rectangle-card genset-fuel-card h-[100px]">
+          <div className="genset-fuel-card__content">
+            <div className="genset-fuel-card__copy"><h2 className="m-0 text-sm font-bold">Fuel Level</h2><small className="block text-[10px]">(Low)</small><strong className="mt-2 block font-inter text-2xl font-semibold leading-[30px]">25%</strong></div>
             <FuelLevelGauge />
           </div>
         </GensetCard>
 
-        <GensetCard className="h-[100px] px-3 py-3">
+        <GensetCard className="genset-rectangle-card h-[100px] px-3 py-3">
           <div className="flex h-full items-center justify-between gap-[18px]">
             <div><h2 className="m-0 text-sm font-bold">Load</h2><small className="block text-[10px]">(Optimal)</small><strong className="mt-2 block font-inter text-2xl font-semibold leading-[30px]">25%</strong></div>
             <LoadGauge />
           </div>
         </GensetCard>
 
-        <GensetCard className="col-span-2 h-28 px-5 py-[13px]">
-          <div className="flex h-full items-center gap-3">
+        <GensetCard className="genset-wide-rectangle-card col-span-2 h-[116px] px-5 py-[13px]">
+          <img className="genset-wide-rectangle-card-bg" src="/assets/genset/no-starts-card-frame.svg" alt="" aria-hidden="true" />
+          <div className="relative z-[1] flex h-full items-center gap-3">
             <div className="min-w-0 flex-1">
-              <h2 className="m-0 text-sm font-bold leading-6">No. Starts <small className="text-[10px] font-normal">(Genset)</small></h2>
-              <div className="mt-1 inline-grid grid-cols-[auto_1px_auto_1px_auto] items-center gap-x-[22px]">
+              <h2 className="m-0 text-sm font-bold leading-6 pl-2">No. Starts <small className="text-[10px] font-normal">(Genset)</small></h2>
+              <div className="ml-[0.50rem] mt-1 inline-grid grid-cols-[auto_1px_auto_1px_auto] items-center gap-x-[22px]">
                 <GensetStat value="5" label="Today" />
                 <span className="metric-divider genset-starts-divider" />
                 <GensetStat value="15" label="This Month" />
@@ -89,8 +90,9 @@ export function GensetContent() {
           </div>
         </GensetCard>
 
-        <GensetCard className="col-span-2 h-[110px] px-5 py-[13px]">
-          <div className="flex h-full items-center justify-between">
+        <GensetCard className="genset-running-time-card col-span-2 h-[114px] px-5 py-[13px]">
+          <img className="genset-running-time-card-bg" src="/assets/genset/running-time-card-frame.svg" alt="" aria-hidden="true" />
+          <div className="relative z-[1] flex h-full items-center justify-between">
             <div className="self-start"><h2 className="m-0 text-sm font-bold leading-6">Running Time</h2><p className="m-0 text-[10px] leading-6">( 5.5 hrs Yesterday )</p><strong className="font-inter text-2xl font-semibold leading-[38px]">4 hrs</strong></div>
             <RunningTimeChart />
           </div>
@@ -106,14 +108,14 @@ function ProgressRing() {
 
 function FuelLevelGauge() {
   return (
-    <div className="relative h-[74px] w-[38px] shrink-0 drop-shadow-[0_4px_4px_rgba(0,0,0,.25)]" aria-label="25 percent fuel remaining">
-      <svg className="absolute left-0 top-[44px] h-[9px] w-[6px]" viewBox="0 0 6 9" fill="none" aria-hidden="true">
+    <div className="genset-fuel-gauge" aria-label="25 percent fuel remaining">
+      <svg className="genset-fuel-gauge__pointer" viewBox="0 0 6 9" fill="none" aria-hidden="true">
         <path opacity="0.8" d="M5.47156 5.01996C5.94029 4.62069 5.94029 3.89673 5.47156 3.49746L1.64849 0.240875C0.999208 -0.312197 0.000033 0.149219 0.000033 1.00213V7.51529C0.000033 8.3682 0.999208 8.82962 1.64849 8.27655L5.47156 5.01996Z" fill="white" />
       </svg>
-      <div className="absolute right-0 top-0 flex h-[74px] w-7 flex-col gap-[3px]">
+      <div className="genset-fuel-gauge__segments">
         {Array.from({ length: 7 }, (_, index) => (
           <span
-            className={`h-2 w-7 rounded bg-white ${index >= 4 ? "bg-[linear-gradient(135deg,#F74FAC_0%,#FCB24F_100%)] opacity-100" : "opacity-[var(--segment-opacity)]"}`}
+            className={index >= 4 ? "is-active" : ""}
             key={index}
             style={{ "--segment-opacity": String(.1 + index * .05) } as CSSProperties}
           />

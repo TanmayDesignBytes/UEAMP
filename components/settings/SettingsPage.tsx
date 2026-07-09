@@ -151,9 +151,7 @@ export function ReportPage({ onBack }: { onBack: () => void }) {
 
       <header className="report-header mt-[21px] flex h-[35px] w-full items-center gap-3">
         <button className="report-back grid size-[35px] shrink-0 place-items-center rounded-full p-[5px] text-white" type="button" onClick={onBack} aria-label="Back to settings">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M15 5 8 12l7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <img src="/assets/settings/arrow-narrow-left.svg" alt="" aria-hidden="true" />
         </button>
         <h1 className="m-0 font-poppins text-xl font-semibold leading-[30px] text-[#f2f2f2]">Report</h1>
       </header>

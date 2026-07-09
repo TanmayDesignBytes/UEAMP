@@ -28,8 +28,8 @@ export function LoginScreen({ onLogin }: { onLogin: () => void }) {
       <div className="login-hero relative aspect-[171/128] w-full overflow-hidden md:h-dvh md:aspect-auto" aria-hidden="true">
         <img className="size-full object-cover" src="/assets/images/overview-login-microgrid.gif" alt="" />
       </div>
-      <div className="login-content w-full px-6 pb-0 pt-[clamp(44px,8.1vh,69px)] md:w-full md:max-w-[520px] md:justify-self-center md:p-12">
-        <h1 className="m-0 font-poppins text-[28px] font-semibold leading-[42px] text-white">Welcome Back ...</h1>
+      <div className="login-content w-full px-6 pb-0 pt-[31px] md:w-full md:max-w-[520px] md:justify-self-center md:p-12">
+        <h1 className="m-0 font-jakarta text-[23px] font-bold leading-normal text-white">Welcome Back ...</h1>
         <div className="credential-fields mt-8 flex flex-col gap-3">
           <label className="glass-control flex h-14 w-full items-center rounded-[18px] px-5 backdrop-blur-[21px]">
             <span className="sr-only">User name</span>

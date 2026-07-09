@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useState, type ReactNode } from "react";
 import { GlassCard } from "@/components/dashboard/common/Cards";
 import { StatusBar } from "@/components/dashboard/common/StatusBar";
 import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
@@ -23,6 +25,12 @@ const dcPowerTileSources = [
   "/assets/solar/dc-power-tiles/tile-muted.svg",
 ];
 
+const dcSideTabs = [
+  { label: "PV Voltage (V)", unit: "V", value: "42.3" },
+  { label: "PV Current (Amps)", unit: "Amps", value: "42.3" },
+  { label: "DC Power (kW)", unit: "kW", value: "42.3" },
+];
+
 export function SolarEnergyContent() {
   useDevLifecycleLog(11);
 
@@ -32,6 +40,7 @@ export function SolarEnergyContent() {
       <h1 className="genset-energy-title">Power Output</h1>
 
       <GlassCard className="genset-energy-card">
+        <img className="genset-energy-card-bg" src="/assets/solar/performance-trends-card-frame.svg" alt="" aria-hidden="true" />
         <div className="power-card-header genset-energy-card__header">
           <h2>Performance Trends</h2>
           <button className="period-select" type="button">
@@ -164,16 +173,28 @@ function SolarInfoCard({ className, icon, title, unit, value }: { className?: st
 }
 
 function DcSideCard() {
+  const [activeTab, setActiveTab] = useState(2);
+  const activeMetric = dcSideTabs[activeTab];
+
   return (
     <article className="solar-dc-side-card">
+      <img className="solar-dc-side-card__frame" src="/assets/solar/dc-side-card-frame.svg" alt="" aria-hidden="true" />
       <h2>DC Side (PV Array)</h2>
       <div className="solar-dc-side-card__body">
         <div className="solar-dc-side-card__tabs" aria-label="DC side metrics">
-          <button type="button">PV Voltage (V)</button>
-          <button type="button">PV Current (Amps)</button>
-          <button className="is-active" type="button">DC Power (kW)</button>
+          {dcSideTabs.map((tab, index) => (
+            <button
+              aria-pressed={activeTab === index}
+              className={activeTab === index ? "is-active" : undefined}
+              key={tab.label}
+              onClick={() => setActiveTab(index)}
+              type="button"
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-        <p><strong>42.3</strong> <span>kW</span></p>
+        <p><strong>{activeMetric.value}</strong> <span>{activeMetric.unit}</span></p>
         <div className="solar-dc-power-grid" aria-hidden="true">
           {dcPowerTileSources.map((src, index) => (
             <img key={`${src}-${index}`} src={src} alt="" />

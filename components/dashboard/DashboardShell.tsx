@@ -18,6 +18,9 @@ export function DashboardShell() {
   const [dashboardScope, setDashboardScope] = useState<DashboardScope>("overview");
   const [quickMenuOpen, setQuickMenuOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const isGensetEnergyPage = activeTab === "energy" && dashboardScope === "genset";
+  const isSolarEnergyPage = activeTab === "energy" && dashboardScope === "solar";
+  const energyShellClass = isGensetEnergyPage ? "dashboard-shell--genset-energy" : isSolarEnergyPage ? "dashboard-shell--solar-energy" : "";
   useDevLifecycleLog(1);
 
   const navigate = useCallback((tab: DashboardTab) => {
@@ -49,7 +52,7 @@ export function DashboardShell() {
   }, [activeTab, dashboardScope, reportOpen]);
 
   return (
-    <section className="overview-screen screen-background screen-enter relative min-h-dvh w-full bg-page-gradient pb-[calc(101px+env(safe-area-inset-bottom))] text-white">
+    <section className={`overview-screen screen-background screen-enter relative min-h-dvh w-full bg-page-gradient pb-[calc(101px+env(safe-area-inset-bottom))] text-white ${energyShellClass}`}>
       {reportOpen ? <ReportPage onBack={() => {
         logDevEvent(3, "settings");
         setReportOpen(false);

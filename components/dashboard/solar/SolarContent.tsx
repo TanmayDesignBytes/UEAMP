@@ -49,6 +49,7 @@ export function SolarContent() {
         </SolarGlassCard>
 
         <SolarGlassCard className="grid-status-card">
+          <img className="grid-status-card__frame" src="/assets/solar/grid-status-card-frame.svg" alt="" aria-hidden="true" />
           <h2>Grid Status</h2>
           <div className="grid-status-card__metrics">
             <SolarMetric value="15" unit="kWh" label="Energy Imported" />
@@ -59,19 +60,21 @@ export function SolarContent() {
         </SolarGlassCard>
 
         <div className="solar-small-grid grid grid-cols-2 gap-2.5">
-          <SolarGlassCard className="solar-small-card h-[144px] px-4 py-[15px]">
+          <SolarGlassCard className="solar-small-card solar-capacity-card h-[144px] px-4 py-[15px]">
+            <img className="solar-capacity-card__frame" src="/assets/solar/capacity-utilization-card-frame.svg" alt="" aria-hidden="true" />
             <h2>Capacity Utilization Factor</h2>
             <strong>18.6%</strong>
             <SegmentGauge />
           </SolarGlassCard>
 
-          <SolarGlassCard className="solar-small-card h-[144px] px-4 py-[15px]">
+          <SolarGlassCard className="solar-small-card solar-performance-card h-[144px] px-4 py-[15px]">
+            <img className="solar-performance-card__frame" src="/assets/solar/performance-ratio-card-frame.svg" alt="" aria-hidden="true" />
             <h2>Performance Ratio</h2>
             <strong>75%</strong>
             <SolarSparkline />
           </SolarGlassCard>
 
-          <SolarGlassCard className="solar-small-card h-[92px] px-4 py-[13px]">
+          <SolarGlassCard className="solar-small-card solar-irradiance-card h-[92px] px-4 py-[13px]">
             <h2>Solar Irradiance</h2>
             <div className="mt-2 flex items-center justify-between">
               <strong>847 <small>W/m2</small></strong>
@@ -79,7 +82,7 @@ export function SolarContent() {
             </div>
           </SolarGlassCard>
 
-          <SolarGlassCard className="solar-small-card h-[92px] px-4 py-[13px]">
+          <SolarGlassCard className="solar-small-card solar-energy-consumed-card h-[92px] px-4 py-[13px]">
             <h2>Energy Consumed</h2>
             <div className="mt-2 flex items-center justify-between">
               <strong>234 <small>kWh</small></strong>
@@ -89,6 +92,7 @@ export function SolarContent() {
         </div>
 
         <SolarGlassCard className="co2-card solar-co2-card relative flex h-[134px] w-full items-center px-[22px] py-[15px]">
+          <img className="co2-card-bg" src="/assets/solar/co2-card-frame.svg" alt="" aria-hidden="true" />
           <div>
             <h2>CO2 Emission Avoided</h2>
             <strong>1,248 Tons</strong>

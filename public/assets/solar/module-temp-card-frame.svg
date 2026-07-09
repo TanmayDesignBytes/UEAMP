@@ -1,0 +1,22 @@
+<svg width="180" height="104" viewBox="0 0 180 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject x="-42" y="-42" width="263.5" height="188">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(21px);clip-path:url(#bgblur_module_temp_card_clip_path);height:100%;width:100%"></div>
+  </foreignObject>
+  <g data-figma-bg-blur-radius="42">
+    <rect x="1" y="1" width="177.5" height="102" rx="21" fill="url(#module_temp_card_fill)" fill-opacity="0.1"/>
+    <rect x="1" y="1" width="177.5" height="102" rx="21" stroke="url(#module_temp_card_border)" stroke-width="2"/>
+  </g>
+  <defs>
+    <clipPath id="bgblur_module_temp_card_clip_path" transform="translate(42 42)">
+      <rect x="1" y="1" width="177.5" height="102" rx="21"/>
+    </clipPath>
+    <linearGradient id="module_temp_card_fill" x1="-77.6192" y1="14.1429" x2="37.1004" y2="148.092" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0001" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity="0.39"/>
+    </linearGradient>
+    <radialGradient id="module_temp_card_border" cx="0" cy="0" r="1" gradientTransform="matrix(-111.969 -69.4286 121.847 -32.551 89.75 52)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

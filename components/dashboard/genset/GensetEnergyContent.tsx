@@ -13,6 +13,7 @@ export function GensetEnergyContent() {
       <h1 className="genset-energy-title">Power Output</h1>
 
       <GlassCard className="genset-energy-card">
+        <img className="genset-energy-card-bg" src="/assets/genset/performance-trends-card-frame.svg" alt="" aria-hidden="true" />
         <div className="power-card-header genset-energy-card__header">
           <h2>Performance Trends</h2>
           <button className="period-select" type="button">
@@ -60,6 +61,7 @@ export function GensetEnergyContent() {
       </GlassCard>
 
       <GensetCard className="genset-electrical-card">
+        <img className="genset-electrical-card-bg" src="/assets/genset/electrical-parameter-card-frame.svg" alt="" aria-hidden="true" />
         <h2>Electrical Parameter</h2>
         <div>
           <GensetStat value="5" label="Current" />
@@ -90,6 +92,7 @@ function GensetEnergyMetric({ label, unit, value }: { label: string; unit: strin
 function GensetLubeOilCard() {
   return (
     <GensetCard className="genset-lube-card">
+      <img className="genset-lube-card-bg" src="/assets/genset/lube-oil-card-frame.svg" alt="" aria-hidden="true" />
       <h2>Lube Oil</h2>
       <div className="genset-lube-card__body">
         <div className="genset-lube-gauge genset-lube-gauge--temperature">
@@ -112,6 +115,7 @@ function GensetLubeOilCard() {
 function GensetSpeedCard() {
   return (
     <GensetCard className="genset-speed-card">
+      <img className="genset-speed-card-bg" src="/assets/genset/speed-card-frame.svg" alt="" aria-hidden="true" />
       <h2>Speed</h2>
       <div className="genset-speed-card__body">
         <div className="genset-speed-bars" aria-hidden="true">
@@ -133,12 +137,14 @@ function GensetEngineMetrics() {
   return (
     <div className="genset-engine-metrics">
       <GensetCard className="genset-battery-card">
+        <img className="genset-battery-card-bg" src="/assets/genset/battery-voltage-card-frame.svg" alt="" aria-hidden="true" />
         <h2>Battery Voltage</h2>
         <p><strong>92</strong> <span>V</span></p>
         <BatteryVoltageGauge />
       </GensetCard>
 
       <GensetCard className="genset-frequency-card">
+        <img className="genset-frequency-card-bg" src="/assets/genset/frequency-card-frame.svg" alt="" aria-hidden="true" />
         <div>
           <h2>Frequency</h2>
           <p><strong>42.3</strong> <span>Hz</span></p>
@@ -147,6 +153,7 @@ function GensetEngineMetrics() {
       </GensetCard>
 
       <GensetCard className="genset-coolant-card">
+        <img className="genset-coolant-card-bg" src="/assets/genset/coolant-card-frame.svg" alt="" aria-hidden="true" />
         <div>
           <h2>Coolant Temp</h2>
           <p><strong>50°C</strong></p>
@@ -155,6 +162,7 @@ function GensetEngineMetrics() {
       </GensetCard>
 
       <GensetCard className="genset-average-voltage-card">
+        <img className="genset-average-voltage-card-bg" src="/assets/genset/average-voltage-card-frame.svg" alt="" aria-hidden="true" />
         <h2>Average Voltage</h2>
         <div className="genset-average-voltage-row">
           <div className="genset-average-voltage-values">
@@ -177,6 +185,7 @@ function GensetEngineMetrics() {
 function GensetMaintenanceCard() {
   return (
     <GensetCard className="genset-maintenance-card">
+      <img className="genset-maintenance-card-bg" src="/assets/genset/maintenance-card-frame.svg" alt="" aria-hidden="true" />
       <h2>Maintenance</h2>
       <div className="maintenance-line genset-maintenance-line">
         <span /><span /><span /><span />
@@ -199,6 +208,7 @@ function GensetMaintenanceCard() {
 function GensetMainsVoltageCard() {
   return (
     <GensetCard className="genset-mains-voltage-card">
+      <img className="genset-mains-voltage-card-bg" src="/assets/genset/mains-voltage-card-frame.svg" alt="" aria-hidden="true" />
       <h2>Mains Voltage</h2>
       <div className="genset-mains-voltage-row">
         <GensetVoltageStat value="5" label="(R-Y)" />
@@ -222,6 +232,7 @@ function GensetPowerCard() {
 
   return (
     <GensetCard className="genset-power-card">
+      <img className="genset-power-card-bg" src="/assets/genset/power-card-frame.svg" alt="" aria-hidden="true" />
       <h2>Power</h2>
       <div className="genset-power-list">
         {rows.map((row) => (
@@ -238,6 +249,7 @@ function GensetPowerCard() {
 function GensetBusUtilityCard() {
   return (
     <GensetCard className="genset-bus-utility-card">
+      <img className="genset-bus-utility-card-bg" src="/assets/genset/bus-utility-card-frame.svg" alt="" aria-hidden="true" />
       <h2>BUS Utility</h2>
       <div className="genset-bus-utility-row">
         <GensetBusUtilityMetric icon={<BusFrequencyIcon />} value="50.0" unit="Hz" label="Avg Frequency" />

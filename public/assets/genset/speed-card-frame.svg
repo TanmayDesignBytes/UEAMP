@@ -1,0 +1,15 @@
+<svg width="361" height="119" viewBox="0 0 361 119" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-42" y="-42" width="445" height="203"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(21px);clip-path:url(#bgblur_speed_card_clip_path);height:100%;width:100%"></div></foreignObject>
+<rect data-figma-bg-blur-radius="42" x="1" y="1" width="359" height="117" rx="20" fill="url(#paint0_linear_speed_card)" fill-opacity="0.1" stroke="url(#paint1_radial_speed_card)" stroke-width="2"/>
+<defs>
+<clipPath id="bgblur_speed_card_clip_path" transform="translate(42 42)"><rect x="1" y="1" width="359" height="117" rx="20"/></clipPath>
+<linearGradient id="paint0_linear_speed_card" x1="-159.961" y1="15.6" x2="-57.4716" y2="232.947" gradientUnits="userSpaceOnUse">
+<stop offset="0.0001" stop-color="white" stop-opacity="0"/>
+<stop offset="1" stop-color="white" stop-opacity="0.39"/>
+</linearGradient>
+<radialGradient id="paint1_radial_speed_card" cx="0" cy="0" r="1" gradientTransform="matrix(-227.766 -79.77 247.86 -37.3993 180.5 59.5)" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

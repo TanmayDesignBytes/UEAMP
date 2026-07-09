@@ -1,0 +1,19 @@
+<svg width="176" height="214" viewBox="0 0 176 214" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject x="-42" y="-42" width="260" height="298">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(21px);clip-path:url(#capacity_utilization_blur_clip);height:100%;width:100%"></div>
+  </foreignObject>
+  <rect data-figma-bg-blur-radius="42" x="1" y="1" width="174" height="212" rx="21" fill="url(#capacity_utilization_fill)" fill-opacity="0.1" stroke="url(#capacity_utilization_border)" stroke-width="2"/>
+  <defs>
+    <clipPath id="capacity_utilization_blur_clip" transform="translate(42 42)">
+      <rect x="1" y="1" width="174" height="212" rx="21"/>
+    </clipPath>
+    <linearGradient id="capacity_utilization_fill" x1="-76.0314" y1="27.5" x2="128.847" y2="139.143" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0001" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity="0.39"/>
+    </linearGradient>
+    <radialGradient id="capacity_utilization_border" cx="0" cy="0" r="1" gradientTransform="matrix(-109.736 -145.8 119.417 -68.3571 88 107)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

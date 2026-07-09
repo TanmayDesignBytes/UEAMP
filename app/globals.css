@@ -11,6 +11,14 @@
 }
 
 @font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Poppins";
   src: url("/assets/fonts/Poppins-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -151,7 +159,7 @@ img { display: block; max-width: 100%; }
 
 .login-content {
   width: 100%;
-  padding: clamp(44px, 8.1vh, 69px) 24px 0;
+  padding: 31px 24px 0;
 }
 
 .login-content h1 {
@@ -193,6 +201,48 @@ img { display: block; max-width: 100%; }
   border-radius: 15px;
 }
 
+.credential-fields .glass-control {
+  --cardfill: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%);
+  --cardborder: conic-gradient(
+    from 12deg at 50% 50%,
+    rgba(255, 255, 255, 0.4) 0deg,
+    rgba(255, 255, 255, 0.04) 48deg,
+    rgba(255, 255, 255, 0.3) 104deg,
+    rgba(255, 255, 255, 0.5) 162deg,
+    rgba(255, 255, 255, 0.03) 226deg,
+    rgba(255, 255, 255, 0.28) 286deg,
+    rgba(255, 255, 255, 0.4) 360deg
+  );
+
+  display: flex;
+  height: 55px;
+  padding: 0 20px;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 0;
+  background: var(--cardfill);
+}
+
+.credential-fields .glass-control::after {
+  content: "";
+  padding: 1px;
+  background: var(--cardborder);
+}
+
+.credential-fields .glass-control:focus-within::after {
+  background: conic-gradient(
+    from 12deg at 50% 50%,
+    rgba(255, 255, 255, 0.46) 0deg,
+    rgba(55, 147, 255, 0.18) 48deg,
+    rgba(255, 255, 255, 0.36) 104deg,
+    rgba(255, 255, 255, 0.56) 162deg,
+    rgba(55, 147, 255, 0.16) 226deg,
+    rgba(255, 255, 255, 0.34) 286deg,
+    rgba(255, 255, 255, 0.46) 360deg
+  );
+}
+
 .glass-control input {
   width: 100%;
   height: 100%;
@@ -219,7 +269,7 @@ img { display: block; max-width: 100%; }
   height: 55px;
   margin-top: 45px;
   border-radius: 28px;
-  background: var(--primary-action);
+  background: url("/assets/login-button-frame.svg") center / 100% 100% no-repeat;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -318,19 +368,39 @@ img { display: block; max-width: 100%; }
 }
 
 .weather-pill {
+  position: relative;
   display: flex;
   width: 72px;
   height: 40px;
-  padding: 0 7px 0 10px;
+  padding: 15px 35px 10px 10px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   border-radius: 50px;
   background: rgba(148, 149, 152, 0.2);
+  box-shadow: none;
+  color: #fff;
   font-family: Inter, sans-serif;
   font-size: 12px;
 }
 
-.weather-pill img { width: 24px; height: 24px; }
+.weather-pill span {
+  position: static;
+  display: block;
+  width: 27px;
+  height: 15px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.84px;
+  transform: none;
+}
+
+.weather-pill img {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+}
 
 .genset-status {
   display: flex;
@@ -376,6 +446,249 @@ img { display: block; max-width: 100%; }
   font-size: 10px;
   font-weight: 500;
   line-height: normal;
+}
+
+.genset-summary-grid {
+  grid-template-columns: repeat(2, 172px);
+  justify-content: center;
+  gap: 6px;
+}
+
+.genset-summary-grid > .genset-small-stat-card,
+.genset-summary-grid > .genset-rectangle-card {
+  width: 172px;
+  height: 100px;
+}
+
+.genset-small-stat-card h2,
+.genset-rectangle-card h2 {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.genset-small-stat-card h2 small,
+.genset-rectangle-card small {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.genset-small-stat-card strong,
+.genset-rectangle-card strong {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.genset-small-stat-card h2 + strong {
+  display: block;
+  margin-top: 5px;
+}
+
+.genset-rectangle-card small + strong {
+  display: block;
+  margin-top: 8px;
+}
+
+@media (min-width: 900px) {
+  .genset-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+
+  .genset-summary-grid > .genset-small-stat-card,
+  .genset-summary-grid > .genset-rectangle-card {
+    width: 100%;
+  }
+}
+
+.genset-small-stat-card {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.genset-small-stat-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/genset/small-stat-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.genset-small-stat-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.genset-rectangle-card {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.genset-rectangle-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/genset/rectangle-52-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.genset-rectangle-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.genset-fuel-card {
+  padding: 19px 14px 20px 17px;
+}
+
+.genset-fuel-card__content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.genset-fuel-card__copy {
+  min-width: 0;
+}
+
+.genset-fuel-card h2 {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.genset-fuel-card small {
+  line-height: 12px;
+}
+
+.genset-fuel-card strong {
+  margin-top: 19px;
+  font-size: 28px;
+  line-height: 30px;
+}
+
+.genset-fuel-gauge {
+  position: relative;
+  width: 39px;
+  height: 76px;
+  flex: 0 0 39px;
+  margin-top: -7px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.genset-fuel-gauge__pointer {
+  position: absolute;
+  top: 43px;
+  left: 0;
+  width: 6px;
+  height: 9px;
+}
+
+.genset-fuel-gauge__segments {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 28px;
+  height: 76px;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.genset-fuel-gauge__segments span {
+  display: block;
+  width: 28px;
+  height: 8px;
+  border-radius: 4px;
+  background: #fff;
+  opacity: var(--segment-opacity);
+}
+
+.genset-fuel-gauge__segments span.is-active {
+  background: linear-gradient(135deg, #f74fac 0%, #fcb24f 100%);
+  opacity: 1;
+}
+
+.genset-wide-rectangle-card {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.genset-wide-rectangle-card::before {
+  content: none;
+}
+
+.genset-wide-rectangle-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-wide-rectangle-card > :not(.genset-wide-rectangle-card-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.genset-running-time-card {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.genset-running-time-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-running-time-card > :not(.genset-running-time-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .overview-hero {
@@ -518,10 +831,11 @@ img { display: block; max-width: 100%; }
 
 .energy-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  grid-template-columns: repeat(2, 182px);
+  justify-content: center;
+  gap: 0;
   margin-top: 32px;
-  padding: 5px;
+  padding: 0;
 }
 
 .glass-card {
@@ -544,8 +858,40 @@ img { display: block; max-width: 100%; }
   position: relative;
   display: flex;
   min-width: 0;
-  height: 215px;
+  width: 184px;
+  max-width: 184px;
+  height: 222px;
   padding: 15px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  overflow: hidden;
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.energy-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.energy-card-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
@@ -584,11 +930,12 @@ img { display: block; max-width: 100%; }
   font-weight: 600;
 }
 
-.energy-value b {
+.energy-value-arrow {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
   margin-left: -1px;
-  font-family: Inter, sans-serif;
-  font-size: 18px;
-  line-height: 1;
+  transform: translateY(3px);
 }
 
 .bar-chart {
@@ -622,13 +969,15 @@ img { display: block; max-width: 100%; }
 
 .energy-chart-region > p {
   margin: 0;
+  font-style: normal;
   padding-top: 0;
   white-space: nowrap;
   text-align: left;
   color: #fff;
   font-size: 14px;
   font-weight: 400;
-  line-height: 18px;
+  line-height: normal;
+  font-family: "Plus Jakarta Sans";
 }
 
 .economics-card,
@@ -641,15 +990,40 @@ img { display: block; max-width: 100%; }
 
 .economics-card {
   position: relative;
-  height: 130px;
-  margin-top: 1px;
+  height: 142px;
+  margin-top: -2px;
   padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.economics-card::after {
+  content: none;
+}
+
+.economics-card-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.economics-card > h2,
+.economics-card > .economics-values {
+  z-index: 1;
 }
 
 .economics-card h2 {
   position: absolute;
   top: 20px;
-  left: 16px;
+  left: 25px;
   width: 302px;
   margin: 0;
   line-height: normal;
@@ -658,7 +1032,7 @@ img { display: block; max-width: 100%; }
 .economics-values {
   position: absolute;
   top: 53px;
-  left: 16px;
+  left: 25px;
   display: flex;
   width: 302px;
   box-sizing: border-box;
@@ -673,13 +1047,14 @@ img { display: block; max-width: 100%; }
   gap: 5px;
 }
 
-.economics-card .metric-label {
+.economics-card .metric > span {
   display: flex;
   align-items: baseline;
   gap: 4px;
 }
 
-.economics-card .metric-label span {
+.economics-card .metric > span {
+  color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -688,6 +1063,7 @@ img { display: block; max-width: 100%; }
 }
 
 .economics-card .metric-label-detail {
+  color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -748,7 +1124,7 @@ img { display: block; max-width: 100%; }
 .genset-energy-title {
   width: 244px;
   height: 30px;
-  margin: 21px 0 20px 4px;
+  margin: 21px 0 20px 5px;
   color: #f2f2f2;
   font-family: Poppins, sans-serif;
   font-size: 20px;
@@ -757,18 +1133,55 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-energy-card {
+  position: relative;
   display: flex;
-  width: 100%;
-  min-height: 587px;
-  padding: 20px;
+  width: calc(100% + 4px);
+  min-height: 641px;
+  margin-right: -2px;
+  margin-left: -2px;
+  padding: 28px 20px 26px;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   border-radius: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  background: var(--cardfill);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.genset-energy-card::after {
+  content: none;
+}
+
+.genset-energy-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-energy-card > :not(.genset-energy-card-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.solar-energy-content > .genset-energy-card {
+  min-height: 591px;
+  padding: 20px;
+  gap: 10px;
+}
+
+.solar-energy-content > .genset-energy-card .power-output-chart {
+  height: 236px;
+  flex-basis: 236px;
 }
 
 .genset-energy-card__header {
@@ -926,8 +1339,9 @@ img { display: block; max-width: 100%; }
 
 .solar-specific-yield-card {
   margin-top:5px;
+  position: relative;
   display: flex;
-  height: 113px;
+  height: 117px;
   padding: 13px 15px;
   flex-direction: column;
   justify-content: center;
@@ -936,10 +1350,25 @@ img { display: block; max-width: 100%; }
   align-self: stretch;
   overflow: hidden;
   border-radius: 20px;
-  border: 2px solid var(--cardborder, #fff);
-  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.solar-specific-yield-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background: url("/assets/solar/specific-yield-card-frame.svg") center / 100% 100% no-repeat;
+}
+
+.solar-specific-yield-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-specific-yield-card h2 {
@@ -1042,10 +1471,25 @@ img { display: block; max-width: 100%; }
   flex: 1 0 0;
   overflow: hidden;
   border-radius: 20px;
-  border: 2px solid var(--cardborder, #fff);
-  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.solar-frequency-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/solar/frequency-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.solar-frequency-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-frequency-card > div {
@@ -1115,6 +1559,7 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-power-factor-card {
+  position: relative;
   display: flex;
   height: 95px;
   min-width: 0;
@@ -1122,6 +1567,25 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   gap: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-power-factor-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/solar/power-factor-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.solar-power-factor-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-power-factor-card > div {
@@ -1177,6 +1641,7 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-average-voltage-card {
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 361px;
@@ -1188,6 +1653,25 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-average-voltage-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/solar/average-voltage-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.solar-average-voltage-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-average-voltage-card h2 {
@@ -1280,17 +1764,59 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-current-card {
+  position: relative;
   height: 100px;
   padding: 15px 16.5px 22px 15px;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-current-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/solar/current-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.solar-current-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-module-temp-card {
+  position: relative;
   height: 100px;
   padding: 15px 14px 13px 14.5px;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-module-temp-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/solar/module-temp-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.solar-module-temp-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-info-card p {
@@ -1382,6 +1908,7 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-dc-side-card {
+  position: relative;
   display: flex;
   width: 361px;
   max-width: 361px;
@@ -1392,6 +1919,30 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   align-items: center;
   gap: 16px;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-dc-side-card__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.solar-dc-side-card > :not(.solar-dc-side-card__frame) {
+  position: relative;
+  z-index: 1;
 }
 
 .solar-dc-side-card h2 {
@@ -1425,7 +1976,7 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   border: 0;
   border-radius: 24px;
-  background: rgba(217, 217, 217, .05);
+  background: url("/assets/solar/dc-side-tabs-bg.svg") center / 100% 100% no-repeat;
 }
 
 .solar-dc-side-card__tabs button {
@@ -1461,9 +2012,13 @@ img { display: block; max-width: 100%; }
 .solar-dc-side-card__tabs .is-active {
   flex: 0 0 105.34px;
   border-radius: 24px;
-  background: rgba(217, 217, 217, .15);
+  background: url("/assets/solar/dc-side-tab-active.svg") center / 100% 100% no-repeat;
   color: #fff;
   font-weight: 500;
+}
+
+.solar-dc-side-card__tabs .is-active::after {
+  content: none;
 }
 
 .solar-dc-side-card__body > p {
@@ -1547,17 +2102,38 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-electrical-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
-  height: 112px;
+  height: 116px;
   margin-top: 10px;
   padding: 13px 20px;
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  border-color: var(--cardborder, #fff);
-  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.genset-electrical-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-electrical-card > :not(.genset-electrical-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-electrical-card h2 {
@@ -1619,10 +2195,29 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   overflow: hidden;
   border-radius: 20px;
-  border-color: var(--cardborder, #fff);
-  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.genset-lube-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-lube-card > :not(.genset-lube-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-lube-card h2 {
@@ -1809,8 +2404,9 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-speed-card {
+  position: relative;
   display: flex;
-  height: 115px;
+  height: 119px;
   margin-top: 10px;
   padding: 13px 20px 13px 22px;
   flex-direction: column;
@@ -1819,10 +2415,29 @@ img { display: block; max-width: 100%; }
   gap: 10px;
   overflow: hidden;
   border-radius: 20px;
-  border-color: var(--cardborder, #fff);
-  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.genset-speed-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-speed-card > :not(.genset-speed-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-speed-card h2 {
@@ -1921,8 +2536,9 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-battery-card {
+  position: relative;
   display: flex;
-  height: 210px;
+  height: 214px;
   grid-row: span 2;
   padding: 20px 21px 24px;
   flex-direction: column;
@@ -1930,6 +2546,27 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   gap: 27px;
   overflow: hidden;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-battery-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-battery-card > :not(.genset-battery-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-battery-card h2,
@@ -1990,6 +2627,56 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+}
+
+.genset-frequency-card {
+  height: 104px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-coolant-card {
+  height: 104px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-frequency-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-coolant-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-frequency-card > :not(.genset-frequency-card-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.genset-coolant-card > :not(.genset-coolant-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-frequency-card > div,
@@ -2054,10 +2741,12 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-average-voltage-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 100%;
   max-width: 357px;
-  height: 133px;
+  height: 137px;
   grid-column: 1 / -1;
   justify-self: center;
   padding: 20px;
@@ -2065,6 +2754,27 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-average-voltage-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-average-voltage-card > :not(.genset-average-voltage-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-average-voltage-card h2 {
@@ -2139,10 +2849,12 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-maintenance-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
-  width: 353px;
+  width: 357px;
   max-width: 100%;
-  height: 197px;
+  height: 200px;
   grid-column: 1 / -1;
   justify-self: center;
   padding: 15px 15px 15px 22px;
@@ -2150,6 +2862,27 @@ img { display: block; max-width: 100%; }
   align-items: flex-start;
   justify-content: center;
   gap: 24px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-maintenance-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-maintenance-card > :not(.genset-maintenance-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-maintenance-card h2 {
@@ -2174,16 +2907,39 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-mains-voltage-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 357px;
   max-width: 100%;
-  height: 125px;
+  height: 129px;
   grid-column: 1 / -1;
   justify-self: center;
   padding: 13px 20px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-mains-voltage-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-mains-voltage-card > :not(.genset-mains-voltage-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-mains-voltage-card h2,
@@ -2224,20 +2980,45 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-power-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 357px;
   max-width: 100%;
-  min-height: 336px;
+  height: 344px;
   grid-column: 1 / -1;
   justify-self: center;
   padding: 20px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 16px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-power-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-power-card > :not(.genset-power-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-power-card h2 {
   width: 126px;
+  height: 28px;
+  line-height: 28px;
 }
 
 .genset-power-list {
@@ -2246,13 +3027,13 @@ img { display: block; max-width: 100%; }
   max-width: 100%;
   flex-direction: column;
   align-items: stretch;
-  gap: 16px;
+  gap: 8px;
 }
 
 .genset-power-row {
   display: flex;
   width: 100%;
-  min-height: 44px;
+  height: 44px;
   padding: 10px;
   align-items: center;
   justify-content: space-between;
@@ -2289,10 +3070,12 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-bus-utility-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
-  width: 353px;
+  width: 357px;
   max-width: 100%;
-  height: 124px;
+  height: 128px;
   grid-column: 1 / -1;
   justify-self: center;
   padding: 20px;
@@ -2300,6 +3083,27 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   gap: 16px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.genset-bus-utility-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.genset-bus-utility-card > :not(.genset-bus-utility-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .genset-bus-utility-card h2 {
@@ -2391,7 +3195,7 @@ img { display: block; max-width: 100%; }
 .currency-badge {
   position: absolute;
   top: 12%;
-  right: 0;
+  right: -13;
   transform: translateY(-50%);
   width: 50px;
   height: 50px;
@@ -2400,11 +3204,36 @@ img { display: block; max-width: 100%; }
 .performance-card {
   display: flex;
   width: 100%;
-  height: 171px;
-  margin-top: 5px;
+  height: 175px;
+  margin-top: -2px;
   padding: 20px;
   flex-direction: column;
   justify-content: flex-start;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.performance-card::after {
+  content: none;
+}
+
+.performance-card-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.performance-card > h2,
+.performance-card > .performance-body {
+  z-index: 1;
 }
 
 .performance-card h2 {
@@ -2434,7 +3263,7 @@ img { display: block; max-width: 100%; }
   width: 203px;
   flex: 0 1 203px;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2497,13 +3326,21 @@ img { display: block; max-width: 100%; }
 }
 
 .co2-card {
-  height: 133px;
+  height: 142px;
   padding: 16px 19px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.co2-card::after {
+  content: none;
 }
 
 .co2-card > div {
   width: 296px;
   max-width: 100%;
+  z-index: 1;
 }
 
 .co2-card h2 {
@@ -2524,7 +3361,7 @@ img { display: block; max-width: 100%; }
 
 .co2-card p {
   display: flex;
-  width: 220px;
+  width: 296px;
   max-width: 100%;
   height: 24px;
   margin-top: 0;
@@ -2533,7 +3370,7 @@ img { display: block; max-width: 100%; }
   font-family: Inter, sans-serif;
   font-size: 12px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 38px;
 }
 
 .co2-divider {
@@ -2549,16 +3386,56 @@ img { display: block; max-width: 100%; }
   right: 19px;
   width: 64px;
   height: 60px;
+  z-index: 1;
+}
+
+.co2-card > .co2-card-bg {
+  inset: 0;
+  top: 0;
+  right: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 .maintenance-card {
   display: flex;
-  height: 211px;
+  height: 215px;
   padding: 15px 15px 15px 22px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 24px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.maintenance-card::after {
+  content: none;
+}
+
+.maintenance-card-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.maintenance-card > :not(.maintenance-card-bg) {
+  position: relative;
+  z-index: 1;
 }
 
 .maintenance-card h2 {
@@ -2615,7 +3492,8 @@ img { display: block; max-width: 100%; }
 .maintenance-dates {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 158px minmax(0, 1fr);
+  column-gap: 37px;
   margin: 0;
 }
 
@@ -2853,13 +3731,27 @@ img { display: block; max-width: 100%; }
 
 .grid-status-card {
   display: flex;
-  height: 130px;
+  height: 137px;
   padding: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
+  border: 0;
+  background: transparent;
+}
+
+.grid-status-card__frame {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
 }
 
 .grid-status-card h2 {
@@ -2935,6 +3827,26 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
 }
 
+.solar-capacity-card,
+.solar-performance-card {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.solar-capacity-card__frame,
+.solar-performance-card__frame {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
 .solar-small-grid .solar-small-card:nth-child(-n + 2) {
   width: 172px;
   height: 210px;
@@ -2945,6 +3857,54 @@ img { display: block; max-width: 100%; }
   width: 172px;
   height: 100px;
   padding: 12px 14px 16px;
+}
+
+.solar-small-grid .solar-irradiance-card,
+.solar-small-grid .solar-energy-consumed-card {
+  width: 172px;
+  height: 106px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.solar-small-grid .solar-irradiance-card::after,
+.solar-small-grid .solar-energy-consumed-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 12deg at 50% 50%,
+    rgba(255, 255, 255, 0.4) 0deg,
+    rgba(255, 255, 255, 0.04) 48deg,
+    rgba(255, 255, 255, 0.3) 104deg,
+    rgba(255, 255, 255, 0.5) 162deg,
+    rgba(255, 255, 255, 0.03) 226deg,
+    rgba(255, 255, 255, 0.28) 286deg,
+    rgba(255, 255, 255, 0.4) 360deg
+  );
+  content: "";
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.solar-small-grid .solar-irradiance-card > *,
+.solar-small-grid .solar-energy-consumed-card > * {
+  position: relative;
+  z-index: 2;
 }
 
 .solar-small-grid .solar-small-card:nth-child(-n + 2) h2 {
@@ -3071,8 +4031,10 @@ img { display: block; max-width: 100%; }
 
 .solar-co2-card.co2-card {
   height: 133px;
-  margin-top: -6px;
+  margin-top: -2px;
   padding: 16px 19px;
+  border: 0;
+  background: transparent;
 }
 
 .solar-co2-card.co2-card h2 {
@@ -3096,11 +4058,22 @@ img { display: block; max-width: 100%; }
   line-height: 18px;
 }
 
-.solar-co2-card.co2-card img {
+.solar-co2-card.co2-card img:not(.co2-card-bg) {
   top: 36px;
   right: 19px;
   width: 64px;
   height: 60px;
+}
+
+.solar-co2-card.co2-card > .co2-card-bg {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 0;
 }
 
 .power-content {
@@ -3155,6 +4128,8 @@ img { display: block; max-width: 100%; }
 }
 
 .alert-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 100%;
   height: 106px;
@@ -3162,14 +4137,31 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 20px;
-  background:
-    linear-gradient(124deg, rgba(4, 8, 24, 0.96) -22.38%, rgba(10, 16, 34, 0.94) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: transparent;
+  box-shadow: none;
   color: #fff;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.alert-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/alert-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.alert-card::after {
+  content: none;
+}
+
+.alert-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .alert-card__heading {
@@ -3217,6 +4209,7 @@ img { display: block; max-width: 100%; }
 }
 
 .power-output-card {
+  position: relative;
   display: flex;
   width: 100%;
   height: 386px;
@@ -3225,11 +4218,31 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   gap: 11px;
+  overflow: hidden;
   border-radius: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  background: var(--card-fill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: none;
+  background: transparent;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.power-output-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background: url("/assets/power-output-card-frame.svg") center / 100% 100% no-repeat;
+}
+
+.power-output-card::after {
+  content: none;
+}
+
+.power-output-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .power-card-header {
@@ -3256,6 +4269,8 @@ img { display: block; max-width: 100%; }
 }
 
 .period-select {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 96.45px;
   height: 30px;
@@ -3263,10 +4278,26 @@ img { display: block; max-width: 100%; }
   flex: 0 0 96.45px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--cardborder, #fff);
+  border: 0;
   border-radius: 100px;
-  background: var(--cardfill, var(--card-fill));
+  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
   color: #fff;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.period-select::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/period-select-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.period-select > * {
+  position: relative;
+  z-index: 1;
 }
 
 .period-select span {
@@ -3502,7 +4533,7 @@ img { display: block; max-width: 100%; }
   width: 36px;
   height: 36px;
   max-width: none;
-  transform: translate(-2px, -2px);
+  transform: translate(-5px, -6px);
 }
 
 .nav-item:not(.active) .nav-icon--solar img {
@@ -3637,17 +4668,15 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   gap: 4px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 50%;
-  background:
-    linear-gradient(124deg, rgba(5, 10, 26, 0.9) -22.38%, rgba(12, 19, 36, 0.82) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: url("/assets/quick-menu/ellipse-frame.svg") center / 100% 100% no-repeat;
   color: #fff;
   font-family: Inter, sans-serif;
   pointer-events: auto;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
-  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.025), 0 4px 14px rgba(0, 0, 0, 0.22);
+  box-shadow: none;
 }
 
 .quick-menu__item img {
@@ -3720,17 +4749,16 @@ img { display: block; max-width: 100%; }
 .settings-card {
   appearance: none;
   position: relative;
+  overflow: hidden;
   display: flex;
   width: 100%;
   height: 68px;
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 20px;
-  background:
-    linear-gradient(124deg, rgba(4, 8, 24, 0.96) -22.38%, rgba(10, 16, 34, 0.94) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: transparent;
   color: rgba(255, 255, 255, 0.85);
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
@@ -3740,6 +4768,20 @@ img { display: block; max-width: 100%; }
   text-align: left;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.settings-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/settings-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.settings-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .settings-card img {
@@ -3786,14 +4828,18 @@ img { display: block; max-width: 100%; }
   width: 35px;
   height: 35px;
   flex: 0 0 35px;
-  padding: 5px;
+  padding: 0;
   place-items: center;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 50%;
-  background:
-    linear-gradient(124deg, rgba(4, 8, 24, 0.96) -22.38%, rgba(10, 16, 34, 0.94) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: transparent;
   color: #fff;
+}
+
+.report-back img {
+  display: block;
+  width: 35px;
+  height: 35px;
 }
 
 .report-fields {
@@ -3813,16 +4859,16 @@ img { display: block; max-width: 100%; }
 }
 
 .report-parameter-chips button {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   height: 40px;
   padding: 8px 10px;
   align-items: center;
   gap: 5px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 100px;
-  background:
-    linear-gradient(124deg, rgba(4, 8, 24, 0.96) -22.38%, rgba(10, 16, 34, 0.94) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
   color: #fff;
   font-family: Inter, sans-serif;
   font-size: 12px;
@@ -3830,6 +4876,24 @@ img { display: block; max-width: 100%; }
   line-height: normal;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.report-parameter-chips button::before {
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  content: "";
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.report-parameter-chips button > * {
+  position: relative;
+  z-index: 1;
 }
 
 .report-parameter-chips svg {
@@ -3856,6 +4920,8 @@ img { display: block; max-width: 100%; }
 }
 
 .report-field > button {
+  position: relative;
+  overflow: hidden;
   display: flex;
   width: 100%;
   height: 68px;
@@ -3863,13 +4929,27 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 20px;
-  background:
-    linear-gradient(124deg, rgba(4, 8, 24, 0.96) -22.38%, rgba(10, 16, 34, 0.94) 70.38%) padding-box,
-    radial-gradient(76.68% 94.29% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%) border-box;
+  background: transparent;
   color: #fff;
   text-align: left;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.report-field > button::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/assets/settings-card-frame.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.report-field > button > * {
+  position: relative;
+  z-index: 1;
 }
 
 .report-field > button span {
@@ -5049,8 +6129,8 @@ img { display: block; max-width: 100%; }
   }
 
   .overview-content .economics-values {
-    top: 70px;
-    left: 24px;
+    top: 50px;
+    left: 30px;
     right: 24px;
     width: auto;
     padding-right: 0;
@@ -5170,7 +6250,7 @@ img { display: block; max-width: 100%; }
 
   .genset-power-card {
     grid-column: 1 / 7;
-    min-height: 336px;
+    height: 344px;
   }
 
   .genset-bus-utility-card {
@@ -5709,19 +6789,33 @@ img { display: block; max-width: 100%; }
 }
 
 .power-output-card--energy {
+  height: 400px;
+  gap: 20px;
   justify-content: flex-start;
 }
 
 .power-output-card--energy .power-card-header {
+  width: 100%;
+  height: 30px;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   transform: none;
 }
 
 .power-output-card--peak {
-  height: 255px;
+  width: 100%;
+  height: 259px;
+  margin-left: 0;
   padding: 20px;
   gap: 16px;
   align-items: center;
   justify-content: flex-start;
+}
+
+.power-output-card--peak::before {
+  background-image: url("/assets/peak-demand-card-frame.png");
 }
 
 .power-output-card--peak .power-card-header {
@@ -6048,5 +7142,1826 @@ img { display: block; max-width: 100%; }
     justify-content: center;
     gap: 14px;
     flex: 0 0 auto;
+  }
+}
+
+.overview-content .maintenance-card {
+  height: 215px;
+  min-height: 0;
+  aspect-ratio: auto;
+  margin-top: -2px;
+  padding: 15px 15px 15px 22px;
+  gap: 24px;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.overview-content .maintenance-card-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.overview-content .maintenance-card > :not(.maintenance-card-bg) {
+  position: relative;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .dashboard-shell--genset-energy .genset-energy-content {
+    display: grid;
+    width: min(100%, 1440px);
+    max-width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: clamp(28px, 2.6vw, 54px);
+    padding-left: clamp(28px, 2.6vw, 54px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+    align-content: start;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-title {
+    grid-column: 1 / -1;
+    margin: 3px 0 0 4px;
+  }
+
+  .dashboard-shell--genset-energy .figma-statusbar,
+  .dashboard-shell--genset-energy .genset-bottom-spacer {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card {
+    grid-column: 1 / 7;
+    grid-row: span 3;
+    width: 100%;
+    min-height: 620px;
+    max-width: none;
+    justify-self: stretch;
+    padding: 28px;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card__header,
+  .dashboard-shell--genset-energy .genset-energy-card .power-output-chart {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card .power-output-chart {
+    height: clamp(260px, 20vw, 290px);
+    flex-basis: clamp(260px, 20vw, 290px);
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-series,
+  .dashboard-shell--genset-energy .genset-energy-stat-grid,
+  .dashboard-shell--genset-energy .genset-weekly-summary {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card__header h2 {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .dashboard-shell--genset-energy .genset-electrical-card,
+  .dashboard-shell--genset-energy .genset-speed-card {
+    width: 100%;
+    max-width: none;
+    margin-top: 0;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-electrical-card {
+    grid-column: 7 / 10;
+    height: 142px;
+  }
+
+  .dashboard-shell--genset-energy .genset-speed-card {
+    grid-column: 10 / 13;
+    height: 142px;
+  }
+
+  .dashboard-shell--genset-energy .genset-lube-card {
+    width: 100%;
+    max-width: none;
+    height: 320px;
+    grid-column: 7 / 13;
+    justify-self: stretch;
+    margin-top: 0;
+    padding: 22px 28px;
+  }
+
+  .dashboard-shell--genset-energy .genset-lube-card__body {
+    gap: clamp(42px, 4.6vw, 82px);
+    padding-top: 4px;
+  }
+
+  .dashboard-shell--genset-energy .genset-engine-metrics {
+    display: grid;
+    width: 100%;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 0;
+  }
+
+  .dashboard-shell--genset-energy .genset-battery-card {
+    width: 100%;
+    max-width: none;
+    height: 280px;
+    grid-column: 1 / 4;
+    grid-row: span 2;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-frequency-card {
+    width: 100%;
+    max-width: none;
+    height: 130px;
+    grid-column: 4 / 8;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-coolant-card {
+    width: 100%;
+    max-width: none;
+    height: 130px;
+    grid-column: 8 / 13;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-average-voltage-card {
+    width: 100%;
+    max-width: none;
+    height: 130px;
+    grid-column: 4 / 13;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-maintenance-card {
+    width: 100%;
+    max-width: none;
+    height: 204px;
+    grid-column: 1 / 7;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-mains-voltage-card {
+    width: 100%;
+    max-width: none;
+    height: 172px;
+    grid-column: 7 / 13;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-power-card {
+    width: 100%;
+    max-width: none;
+    height: 344px;
+    grid-column: 1 / 7;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-bus-utility-card {
+    width: 100%;
+    max-width: none;
+    height: 150px;
+    grid-column: 7 / 13;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-average-voltage-row,
+  .dashboard-shell--genset-energy .genset-mains-voltage-row,
+  .dashboard-shell--genset-energy .genset-power-list {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-shell--genset-energy .genset-bus-utility-row {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-shell--genset-energy .genset-maintenance-card h2 {
+    width: 283px;
+  }
+
+  .dashboard-shell--genset-energy .genset-mains-voltage-card h2 {
+    width: 96px;
+  }
+
+  .dashboard-shell--genset-energy .genset-power-card h2 {
+    width: 126px;
+  }
+
+  .dashboard-shell--genset-energy .genset-bus-utility-card h2 {
+    width: auto;
+    max-width: 100%;
+    align-self: stretch;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card-bg,
+  .dashboard-shell--genset-energy .genset-electrical-card-bg,
+  .dashboard-shell--genset-energy .genset-lube-card-bg,
+  .dashboard-shell--genset-energy .genset-speed-card-bg,
+  .dashboard-shell--genset-energy .genset-battery-card-bg,
+  .dashboard-shell--genset-energy .genset-frequency-card-bg,
+  .dashboard-shell--genset-energy .genset-coolant-card-bg,
+  .dashboard-shell--genset-energy .genset-average-voltage-card-bg,
+  .dashboard-shell--genset-energy .genset-maintenance-card-bg,
+  .dashboard-shell--genset-energy .genset-mains-voltage-card-bg,
+  .dashboard-shell--genset-energy .genset-power-card-bg,
+  .dashboard-shell--genset-energy .genset-bus-utility-card-bg {
+    display: none;
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card,
+  .dashboard-shell--genset-energy .genset-electrical-card,
+  .dashboard-shell--genset-energy .genset-lube-card,
+  .dashboard-shell--genset-energy .genset-speed-card,
+  .dashboard-shell--genset-energy .genset-battery-card,
+  .dashboard-shell--genset-energy .genset-frequency-card,
+  .dashboard-shell--genset-energy .genset-coolant-card,
+  .dashboard-shell--genset-energy .genset-average-voltage-card,
+  .dashboard-shell--genset-energy .genset-maintenance-card,
+  .dashboard-shell--genset-energy .genset-mains-voltage-card,
+  .dashboard-shell--genset-energy .genset-power-card,
+  .dashboard-shell--genset-energy .genset-bus-utility-card {
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 20px;
+    background:
+      linear-gradient(124deg, rgba(255, 255, 255, 0.015) -22.38%, rgba(255, 255, 255, 0.055) 70.38%),
+      rgba(5, 8, 24, 0.78);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .dashboard-shell--genset-energy .genset-energy-card > *,
+  .dashboard-shell--genset-energy .genset-electrical-card > *,
+  .dashboard-shell--genset-energy .genset-lube-card > *,
+  .dashboard-shell--genset-energy .genset-speed-card > *,
+  .dashboard-shell--genset-energy .genset-battery-card > *,
+  .dashboard-shell--genset-energy .genset-frequency-card > *,
+  .dashboard-shell--genset-energy .genset-coolant-card > *,
+  .dashboard-shell--genset-energy .genset-average-voltage-card > *,
+  .dashboard-shell--genset-energy .genset-maintenance-card > *,
+  .dashboard-shell--genset-energy .genset-mains-voltage-card > *,
+  .dashboard-shell--genset-energy .genset-power-card > *,
+  .dashboard-shell--genset-energy .genset-bus-utility-card > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (min-width: 900px) {
+  .overview-content .energy-card-bg,
+  .overview-content .economics-card-bg,
+  .overview-content .performance-card-bg,
+  .overview-content .co2-card-bg,
+  .solar-content .solar-co2-card .co2-card-bg,
+  .overview-content .maintenance-card-bg,
+  .genset-content .genset-generated-summary-card > img[aria-hidden="true"],
+  .genset-content .genset-wide-rectangle-card-bg,
+  .genset-content .genset-running-time-card-bg,
+  .solar-content .grid-status-card__frame,
+  .solar-content .solar-capacity-card__frame,
+  .solar-content .solar-performance-card__frame,
+  .dashboard-shell--genset-energy .genset-energy-card-bg,
+  .dashboard-shell--genset-energy .genset-electrical-card-bg,
+  .dashboard-shell--genset-energy .genset-lube-card-bg,
+  .dashboard-shell--genset-energy .genset-speed-card-bg,
+  .dashboard-shell--genset-energy .genset-battery-card-bg,
+  .dashboard-shell--genset-energy .genset-frequency-card-bg,
+  .dashboard-shell--genset-energy .genset-coolant-card-bg,
+  .dashboard-shell--genset-energy .genset-average-voltage-card-bg,
+  .dashboard-shell--genset-energy .genset-maintenance-card-bg,
+  .dashboard-shell--genset-energy .genset-mains-voltage-card-bg,
+  .dashboard-shell--genset-energy .genset-power-card-bg,
+  .dashboard-shell--genset-energy .genset-bus-utility-card-bg {
+    display: none !important;
+  }
+
+  .power-content .power-output-card::before,
+  .alert-content .alert-card::before,
+  .period-select::before {
+    display: none;
+  }
+
+  :is(
+    .overview-content .energy-card,
+    .overview-content .economics-card,
+    .overview-content .performance-card,
+    .overview-content .co2-card,
+    .overview-content .maintenance-card,
+    .genset-content .genset-generated-summary-card,
+    .genset-content .genset-small-stat-card,
+    .genset-content .genset-rectangle-card,
+    .genset-content .genset-wide-rectangle-card,
+    .genset-content .genset-running-time-card,
+    .solar-content .solar-generated-card,
+    .solar-content .grid-status-card,
+    .solar-content .solar-small-card,
+    .solar-content .solar-co2-card,
+    .power-content .power-output-card,
+    .alert-content .alert-card,
+    .dashboard-shell--genset-energy .genset-energy-card,
+    .dashboard-shell--genset-energy .genset-electrical-card,
+    .dashboard-shell--genset-energy .genset-lube-card,
+    .dashboard-shell--genset-energy .genset-speed-card,
+    .dashboard-shell--genset-energy .genset-battery-card,
+    .dashboard-shell--genset-energy .genset-frequency-card,
+    .dashboard-shell--genset-energy .genset-coolant-card,
+    .dashboard-shell--genset-energy .genset-average-voltage-card,
+    .dashboard-shell--genset-energy .genset-maintenance-card,
+    .dashboard-shell--genset-energy .genset-mains-voltage-card,
+    .dashboard-shell--genset-energy .genset-power-card,
+    .dashboard-shell--genset-energy .genset-bus-utility-card
+  ) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 0;
+    border-radius: 20px;
+    background: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.039) 70.38%);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .overview-content .energy-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  :is(
+    .overview-content .energy-card,
+    .overview-content .economics-card,
+    .overview-content .performance-card,
+    .overview-content .co2-card,
+    .overview-content .maintenance-card,
+    .genset-content .genset-generated-summary-card,
+    .genset-content .genset-small-stat-card,
+    .genset-content .genset-rectangle-card,
+    .genset-content .genset-wide-rectangle-card,
+    .genset-content .genset-running-time-card,
+    .solar-content .solar-generated-card,
+    .solar-content .grid-status-card,
+    .solar-content .solar-small-card,
+    .solar-content .solar-co2-card,
+    .power-content .power-output-card,
+    .alert-content .alert-card,
+    .dashboard-shell--genset-energy .genset-energy-card,
+    .dashboard-shell--genset-energy .genset-electrical-card,
+    .dashboard-shell--genset-energy .genset-lube-card,
+    .dashboard-shell--genset-energy .genset-speed-card,
+    .dashboard-shell--genset-energy .genset-battery-card,
+    .dashboard-shell--genset-energy .genset-frequency-card,
+    .dashboard-shell--genset-energy .genset-coolant-card,
+    .dashboard-shell--genset-energy .genset-average-voltage-card,
+    .dashboard-shell--genset-energy .genset-maintenance-card,
+    .dashboard-shell--genset-energy .genset-mains-voltage-card,
+    .dashboard-shell--genset-energy .genset-power-card,
+    .dashboard-shell--genset-energy .genset-bus-utility-card
+  )::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    padding: 2px;
+    border-radius: inherit;
+    background: radial-gradient(99% 62% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  :is(
+    .overview-content .energy-card,
+    .overview-content .economics-card,
+    .overview-content .performance-card,
+    .overview-content .co2-card,
+    .overview-content .maintenance-card,
+    .genset-content .genset-generated-summary-card,
+    .genset-content .genset-small-stat-card,
+    .genset-content .genset-rectangle-card,
+    .genset-content .genset-wide-rectangle-card,
+    .genset-content .genset-running-time-card,
+    .solar-content .solar-generated-card,
+    .solar-content .grid-status-card,
+    .solar-content .solar-small-card,
+    .solar-content .solar-co2-card,
+    .power-content .power-output-card,
+    .alert-content .alert-card,
+    .dashboard-shell--genset-energy .genset-energy-card,
+    .dashboard-shell--genset-energy .genset-electrical-card,
+    .dashboard-shell--genset-energy .genset-lube-card,
+    .dashboard-shell--genset-energy .genset-speed-card,
+    .dashboard-shell--genset-energy .genset-battery-card,
+    .dashboard-shell--genset-energy .genset-frequency-card,
+    .dashboard-shell--genset-energy .genset-coolant-card,
+    .dashboard-shell--genset-energy .genset-average-voltage-card,
+    .dashboard-shell--genset-energy .genset-maintenance-card,
+    .dashboard-shell--genset-energy .genset-mains-voltage-card,
+    .dashboard-shell--genset-energy .genset-power-card,
+    .dashboard-shell--genset-energy .genset-bus-utility-card
+  ) > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .period-select {
+    isolation: isolate;
+    border: 0;
+    background: linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.039) 70.38%);
+  }
+
+  .period-select::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    padding: 1px;
+    border-radius: inherit;
+    background: radial-gradient(99% 62% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .period-select > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .solar-content .solar-small-grid .solar-irradiance-card::after,
+  .solar-content .solar-small-grid .solar-energy-consumed-card::after {
+    background: conic-gradient(
+      from 12deg at 50% 50%,
+      rgba(255, 255, 255, 0.4) 0deg,
+      rgba(255, 255, 255, 0.04) 48deg,
+      rgba(255, 255, 255, 0.3) 104deg,
+      rgba(255, 255, 255, 0.5) 162deg,
+      rgba(255, 255, 255, 0.03) 226deg,
+      rgba(255, 255, 255, 0.28) 286deg,
+      rgba(255, 255, 255, 0.4) 360deg
+    );
+  }
+}
+
+@media (min-width: 900px) {
+  .overview-content .energy-card {
+    align-items: stretch;
+    padding: 22px 28px;
+  }
+
+  .overview-content .energy-card-content {
+    display: grid;
+    grid-template-columns: minmax(128px, max-content) minmax(150px, 1fr);
+    grid-template-rows: auto 1fr auto;
+    column-gap: clamp(18px, 3vw, 42px);
+    align-items: center;
+    justify-items: start;
+  }
+
+  .overview-content .energy-card h2 {
+    grid-column: 1 / -1;
+    width: auto;
+    align-self: start;
+  }
+
+  .overview-content .energy-value {
+    grid-column: 1;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .overview-content .energy-chart-region {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    margin-top: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .overview-content .bar-chart {
+    width: min(180px, 100%);
+    height: 78px;
+  }
+
+  .overview-content .energy-chart-region > p {
+    text-align: center;
+  }
+
+  .overview-content .economics-card h2 {
+    right: 24px;
+    width: auto;
+  }
+
+  .overview-content .economics-values {
+    width: min(360px, calc(100% - 118px));
+    padding-right: 0;
+    justify-content: flex-start;
+    gap: 34px;
+  }
+
+  .overview-content .economics-card .metric {
+    flex: 0 0 96px;
+    max-width: 96px;
+  }
+
+  .overview-content .currency-badge {
+    top: 20%;
+    right: -50px;
+    transform: translateY(-50%);
+  }
+}
+
+@media (min-width: 900px) {
+  .power-content .power-output-card--energy {
+    height: 480px;
+    padding-bottom: 30px;
+    gap: 16px;
+  }
+
+  .power-content .power-output-card--energy .power-series-control {
+    margin-top: 2px;
+  }
+}
+@media (min-width: 900px) {
+  .power-content .power-output-card--trends {
+    height: 480px; /* Performance Trends */
+  }
+
+  .power-content .power-output-card--peak {
+    height: 480px; /* Peak Demand */
+  }
+}
+
+@media (min-width: 900px) {
+  .power-content .power-output-card--trends .power-output-chart--bars {
+    height: 300px;
+    flex-basis: 190px;
+  }
+
+  .power-content .power-output-card--peak .power-output-chart--peak {
+    height: 400px;
+    flex-basis: 200px;
+  }
+}
+
+@media (min-width: 900px) {
+  .power-content .power-output-card--trends .power-output-chart--bars {
+    width: 380px;
+    height: 240px;
+    flex-basis: 240px;
+  }
+
+  .power-content .power-output-card--trends .power-trends-legend {
+    width: 360px;
+    height: 90px;
+    flex-basis: 90px;
+  }
+
+  .power-content .power-output-card--peak .power-output-chart--peak {
+    width: 380px;
+    height: 220px;
+    flex-basis: 220px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .genset-content {
+    grid-template-columns: minmax(560px, 820px) max-content;
+    justify-content: center;
+    gap: 28px;
+  }
+
+  .genset-content .genset-hero {
+    width: 100%;
+    max-width: 820px;
+  }
+
+  .genset-content .genset-summary-grid {
+    grid-template-columns: repeat(4, 172px);
+    justify-content: start;
+    gap: 18px;
+  }
+
+  .genset-content .genset-summary-grid > .genset-small-stat-card,
+  .genset-content .genset-summary-grid > .genset-rectangle-card {
+    width: 172px;
+    height: 100px;
+  }
+
+  .genset-content .genset-generated-summary-card {
+    width: 362px;
+    height: 224px;
+    min-height: 0;
+  }
+
+  .genset-content .genset-generated-bars {
+    width: 320px;
+  }
+
+  .genset-content .genset-wide-rectangle-card,
+  .genset-content .genset-running-time-card {
+    width: 362px;
+  }
+}
+
+@media (min-width: 900px) {
+  .solar-energy-content {
+    width: min(100%, 1180px);
+    max-width: 1180px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 32px;
+    padding-left: 32px;
+    grid-template-columns: 520px 520px;
+    grid-auto-rows: auto;
+    justify-content: center;
+    align-items: start;
+    align-content: start;
+    gap: 20px 28px;
+  }
+
+  .solar-energy-content > .figma-statusbar,
+  .solar-energy-content > .genset-energy-title {
+    grid-column: 1 / -1;
+  }
+
+  .solar-energy-content > .genset-energy-card {
+    grid-column: 1;
+    grid-row: 2 / span 3;
+    width: 520px;
+    min-height: 620px;
+    align-self: start;
+    justify-self: start;
+    padding: 24px;
+    gap: 12px;
+  }
+
+  .solar-energy-content > .genset-energy-card .power-output-chart {
+    width: 100%;
+    height: 250px;
+    flex-basis: 250px;
+  }
+
+  .solar-energy-content > .genset-energy-card .genset-energy-series,
+  .solar-energy-content > .genset-energy-card .genset-energy-stat-grid,
+  .solar-energy-content > .genset-energy-card .genset-weekly-summary {
+    width: 100%;
+    max-width: none;
+  }
+
+  .solar-energy-content > .solar-specific-yield-card {
+    grid-column: 2;
+    grid-row: 2;
+    width: 520px;
+    height: 117px;
+    min-height: 117px;
+    padding: 18px 22px;
+    align-self: start;
+    justify-self: start;
+    gap: 10px;
+  }
+
+  .solar-energy-content .solar-specific-yield-card h2 {
+    padding-left: 0;
+    line-height: normal;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__body {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__gauge {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__bars {
+    width: 100%;
+    height: 30px;
+    gap: 5px;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__bars span {
+    width: 3px;
+    flex: 1 1 3px;
+    min-width: 2px;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__labels {
+    width: 100%;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__body p {
+    width: auto;
+    margin: 0;
+    align-self: center;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__body strong {
+    font-size: 28px;
+  }
+
+  .solar-energy-content .solar-specific-yield-card__body span {
+    font-size: 13px;
+  }
+
+  .solar-energy-content > .solar-energy-metric-grid {
+    display: grid !important;
+    grid-column: 2;
+    grid-row: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    width: 520px;
+    align-self: start;
+    justify-self: start;
+  }
+
+  .solar-energy-content .solar-frequency-card,
+  .solar-energy-content .solar-power-factor-card,
+  .solar-energy-content .solar-current-card,
+  .solar-energy-content .solar-module-temp-card,
+  .solar-energy-content .solar-average-voltage-card {
+    grid-column: auto;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-top: 0;
+    justify-self: stretch;
+  }
+
+  .solar-energy-content .solar-frequency-card,
+  .solar-energy-content .solar-power-factor-card {
+    height: 124px;
+    min-height: 124px;
+    padding: 20px 22px;
+  }
+
+  .solar-energy-content .solar-average-voltage-card {
+    grid-column: 1 / -1;
+    height: 150px;
+    padding: 22px 26px;
+  }
+
+  .solar-energy-content .solar-current-card,
+  .solar-energy-content .solar-module-temp-card {
+    height: 150px;
+    padding: 22px 24px;
+  }
+
+  .solar-energy-content > .solar-dc-side-card {
+    grid-column: 2;
+    grid-row: 4;
+    width: 520px;
+    height: 330px;
+    min-height: 330px;
+    align-self: start;
+    justify-self: start;
+    margin-top: 0;
+    padding: 22px 28px;
+  }
+
+  .solar-energy-content .solar-average-voltage-row,
+  .solar-energy-content .solar-dc-side-card__body,
+  .solar-energy-content .solar-dc-side-card__tabs,
+  .solar-energy-content .solar-dc-side-card__body > p {
+    width: 100%;
+    max-width: none;
+  }
+
+  .solar-energy-content .solar-average-voltage-values {
+    width: 250px;
+    flex-basis: 250px;
+  }
+
+  .solar-energy-content .solar-current-card p,
+  .solar-energy-content .solar-module-temp-card p {
+    width: auto;
+    transform: none;
+  }
+
+  .solar-energy-content .solar-dc-power-grid {
+    width: min(100%, 420px);
+    align-self: center;
+  }
+}
+
+@media (min-width: 1440px) {
+  .solar-energy-content {
+    width: min(100%, 1240px);
+    max-width: 1240px;
+    grid-template-columns: 540px 540px;
+  }
+
+  .solar-energy-content > .genset-energy-card,
+  .solar-energy-content > .solar-specific-yield-card,
+  .solar-energy-content > .solar-energy-metric-grid,
+  .solar-energy-content > .solar-dc-side-card {
+    width: 540px;
+  }
+}
+
+@media (min-width: 900px) {
+  .dashboard-shell--solar-energy .solar-energy-content {
+    display: grid;
+    width: min(100%, 1440px);
+    max-width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: clamp(28px, 2.6vw, 54px);
+    padding-left: clamp(28px, 2.6vw, 54px);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 20px;
+    align-items: start;
+    align-content: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .figma-statusbar,
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-title {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-title {
+    margin: 3px 0 0 4px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card {
+    grid-column: 1 / 7;
+    grid-row: 2 / span 4;
+    width: 100%;
+    min-height: 620px;
+    max-width: none;
+    justify-self: stretch;
+    padding: 28px;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dashboard-shell--solar-energy .genset-energy-card-bg,
+  .dashboard-shell--solar-energy .solar-dc-side-card__frame {
+    display: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card::before,
+  .dashboard-shell--solar-energy .solar-frequency-card::before,
+  .dashboard-shell--solar-energy .solar-power-factor-card::before,
+  .dashboard-shell--solar-energy .solar-average-voltage-card::before,
+  .dashboard-shell--solar-energy .solar-current-card::before,
+  .dashboard-shell--solar-energy .solar-module-temp-card::before {
+    content: none;
+  }
+
+  .dashboard-shell--solar-energy .genset-energy-card,
+  .dashboard-shell--solar-energy .solar-specific-yield-card,
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-average-voltage-card,
+  .dashboard-shell--solar-energy .solar-current-card,
+  .dashboard-shell--solar-energy .solar-module-temp-card,
+  .dashboard-shell--solar-energy .solar-dc-side-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 0;
+    background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .dashboard-shell--solar-energy .genset-energy-card::after,
+  .dashboard-shell--solar-energy .solar-specific-yield-card::after,
+  .dashboard-shell--solar-energy .solar-frequency-card::after,
+  .dashboard-shell--solar-energy .solar-power-factor-card::after,
+  .dashboard-shell--solar-energy .solar-average-voltage-card::after,
+  .dashboard-shell--solar-energy .solar-current-card::after,
+  .dashboard-shell--solar-energy .solar-module-temp-card::after,
+  .dashboard-shell--solar-energy .solar-dc-side-card::after {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    padding: 2px;
+    border-radius: inherit;
+    background: radial-gradient(99% 62% at 50% 50%, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 100%);
+    content: "";
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .dashboard-shell--solar-energy .genset-energy-card > *,
+  .dashboard-shell--solar-energy .solar-specific-yield-card > *,
+  .dashboard-shell--solar-energy .solar-frequency-card > *,
+  .dashboard-shell--solar-energy .solar-power-factor-card > *,
+  .dashboard-shell--solar-energy .solar-average-voltage-card > *,
+  .dashboard-shell--solar-energy .solar-current-card > *,
+  .dashboard-shell--solar-energy .solar-module-temp-card > *,
+  .dashboard-shell--solar-energy .solar-dc-side-card > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .power-output-chart {
+    width: 100%;
+    max-width: none;
+    height: clamp(260px, 20vw, 290px);
+    flex-basis: clamp(260px, 20vw, 290px);
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .genset-energy-series,
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .genset-energy-stat-grid,
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .genset-weekly-summary {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .genset-energy-card__header h2 {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-specific-yield-card {
+    grid-column: 7 / 10;
+    grid-row: 2;
+    width: 100%;
+    max-width: none;
+    height: 142px;
+    min-height: 142px;
+    margin-top: 0;
+    padding: 22px 24px;
+    align-self: stretch;
+    justify-self: stretch;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card h2 {
+    padding-left: 0;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__gauge {
+    display: flex;
+    width: min(190px, 58%);
+    min-width: 0;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars {
+    width: 100%;
+    height: 30px;
+    gap: 4px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars span {
+    width: 2.5px;
+    flex: 0 0 2.5px;
+    min-width: 0;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body p {
+    width: auto;
+    flex: 0 0 auto;
+    margin: 4px 0 0;
+    align-self: flex-start;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body strong {
+    font-size: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body span {
+    font-size: 12px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-energy-metric-grid {
+    display: contents !important;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-current-card,
+  .dashboard-shell--solar-energy .solar-module-temp-card,
+  .dashboard-shell--solar-energy .solar-average-voltage-card,
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-top: 0;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card {
+    grid-column: 10 / 13;
+    grid-row: 2;
+  }
+
+  .dashboard-shell--solar-energy .solar-power-factor-card {
+    grid-column: 7 / 10;
+    grid-row: 3;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card {
+    grid-column: 10 / 13;
+    grid-row: 3;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-current-card {
+    height: 142px;
+    min-height: 142px;
+    padding: 22px 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-average-voltage-card {
+    grid-column: 7 / 13;
+    grid-row: 4;
+    height: 150px;
+    padding: 22px 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-module-temp-card {
+    grid-column: 7 / 10;
+    grid-row: 5;
+    height: 142px;
+    min-height: 142px;
+    padding: 22px 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 10 / 13;
+    grid-row: 5 / span 2;
+    width: 100%;
+    height: 304px;
+    min-height: 304px;
+    align-self: start;
+    padding: 22px 24px;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .dashboard-shell--solar-energy .solar-average-voltage-row,
+  .dashboard-shell--solar-energy .solar-dc-side-card__body,
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs,
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-average-voltage-values {
+    width: min(48%, 260px);
+    flex-basis: min(48%, 260px);
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card img {
+    top: 54px;
+    right: 20px;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card > div,
+  .dashboard-shell--solar-energy .solar-module-temp-card > div {
+    flex: 1 1 auto;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card p,
+  .dashboard-shell--solar-energy .solar-module-temp-card p {
+    width: auto;
+    transform: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card h2 {
+    width: auto;
+    height: auto;
+    align-self: stretch;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid {
+    width: min(100%, 280px);
+    align-self: center;
+  }
+}
+
+@media (min-width: 900px) {
+  .dashboard-shell--solar-energy .solar-energy-content {
+    display: grid;
+    width: min(100%, 1500px);
+    max-width: 1500px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: clamp(28px, 3vw, 52px) clamp(40px, 5vw, 96px) calc(132px + env(safe-area-inset-bottom));
+    grid-template-columns: minmax(560px, 1.35fr) minmax(280px, 0.82fr) minmax(280px, 0.82fr);
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+    column-gap: clamp(22px, 2.2vw, 38px);
+    row-gap: 22px;
+    align-items: start;
+    align-content: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .figma-statusbar {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-title {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    margin: 0 0 12px 4px;
+    align-self: start;
+    justify-self: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card {
+    grid-column: 1 / 2;
+    grid-row: 3 / span 5;
+    width: 100%;
+    max-width: none;
+    min-height: 690px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-specific-yield-card {
+    grid-column: 2 / 3;
+    grid-row: 3;
+    width: 100%;
+    max-width: none;
+    height: 150px;
+    min-height: 150px;
+    padding: 22px 24px;
+    justify-self: stretch;
+    align-self: stretch;
+    gap: 12px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card h2 {
+    padding-left: 0;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__gauge {
+    width: min(250px, 58%);
+    max-width: 250px;
+    flex: 0 1 250px;
+    gap: 6px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars {
+    height: 28px;
+    gap: 3px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars span {
+    width: 2px;
+    flex-basis: 2px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__labels {
+    width: 100%;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body p {
+    width: auto;
+    flex: 0 0 auto;
+    margin: 0;
+    justify-content: flex-end;
+    white-space: nowrap;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body strong {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body span {
+    font-size: 12px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card {
+    grid-column: 3 / 4;
+    grid-row: 3;
+    display: flex;
+    width: 100%;
+    max-width: none;
+    height: 150px;
+    min-height: 150px;
+    padding: 22px 26px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card > div {
+    width: auto;
+    height: auto;
+    min-width: 0;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card h2 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card p {
+    margin-top: 12px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card strong {
+    font-size: 28px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card img {
+    position: static;
+    width: 68px;
+    height: 40px;
+    margin-left: auto;
+    object-fit: contain;
+    transform: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-power-factor-card {
+    grid-column: 2 / 3;
+    grid-row: 4;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card {
+    grid-column: 3 / 4;
+    grid-row: 4;
+  }
+
+  .dashboard-shell--solar-energy .solar-average-voltage-card {
+    grid-column: 2 / 4;
+    grid-row: 5;
+  }
+
+  .dashboard-shell--solar-energy .solar-module-temp-card {
+    grid-column: 2 / 3;
+    grid-row: 6;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 2 / 4;
+    grid-row: 7;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 430px;
+    padding: 26px 28px 30px;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 18px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card h2 {
+    width: auto;
+    height: auto;
+    align-self: stretch;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(180px, 0.52fr) minmax(260px, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 32px;
+    row-gap: 22px;
+    align-items: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: min(100%, 480px);
+    max-width: 480px;
+    height: 42px;
+    align-self: flex-start;
+    justify-self: flex-start;
+    overflow: hidden;
+    border-radius: 24px;
+    background: rgba(217, 217, 217, 0.05);
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p {
+    grid-column: 1 / 2;
+    grid-row: 2;
+    width: auto;
+    max-width: none;
+    margin: 30px 0 0;
+    align-self: start;
+    justify-self: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p strong {
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p span {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid {
+    display: grid;
+    grid-column: 2 / 3;
+    grid-row: 2;
+    width: auto;
+    max-width: none;
+    height: auto;
+    padding: 12px;
+    grid-template-columns: repeat(5, 42px);
+    gap: 8px;
+    align-self: start;
+    justify-self: center;
+    align-content: start;
+    justify-content: center;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid img {
+    width: 42px;
+    height: 82px;
+    flex: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs button {
+    height: 42px;
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs .is-active {
+    height: 42px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .settings-content {
+    width: min(100%, 980px);
+    max-width: 980px;
+    padding: 40px 32px calc(132px + env(safe-area-inset-bottom));
+  }
+
+  .settings-title {
+    width: auto;
+    margin: 0 0 28px;
+    text-align: left;
+  }
+
+  .settings-list {
+    display: grid;
+    width: 100%;
+    margin-top: 0;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .settings-card {
+    height: 72px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1180px) {
+  .dashboard-shell--solar-energy .solar-energy-content {
+    grid-template-columns: minmax(520px, 1fr) minmax(260px, 0.72fr);
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card {
+    grid-column: 1 / 2;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-specific-yield-card,
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-current-card,
+  .dashboard-shell--solar-energy .solar-average-voltage-card,
+  .dashboard-shell--solar-energy .solar-module-temp-card,
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 2 / 3;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card { grid-row: 4; }
+  .dashboard-shell--solar-energy .solar-power-factor-card { grid-row: 5; }
+  .dashboard-shell--solar-energy .solar-current-card { grid-row: 6; }
+  .dashboard-shell--solar-energy .solar-average-voltage-card { grid-row: 7; }
+  .dashboard-shell--solar-energy .solar-module-temp-card { grid-row: 8; }
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card { grid-row: 9; }
+}
+
+@media (min-width: 900px) {
+  .dashboard-shell--solar-energy .solar-energy-content {
+    display: grid !important;
+    width: min(100%, 1180px);
+    max-width: 1180px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 36px clamp(28px, 4vw, 56px) calc(132px + env(safe-area-inset-bottom));
+    grid-template-columns: minmax(500px, 1fr) minmax(360px, 420px);
+    grid-auto-rows: auto;
+    gap: 18px 24px;
+    align-items: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .figma-statusbar {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    margin: 0 0 2px 4px;
+    justify-self: start;
+    align-self: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card {
+    grid-column: 1 / 2;
+    grid-row: 3 / span 3;
+    width: 100%;
+    max-width: none;
+    min-height: 620px;
+    padding: 26px;
+    gap: 14px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card .power-output-chart {
+    height: 260px;
+    flex-basis: 260px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-specific-yield-card {
+    grid-column: 2 / 3;
+    grid-row: 3;
+    width: 100%;
+    max-width: none;
+    height: 142px;
+    min-height: 142px;
+    padding: 20px 22px;
+    gap: 10px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__gauge {
+    width: min(190px, 56%);
+    max-width: 190px;
+    flex: 0 1 190px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars {
+    height: 24px;
+    gap: 3px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__bars span {
+    width: 2px;
+    flex-basis: 2px;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body p {
+    width: auto;
+    margin: 0 0 2px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body strong {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-specific-yield-card__body span {
+    font-size: 11px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-energy-metric-grid {
+    display: grid !important;
+    grid-column: 2 / 3;
+    grid-row: 4;
+    width: 100%;
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-metric-grid > * {
+    grid-column: auto;
+    grid-row: auto;
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-current-card,
+  .dashboard-shell--solar-energy .solar-module-temp-card {
+    height: 128px;
+    min-height: 128px;
+    padding: 20px;
+  }
+
+  .dashboard-shell--solar-energy .solar-average-voltage-card {
+    grid-column: 1 / -1;
+    height: 140px;
+    min-height: 140px;
+    padding: 20px 22px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card img {
+    position: static;
+    width: 60px;
+    height: 36px;
+    margin-left: auto;
+    object-fit: contain;
+    transform: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card > div,
+  .dashboard-shell--solar-energy .solar-module-temp-card > div {
+    flex: 1 1 auto;
+  }
+
+  .dashboard-shell--solar-energy .solar-current-card p,
+  .dashboard-shell--solar-energy .solar-module-temp-card p {
+    width: auto;
+    transform: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 2 / 3;
+    grid-row: 5;
+    width: 100%;
+    max-width: none;
+    min-height: 470px;
+    height: auto;
+    margin-top: 0;
+    padding: 24px;
+    gap: 16px;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card h2 {
+    width: auto;
+    height: auto;
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body {
+    width: 100%;
+    max-width: none;
+    gap: 16px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs {
+    width: 100%;
+    max-width: none;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs button {
+    font-size: 9px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs .is-active {
+    flex-basis: 34%;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p {
+    width: 100%;
+    max-width: none;
+    min-height: 28px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid {
+    width: min(100%, 280px);
+    padding: 10px 6px;
+    gap: 7px;
+    align-self: center;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid img {
+    width: 42px;
+    height: 80px;
+    flex: 0 0 42px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1040px) {
+  .dashboard-shell--solar-energy .solar-energy-content {
+    grid-template-columns: minmax(460px, 1fr) minmax(320px, 360px);
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .dashboard-shell--solar-energy .solar-energy-content > .genset-energy-card {
+    min-height: 600px;
+  }
+
+  .dashboard-shell--solar-energy .solar-frequency-card,
+  .dashboard-shell--solar-energy .solar-power-factor-card,
+  .dashboard-shell--solar-energy .solar-current-card,
+  .dashboard-shell--solar-energy .solar-module-temp-card {
+    padding: 18px;
+  }
+}
+
+@media (min-width: 900px) {
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    min-height: 430px;
+    padding: 28px 44px 34px;
+    gap: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card h2 {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.42fr) minmax(420px, 0.58fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 48px;
+    row-gap: 26px;
+    align-items: start;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: min(100%, 760px);
+    height: 48px;
+    justify-self: stretch;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs button {
+    height: 48px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__tabs .is-active {
+    flex: 1 1 0;
+    height: 48px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p {
+    grid-column: 1 / 2;
+    grid-row: 2;
+    margin: 64px 0 0;
+    white-space: nowrap;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p strong {
+    font-size: 52px;
+    line-height: 1;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body > p span {
+    font-size: 24px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid {
+    grid-column: 2 / 3;
+    grid-row: 2;
+    width: fit-content;
+    max-width: 100%;
+    padding: 16px;
+    grid-template-columns: repeat(5, 56px);
+    gap: 10px;
+    justify-self: center;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid img {
+    width: 56px;
+    height: 108px;
+    flex: none;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1040px) {
+  .dashboard-shell--solar-energy .solar-energy-content > .solar-dc-side-card {
+    grid-column: 1 / -1;
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-side-card__body {
+    grid-template-columns: minmax(180px, 0.36fr) minmax(360px, 0.64fr);
+    column-gap: 28px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid {
+    grid-template-columns: repeat(5, 48px);
+    gap: 8px;
+  }
+
+  .dashboard-shell--solar-energy .solar-dc-power-grid img {
+    width: 48px;
+    height: 92px;
   }
 }

@@ -1,0 +1,22 @@
+<svg width="357" height="137" viewBox="0 0 357 137" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject x="-42" y="-42" width="441" height="221">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(21px);clip-path:url(#grid_status_blur_clip);height:100%;width:100%"></div>
+  </foreignObject>
+  <g data-figma-bg-blur-radius="42">
+    <rect x="2" y="2" width="353" height="133" rx="20" fill="url(#grid_status_fill)" fill-opacity="0.1"/>
+    <rect x="1" y="1" width="355" height="135" rx="21" stroke="url(#grid_status_border)" stroke-width="2"/>
+  </g>
+  <defs>
+    <clipPath id="grid_status_blur_clip" transform="translate(42 42)">
+      <rect x="2" y="2" width="353" height="133" rx="20"/>
+    </clipPath>
+    <linearGradient id="grid_status_fill" x1="-158.146" y1="18.15" x2="-25.724" y2="251.985" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0001" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity="0.39"/>
+    </linearGradient>
+    <radialGradient id="grid_status_border" cx="0" cy="0" r="1" gradientTransform="matrix(-225.214 -92.34 245.083 -43.2929 178.5 68.5)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
