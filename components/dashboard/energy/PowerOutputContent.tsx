@@ -1,9 +1,35 @@
+"use client";
+
+import { useState } from "react";
 import { GlassCard } from "@/components/dashboard/common/Cards";
+import { PeriodSelect } from "@/components/dashboard/common/PeriodSelect";
 import { StatusBar } from "@/components/dashboard/common/StatusBar";
 import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 
+type EnergySeries = {
+  generated: boolean;
+  consumed: boolean;
+};
+
+type TrendSeries = {
+  solar: boolean;
+  grid: boolean;
+  bess: boolean;
+  genset: boolean;
+};
+
 export function PowerOutputContent() {
+  const [energySeries, setEnergySeries] = useState<EnergySeries>({ generated: true, consumed: true });
+  const [trendSeries, setTrendSeries] = useState<TrendSeries>({ solar: true, grid: true, bess: true, genset: true });
   useDevLifecycleLog(9);
+
+  const toggleEnergySeries = (series: keyof EnergySeries) => {
+    setEnergySeries((current) => ({ ...current, [series]: !current[series] }));
+  };
+
+  const toggleTrendSeries = (series: keyof TrendSeries) => {
+    setTrendSeries((current) => ({ ...current, [series]: !current[series] }));
+  };
 
   return (
     <div className="power-content mx-auto min-h-dvh w-full max-w-[393px] px-4 pb-[120px] min-[900px]:grid min-[900px]:max-w-[1500px] min-[900px]:grid-cols-[repeat(auto-fit,minmax(360px,1fr))] min-[900px]:items-start min-[900px]:content-start min-[900px]:gap-6 min-[900px]:px-8">
@@ -13,65 +39,56 @@ export function PowerOutputContent() {
       <GlassCard className="power-output-card power-output-card--energy flex h-[386px] w-full flex-col items-center justify-center gap-4 p-5 min-[900px]:h-[440px] min-[900px]:justify-start">
         <div className="power-card-header flex h-[30px] w-full shrink-0 items-center justify-between">
           <h2>Energy Generated Vs Consumed</h2>
-          <button className="period-select flex h-[30px] w-[96.45px] shrink-0 items-center justify-between rounded-full px-[13px] text-white" type="button">
-            <span>Today</span>
-            <img src="/assets/power/dropdown-arrow.svg" alt="" />
-          </button>
+          <PeriodSelect />
         </div>
 
-        <PowerOutputChart />
+        <PowerOutputChart series={energySeries} />
 
         <div className="power-series-control grid h-11 w-full shrink-0 grid-cols-[1fr_1px_1fr] items-center rounded-full bg-white/[.04]" aria-label="Chart series">
-          <label>
+          <button className="series-toggle" type="button" aria-pressed={energySeries.generated} onClick={() => toggleEnergySeries("generated")}>
             <span className="series-switch series-switch--generated relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>Generated</small>
-          </label>
+          </button>
           <span className="series-divider h-[18px] w-px bg-white/10" />
-          <label>
+          <button className="series-toggle" type="button" aria-pressed={energySeries.consumed} onClick={() => toggleEnergySeries("consumed")}>
             <span className="series-switch series-switch--consumed relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>Consumed</small>
-          </label>
+          </button>
         </div>
       </GlassCard>
 
       <GlassCard className="power-output-card power-output-card--trends mt-[10px] flex h-[400px] w-full flex-col items-center justify-center gap-4 p-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
         <div className="power-card-header flex h-[30px] w-full shrink-0 items-center justify-between">
           <h2>Performance Trends</h2>
-          <button className="period-select flex h-[30px] w-[96.45px] shrink-0 items-center justify-between rounded-full px-[13px] text-white" type="button">
-            <span>Today</span>
-            <img src="/assets/power/dropdown-arrow.svg" alt="" />
-          </button>
+          <PeriodSelect />
         </div>
 
-        <PerformanceTrendsChart />
+        <PerformanceTrendsChart series={trendSeries} />
 
         <div className="power-trends-legend" aria-label="Performance trend sources">
-          <label>
+          <button className="series-toggle" type="button" aria-pressed={trendSeries.solar} onClick={() => toggleTrendSeries("solar")}>
             <span className="series-switch series-switch--solar relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>Solar</small>
-          </label>
-          <label>
+          </button>
+          <button className="series-toggle" type="button" aria-pressed={trendSeries.grid} onClick={() => toggleTrendSeries("grid")}>
             <span className="series-switch series-switch--grid relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>Grid</small>
-          </label>
-          <label>
+          </button>
+          <button className="series-toggle" type="button" aria-pressed={trendSeries.bess} onClick={() => toggleTrendSeries("bess")}>
             <span className="series-switch series-switch--bess relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>BESS</small>
-          </label>
-          <label>
+          </button>
+          <button className="series-toggle" type="button" aria-pressed={trendSeries.genset} onClick={() => toggleTrendSeries("genset")}>
             <span className="series-switch series-switch--genset relative block h-6 w-[46px] rounded-full"><i /></span>
             <small>Genset</small>
-          </label>
+          </button>
         </div>
       </GlassCard>
 
       <GlassCard className="power-output-card power-output-card--peak mt-[10px] flex h-[340px] w-full flex-col items-center justify-center gap-4 px-5 pb-[26px] pt-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
         <div className="power-card-header flex h-[30px] w-full shrink-0 items-center justify-between">
           <h2>Peak Demand</h2>
-          <button className="period-select flex h-[30px] w-[96.45px] shrink-0 items-center justify-between rounded-full px-[13px] text-white" type="button">
-            <span>Today</span>
-            <img src="/assets/power/dropdown-arrow.svg" alt="" />
-          </button>
+          <PeriodSelect />
         </div>
 
         <PeakDemandChart />
@@ -80,7 +97,7 @@ export function PowerOutputContent() {
   );
 }
 
-export function PowerOutputChart() {
+export function PowerOutputChart({ series = { generated: true, consumed: true } }: { series?: EnergySeries } = {}) {
   const xLabels = ["6am", "9am", "12am", "3pm", "6pm", "9pm", "12pm"];
   const yLabels = ["50 kWh", "40 kWh", "30 kWh", "20 kWh", "10 kWh", "0"];
 
@@ -101,18 +118,25 @@ export function PowerOutputChart() {
       {yLabels.map((label, index) => <text key={label} x="34" y={28 + index * 37} textAnchor="end" className="power-axis-label">{label}</text>)}
       {xLabels.map((label, index) => <text key={label} x={56 + index * 44} y="246" textAnchor="middle" className="power-axis-label">{label}</text>)}
 
-      <path d="M39 229 C75 229 86 209 103 143 C119 82 137 63 168 62 C201 61 220 76 235 139 C249 199 275 222 332 229 L332 229 L39 229 Z" fill="url(#generated-area)" fillOpacity="0.25" />
-      <path d="M39 229 C78 229 94 211 114 171 C130 140 149 126 176 126 C202 126 222 141 242 178 C260 211 284 224 332 229 L332 229 L39 229 Z" fill="url(#consumed-area)" />
-      <path d="M39 229 C75 229 86 209 103 143 C119 82 137 63 168 62 C201 61 220 76 235 139 C249 199 275 222 332 229" fill="none" stroke="#21A17D" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M39 229 C78 229 94 211 114 171 C130 140 149 126 176 126 C202 126 222 141 242 178 C260 211 284 224 332 229" fill="none" stroke="#0087CE" strokeWidth="2.5" strokeLinecap="round" />
+      {series.generated && (
+        <>
+          <path d="M39 229 C75 229 86 209 103 143 C119 82 137 63 168 62 C201 61 220 76 235 139 C249 199 275 222 332 229 L332 229 L39 229 Z" fill="url(#generated-area)" fillOpacity="0.25" />
+          <path d="M39 229 C75 229 86 209 103 143 C119 82 137 63 168 62 C201 61 220 76 235 139 C249 199 275 222 332 229" fill="none" stroke="#21A17D" strokeWidth="2.5" strokeLinecap="round" />
+        </>
+      )}
+      {series.consumed && (
+        <>
+          <path d="M39 229 C78 229 94 211 114 171 C130 140 149 126 176 126 C202 126 222 141 242 178 C260 211 284 224 332 229 L332 229 L39 229 Z" fill="url(#consumed-area)" />
+          <path d="M39 229 C78 229 94 211 114 171 C130 140 149 126 176 126 C202 126 222 141 242 178 C260 211 284 224 332 229" fill="none" stroke="#0087CE" strokeWidth="2.5" strokeLinecap="round" />
+        </>
+      )}
     </svg>
   );
 }
 
 
-function PerformanceTrendsChart() {
+function PerformanceTrendsChart({ series }: { series: TrendSeries }) {
   const xLabels = ["6am", "9am", "12am", "3pm", "6pm", "9pm", "12pm"];
-  const bars = [52, 29, 52, 46, 52, 52, 52];
   const stacks = [
     [5, 10, 10, 27],
     [15, 6, 5, 3],
@@ -154,25 +178,28 @@ function PerformanceTrendsChart() {
 
       {stacks.map((stack, index) => {
         const x = 35 + index * 44;
-        const totalHeight = bars[index] * 2.55;
         const baseY = 146;
-        const segmentHeight = totalHeight / stack.reduce((sum, value) => sum + value, 0);
         let currentY = baseY;
-        const fills = ["url(#trend-genset)", "url(#trend-bess)", "url(#trend-grid)", "url(#trend-solar)"];
+        const segments = [
+          { active: series.genset, fill: "url(#trend-genset)", value: stack[0] },
+          { active: series.bess, fill: "url(#trend-bess)", value: stack[1] },
+          { active: series.grid, fill: "url(#trend-grid)", value: stack[2] },
+          { active: series.solar, fill: "url(#trend-solar)", value: stack[3] },
+        ].filter((segment) => segment.active);
 
         return (
           <g key={xLabels[index]}>
-            {stack.map((segment, segmentIndex) => {
-              const height = segment * segmentHeight;
+            {segments.map((segment, segmentIndex) => {
+              const height = segment.value * 2.55;
               currentY -= height;
-              const isTopSegment = segmentIndex === stack.length - 1;
+              const isTopSegment = segmentIndex === segments.length - 1;
               const radius = Math.min(4, height / 2);
               if (isTopSegment) {
                 return (
                   <path
                     key={segmentIndex}
                     d={`M${x} ${currentY + height}V${currentY + radius}Q${x} ${currentY} ${x + radius} ${currentY}H${x + 18 - radius}Q${x + 18} ${currentY} ${x + 18} ${currentY + radius}V${currentY + height}Z`}
-                    fill={fills[segmentIndex]}
+                    fill={segment.fill}
                   />
                 );
               }
@@ -183,7 +210,7 @@ function PerformanceTrendsChart() {
                   y={currentY}
                   width="18"
                   height={height}
-                  fill={fills[segmentIndex]}
+                  fill={segment.fill}
                 />
               );
             })}

@@ -1,11 +1,19 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useState, type ReactNode } from "react";
 import { GensetCard, GensetStat, GlassCard, Metric } from "@/components/dashboard/common/Cards";
+import { PeriodSelect } from "@/components/dashboard/common/PeriodSelect";
 import { StatusBar } from "@/components/dashboard/common/StatusBar";
 import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 import { PowerOutputChart } from "@/components/dashboard/energy/PowerOutputContent";
 
 export function GensetEnergyContent() {
+  const [energySeries, setEnergySeries] = useState({ generated: true, consumed: true });
   useDevLifecycleLog(10);
+
+  const toggleEnergySeries = (series: "generated" | "consumed") => {
+    setEnergySeries((current) => ({ ...current, [series]: !current[series] }));
+  };
 
   return (
     <div className="genset-energy-content mx-auto min-h-dvh w-full max-w-[393px] px-4 pb-[120px] font-jakarta text-white">
@@ -16,24 +24,21 @@ export function GensetEnergyContent() {
         <img className="genset-energy-card-bg" src="/assets/genset/performance-trends-card-frame.svg" alt="" aria-hidden="true" />
         <div className="power-card-header genset-energy-card__header">
           <h2>Performance Trends</h2>
-          <button className="period-select" type="button">
-            <span>Today</span>
-            <img src="/assets/power/dropdown-arrow.svg" alt="" />
-          </button>
+          <PeriodSelect />
         </div>
 
-        <PowerOutputChart />
+        <PowerOutputChart series={energySeries} />
 
         <div className="power-series-control genset-energy-series" aria-label="Chart series">
-          <label>
+          <button className="series-toggle" type="button" aria-pressed={energySeries.generated} onClick={() => toggleEnergySeries("generated")}>
             <span className="series-switch series-switch--generated"><i /></span>
             <small>Generated</small>
-          </label>
+          </button>
           <span className="series-divider" />
-          <label>
+          <button className="series-toggle" type="button" aria-pressed={energySeries.consumed} onClick={() => toggleEnergySeries("consumed")}>
             <span className="series-switch series-switch--consumed"><i /></span>
             <small>Consumed</small>
-          </label>
+          </button>
         </div>
 
         <div className="genset-energy-stat-grid">

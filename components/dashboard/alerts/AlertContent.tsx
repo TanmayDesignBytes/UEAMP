@@ -1,3 +1,4 @@
+import { PeriodSelect } from "@/components/dashboard/common/PeriodSelect";
 import { StatusBar } from "@/components/dashboard/common/StatusBar";
 import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 
@@ -17,10 +18,7 @@ export function AlertContent() {
       <StatusBar />
       <div className="alert-page-header mt-[21px] flex h-[30px] w-full items-center justify-between">
         <h1>Alerts</h1>
-        <button className="period-select flex h-[30px] w-[96.45px] shrink-0 items-center justify-between rounded-full px-[13px] text-white" type="button">
-          <span>Today</span>
-          <img src="/assets/power/dropdown-arrow.svg" alt="" />
-        </button>
+        <PeriodSelect />
       </div>
       <div className="alert-list mt-[26px] flex w-full flex-col gap-2 min-[900px]:grid min-[900px]:grid-cols-[repeat(auto-fit,minmax(330px,1fr))] min-[900px]:gap-4">
         {alertItems.map((item, index) => <AlertCard key={item.time + index} {...item} />)}
