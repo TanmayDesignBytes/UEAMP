@@ -14,8 +14,8 @@ export function OverviewContent() {
         <MicrogridHero />
         <div className="dashboard-grid w-full md:grid md:grid-cols-2 md:gap-4 xl:grid-cols-3 xl:gap-[18px]">
           <div className="energy-grid grid grid-cols-2 gap-2 md:col-span-full xl:col-span-2">
-            <EnergyCard title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" arrowAccent="#35FFC9" barAccent="#ffffff" bars={[36, 58, 46, 70, 100, 49, 60, 70, 82, 100, 74]} />
-            <EnergyCard title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#FF7E53" bars={[34, 55, 43, 70, 50, 79, 45, 70, 100, 80, 37]} />
+            <EnergyCard title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" arrowAccent="#35FFC9" barAccent="#ffffff" bars={[75, 50, 75, 100, 75, 100, 50, 25, 100, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
+            <EnergyCard title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#FF7E53" bars={[75, 50, 75, 100, 75, 100, 50, 25, 75, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
           </div>
           <GlassCard className="economics-card">
             <img className="economics-card-bg" src="/assets/Rectangle 52.svg" alt="" aria-hidden="true" />

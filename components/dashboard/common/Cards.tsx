@@ -23,6 +23,7 @@ export function EnergyCard({
   arrowAccent,
   barAccent,
   bars,
+  barOpacities,
   footer,
   title,
   unit,
@@ -32,12 +33,14 @@ export function EnergyCard({
   arrowAccent?: string;
   barAccent?: string;
   bars: number[];
+  barOpacities?: number[];
   footer: string;
   title: string;
   unit: string;
   value: string;
 }) {
-  const barOpacity = [0.1, 0.2, 0.3, 0.4, 0.8, 0.4, 0.2, 0.8, 0.4, 0.3, 0.2];
+  const barOpacity =
+    barOpacities || [0.1, 0.2, 0.3, 0.4, 0.8, 0.4, 0.2, 0.8, 0.4, 0.3, 0.2];
 
   return (
     <article className="energy-card">

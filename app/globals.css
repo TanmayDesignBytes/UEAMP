@@ -74,6 +74,21 @@
 
 * { box-sizing: border-box; }
 
+/*
+ * Fluid root font-size — the single lever that scales the whole UI.
+ * All px values are converted to rem at build time (see postcss.config.mjs),
+ * so shrinking this value shrinks every spacing/size proportionally.
+ * 4vw == 16px at a 400px-wide screen (the design reference width).
+ * Below 400px everything scales down proportionally; at/above 400px it is
+ * capped at 16px so the design never grows past its intended size.
+ * The 12.5px floor keeps very narrow screens from becoming unusably small.
+ * NOTE: this selector must stay exactly `html` — postcss.config.mjs blacklists
+ * it so these values are NOT converted to rem (which would be circular).
+ */
+html {
+  font-size: clamp(12.5px, 4vw, 16px);
+}
+
 html,
 body {
   width: 100%;
@@ -313,6 +328,19 @@ img { display: block; max-width: 100%; }
   position: relative;
   padding-bottom: calc(101px + env(safe-area-inset-bottom));
   color: #fff;
+}
+
+.dashboard-shell--settings {
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.dashboard-shell--settings .settings-content {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .overview-content {
@@ -907,6 +935,21 @@ img { display: block; max-width: 100%; }
   line-height: normal;
 }
 
+.overview-content .energy-card h2 {
+  width: 124px;
+  height: 18px;
+  min-height: 18px;
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  transform: translateX(8px);
+}
+
+.overview-content .energy-value {
+  transform: translateX(6px);
+}
+
 .energy-value {
   display: flex;
   align-items: baseline;
@@ -964,7 +1007,7 @@ img { display: block; max-width: 100%; }
   align-items: flex-start;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 5px;
+  margin-top: 13px; /* value -> bars gap = 10px flex gap + 13px = 23px (Figma) */
 }
 
 .energy-chart-region > p {
@@ -978,6 +1021,7 @@ img { display: block; max-width: 100%; }
   font-weight: 400;
   line-height: normal;
   font-family: "Plus Jakarta Sans";
+  padding-left: 5px;
 }
 
 .economics-card,
@@ -1024,9 +1068,14 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: 20px;
   left: 25px;
-  width: 302px;
+  width: 126px;
+  height: 18px;
   margin: 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   line-height: normal;
+  white-space: nowrap;
 }
 
 .economics-values {
@@ -3346,13 +3395,21 @@ img { display: block; max-width: 100%; }
 }
 
 .co2-card h2 {
+  width: 296px;
+  max-width: 100%;
   height: 18px;
-  line-height: 18px;
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
   opacity: 0.85;
 }
 
 .co2-card strong {
   display: block;
+  width: 296px;
+  max-width: 100%;
   height: 38px;
   margin-top: 10px;
   font-family: Inter, sans-serif;
@@ -3367,7 +3424,8 @@ img { display: block; max-width: 100%; }
   max-width: 100%;
   height: 24px;
   margin-top: 0;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   color: #fff;
   font-family: Inter, sans-serif;
   font-size: 12px;
@@ -3513,7 +3571,7 @@ img { display: block; max-width: 100%; }
 }
 
 .maintenance-dates .metric strong {
-  color: #fcfcfd;
+  color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -4332,20 +4390,35 @@ img { display: block; max-width: 100%; }
   top: calc(100% + 7px);
   right: 0;
   z-index: 30;
+  isolation: isolate;
   display: grid;
   width: 142px;
   padding: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.32);
   border-radius: 14px;
-  background: #151726;
+  overflow: hidden;
+  background: #02040c;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 18px 32px rgba(0, 0, 0, 0.48);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.38),
+    0 18px 36px rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.period-select-menu::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  border-radius: inherit;
+  background: #02040c;
+  content: "";
 }
 
 .period-select-menu button {
+  position: relative;
+  z-index: 1;
   display: flex;
   min-height: 32px;
   padding: 0 10px;
@@ -4363,7 +4436,7 @@ img { display: block; max-width: 100%; }
 .period-select-menu button:hover,
 .period-select-menu button:focus-visible,
 .period-select-menu button.is-selected {
-  background: rgba(255, 255, 255, 0.08);
+  background: #171a29;
   color: #fff;
   outline: 0;
 }
@@ -4762,7 +4835,10 @@ img { display: block; max-width: 100%; }
   gap: 4px;
   border: 0;
   border-radius: 50%;
-  background: url("/assets/quick-menu/ellipse-frame.svg") center / 100% 100% no-repeat;
+  /* Figma: fill = --card-fill (linear gradient), 1px border = --card-border
+     (radial gradient). Built in CSS instead of the ellipse-frame.svg so it
+     scales cleanly. The gradient border is drawn by the ::before ring below. */
+  background: var(--card-fill);
   color: #fff;
   font-family: Inter, sans-serif;
   pointer-events: auto;
@@ -4771,8 +4847,26 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
 }
 
+/* 1px gradient border ring (mask-out technique — a plain border can't be a gradient) */
+.quick-menu__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 1px;
+  background: var(--card-border);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .quick-menu__item img {
   display: block;
+  position: relative;
+  z-index: 1;
   width: 30px;
   height: 30px;
   object-fit: contain;
@@ -4784,6 +4878,8 @@ img { display: block; max-width: 100%; }
 }
 
 .quick-menu__item span {
+  position: relative;
+  z-index: 1;
   font-size: 10px;
   font-weight: 400;
   line-height: 12px;
@@ -5883,7 +5979,7 @@ img { display: block; max-width: 100%; }
 }
 
 .power-output-card--trends .power-trends-legend {
-  width: 319px;
+  width: 100%; /* match the Energy card's full-width bottom pill so the two cards look even */
   height: 86px;
   flex-basis: 86px;
   padding: 13px 21px;
@@ -9280,5 +9376,89 @@ img { display: block; max-width: 100%; }
   .dashboard-shell--solar-energy .solar-dc-power-grid img {
     width: 48px;
     height: 92px;
+  }
+}
+
+/*
+ * Power Output cards (mobile, < 900px): let each chart SVG size to its own
+ * aspect ratio and let the card hug that content. This removes the empty
+ * "letterbox" bands the wide bar/peak charts left inside fixed-height cards,
+ * without distorting the charts or their axis text. Cards end up different
+ * heights (each full of content) rather than uniform-with-empty-space.
+ * Desktop (>= 900px) keeps its fixed grid heights untouched.
+ */
+@media (max-width: 899px) {
+  .power-content .power-output-card--energy,
+  .power-content .power-output-card--peak {
+    height: auto;
+  }
+
+  .power-content .power-output-card--trends {
+    height: clamp(366px, 98vw, 400px);
+    min-height: clamp(366px, 98vw, 400px);
+  }
+
+  .power-content .power-output-card--energy .power-output-chart {
+    height: auto;
+    aspect-ratio: 332 / 250;
+    flex: 0 0 auto;
+  }
+
+  .power-content .power-output-chart--bars {
+    height: auto;
+    aspect-ratio: 321 / 181;
+    flex: 0 0 auto;
+  }
+
+  .power-content .power-output-chart--peak {
+    height: auto;
+    aspect-ratio: 321 / 169;
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 374px) {
+  .power-content .power-output-card--trends {
+    width: calc(100% + 12px);
+    max-width: calc(100% + 12px);
+    height: 366px;
+    min-height: 366px;
+    margin-right: -6px;
+    margin-left: -6px;
+    gap: 12px;
+    padding: 18px 12px;
+  }
+
+  .power-content .power-output-card--trends .power-card-header {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+
+  .power-content .power-output-card--trends .power-card-header h2 {
+    width: 216.546px;
+    flex: 0 1 216.546px;
+    font-size: 14px;
+    line-height: normal;
+  }
+
+  .power-content .power-output-card--trends .period-select,
+  .power-content .power-output-card--trends .period-select-wrap {
+    width: 96.454px;
+    height: 30px;
+    flex-basis: 96.454px;
+  }
+
+  .power-content .power-output-card--trends .power-output-chart--bars {
+    height: 176px;
+    aspect-ratio: auto;
+    flex: 0 0 176px;
+  }
+
+  .power-content .power-output-card--trends .power-trends-legend {
+    height: 76px;
+    flex-basis: 76px;
+    margin-top: 0;
+    padding: 10px 12px;
+    row-gap: 9px;
   }
 }

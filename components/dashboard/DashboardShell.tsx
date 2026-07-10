@@ -21,6 +21,7 @@ export function DashboardShell() {
   const isGensetEnergyPage = activeTab === "energy" && dashboardScope === "genset";
   const isSolarEnergyPage = activeTab === "energy" && dashboardScope === "solar";
   const energyShellClass = isGensetEnergyPage ? "dashboard-shell--genset-energy" : isSolarEnergyPage ? "dashboard-shell--solar-energy" : "";
+  const settingsShellClass = activeTab === "settings" && !reportOpen ? "dashboard-shell--settings" : "";
   useDevLifecycleLog(1);
 
   const navigate = useCallback((tab: DashboardTab) => {
@@ -46,13 +47,24 @@ export function DashboardShell() {
   ), [activeTab, dashboardScope, openReport]);
 
   useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const scroller = document.scrollingElement || document.documentElement;
+      scroller.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [activeTab, dashboardScope, reportOpen]);
+
+  useEffect(() => {
     const page = reportOpen ? "report" : activeTab;
     logDevEvent(4, page, "scope", dashboardScope);
     logDevMemory(1, page);
   }, [activeTab, dashboardScope, reportOpen]);
 
   return (
-    <section className={`overview-screen screen-background screen-enter relative min-h-dvh w-full bg-page-gradient pb-[calc(101px+env(safe-area-inset-bottom))] text-white ${energyShellClass}`}>
+    <section className={`overview-screen screen-background screen-enter relative min-h-dvh w-full bg-page-gradient pb-[calc(101px+env(safe-area-inset-bottom))] text-white ${energyShellClass} ${settingsShellClass}`}>
       {reportOpen ? <ReportPage onBack={() => {
         logDevEvent(3, "settings");
         setReportOpen(false);
