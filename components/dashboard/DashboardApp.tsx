@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { logDevEvent, logDevMemory, useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
-import { FpsMeter } from "@/components/dashboard/startup/FpsMeter";
 import { LoaderScreen, LoginScreen, SplashScreen } from "@/components/dashboard/startup/StartupScreens";
 import type { Stage } from "@/components/dashboard/types";
 
@@ -12,6 +11,11 @@ export default function DashboardApp() {
   useDevLifecycleLog(0);
 
   useEffect(() => {
+    if (window.localStorage.getItem("umpie-authenticated") === "true") {
+      setStage("overview");
+      return;
+    }
+
     logDevEvent(0, "loader");
     const loaderTimer = window.setTimeout(() => setStage("loader"), 1700);
     logDevEvent(0, "login");
@@ -27,14 +31,17 @@ export default function DashboardApp() {
   useEffect(() => {
     logDevEvent(2, stage);
     logDevMemory(0, stage);
+    if (stage === "overview") window.localStorage.setItem("umpie-authenticated", "true");
   }, [stage]);
 
   return (
     <main className="app-shell min-h-dvh w-full">
-      <FpsMeter />
       {stage === "splash" && <SplashScreen />}
       {stage === "loader" && <LoaderScreen />}
-      {stage === "login" && <LoginScreen onLogin={() => setStage("overview")} />}
+      {stage === "login" && <LoginScreen onLogin={() => {
+        window.localStorage.setItem("umpie-authenticated", "true");
+        setStage("overview");
+      }} />}
       {stage === "overview" && <DashboardShell />}
     </main>
   );

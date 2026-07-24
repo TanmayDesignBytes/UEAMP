@@ -1,0 +1,152 @@
+/* ============================================================
+   Energy Generated Vs Consumed — card styles
+   Fonts used: "Plus Jakarta Sans" (title/labels), Inter (axis).
+   Load them however your project prefers (Google Fonts / self-host).
+   ============================================================ */
+
+.energy-card {
+  --card-fill: linear-gradient(
+    124deg,
+    rgba(255, 255, 255, 0) -22.38%,
+    rgba(255, 255, 255, 0.04) 70.38%
+  );
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 361px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-fill), rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(21px);
+  -webkit-backdrop-filter: blur(21px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Header ---------- */
+.energy-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  gap: 8px;
+}
+
+.energy-card__header h2 {
+  margin: 0;
+  color: #fff;
+  opacity: 0.85;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.energy-card__period {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ---------- Chart ---------- */
+.energy-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.energy-axis-label {
+  fill: #d0d5dd;
+  font-family: Inter, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+}
+
+/* ---------- Series control (toggles) ---------- */
+.series-control {
+  display: grid;
+  width: 100%;
+  height: 44px;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.series-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.series-toggle small {
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0.85;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  transition: opacity 220ms ease;
+}
+
+.series-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.series-switch {
+  position: relative;
+  display: block;
+  width: 46px;
+  height: 24px;
+  border-radius: 100px;
+  transition: background-color 220ms ease;
+}
+
+.series-switch--generated { background: #22ae87; }
+.series-switch--consumed  { background: #159ee0; }
+
+.series-switch i {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateX(22px);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Off / unchecked state ---------- */
+.series-toggle[aria-pressed="false"] .series-switch {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.series-toggle[aria-pressed="false"] .series-switch i {
+  transform: translateX(0);
+}
+
+.series-toggle[aria-pressed="false"] small {
+  opacity: 0.45;
+}

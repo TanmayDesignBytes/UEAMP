@@ -57,7 +57,7 @@ export function PowerOutputContent() {
         </div>
       </GlassCard>
 
-      <GlassCard className="power-output-card power-output-card--trends mt-[10px] flex h-[400px] w-full flex-col items-center justify-center gap-4 p-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
+      <GlassCard className="power-output-card power-output-card--trends mt-[6px] flex h-[400px] w-full flex-col items-center justify-center gap-4 p-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
         <div className="power-card-header flex h-[30px] w-full shrink-0 items-center justify-between">
           <h2>Performance Trends</h2>
           <PeriodSelect />
@@ -85,7 +85,7 @@ export function PowerOutputContent() {
         </div>
       </GlassCard>
 
-      <GlassCard className="power-output-card power-output-card--peak mt-[10px] flex h-[340px] w-full flex-col items-center justify-center gap-4 px-5 pb-[26px] pt-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
+      <GlassCard className="power-output-card power-output-card--peak mt-[6px] flex h-auto w-full flex-col items-center justify-center gap-4 px-5 pb-[26px] pt-5 min-[900px]:mt-0 min-[900px]:h-[440px] min-[900px]:justify-start">
         <div className="power-card-header flex h-[30px] w-full shrink-0 items-center justify-between">
           <h2>Peak Demand</h2>
           <PeriodSelect />
@@ -147,8 +147,16 @@ function PerformanceTrendsChart({ series }: { series: TrendSeries }) {
     [5, 10, 10, 27],
   ];
 
+  const plotLeft = 38;
+  const plotRight = 312;
+  const barWidth = 20.753;
+  const barGap = 16;
+  const barStep = barWidth + barGap;
+  const groupWidth = stacks.length * barWidth + (stacks.length - 1) * barGap;
+  const startX = plotLeft + (plotRight - plotLeft - groupWidth) / 2;
+
   return (
-    <svg className="power-output-chart power-output-chart--bars" viewBox="0 0 321 181" role="img" aria-label="Performance trends by source">
+    <svg className="power-output-chart power-output-chart--bars" viewBox="0 0 321 181" preserveAspectRatio="none" role="img" aria-label="Performance trends by source">
       <defs>
         <linearGradient id="trend-solar" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#9CCCFA" />
@@ -169,15 +177,15 @@ function PerformanceTrendsChart({ series }: { series: TrendSeries }) {
       </defs>
 
       {[50, 40, 30, 20, 10].map((tick, index) => (
-        <text key={tick} x="28" y={20 + index * 30} textAnchor="end" className="power-axis-label">{tick} kWh</text>
+        <text key={tick} x="28" y={20 + index * 30} textAnchor="end" className="power-axis-label power-axis-label--y">{tick} kWh</text>
       ))}
       {xLabels.map((label, index) => (
-        <text key={label} x={46 + index * 44} y="174" textAnchor="middle" className="power-axis-label">{label}</text>
+        <text key={label} x={startX + index * barStep + barWidth / 2} y="174" textAnchor="middle" className="power-axis-label power-axis-label--x">{label}</text>
       ))}
       <line x1="38" y1="146" x2="312" y2="146" stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
 
       {stacks.map((stack, index) => {
-        const x = 35 + index * 44;
+        const x = startX + index * barStep;
         const baseY = 146;
         let currentY = baseY;
         const segments = [
@@ -198,7 +206,7 @@ function PerformanceTrendsChart({ series }: { series: TrendSeries }) {
                 return (
                   <path
                     key={segmentIndex}
-                    d={`M${x} ${currentY + height}V${currentY + radius}Q${x} ${currentY} ${x + radius} ${currentY}H${x + 18 - radius}Q${x + 18} ${currentY} ${x + 18} ${currentY + radius}V${currentY + height}Z`}
+                    d={`M${x} ${currentY + height}V${currentY + radius}Q${x} ${currentY} ${x + radius} ${currentY}H${x + barWidth - radius}Q${x + barWidth} ${currentY} ${x + barWidth} ${currentY + radius}V${currentY + height}Z`}
                     fill={segment.fill}
                   />
                 );
@@ -208,7 +216,7 @@ function PerformanceTrendsChart({ series }: { series: TrendSeries }) {
                   key={segmentIndex}
                   x={x}
                   y={currentY}
-                  width="18"
+                  width={barWidth}
                   height={height}
                   fill={segment.fill}
                 />
@@ -232,10 +240,10 @@ function PeakDemandChart() {
   return (
     <svg className="power-output-chart power-output-chart--peak" viewBox="0 0 321 169" role="img" aria-label="Peak demand through the day">
       {yLabels.map((label, index) => (
-        <text key={label} x="28" y={24 + index * 30} textAnchor="end" className="power-axis-label">{label}</text>
+        <text key={label} x="28" y={24 + index * 30} textAnchor="end" className="power-axis-label power-axis-label--y">{label}</text>
       ))}
       {xLabels.map((label, index) => (
-        <text key={label} x={46 + index * 44} y="166" textAnchor="middle" className="power-axis-label">{label}</text>
+        <text key={label} x={46 + index * 44} y="166" textAnchor="middle" className="power-axis-label power-axis-label--x">{label}</text>
       ))}
       <line x1="38" y1={plotBottom - (42 / 50) * plotHeight} x2="312" y2={plotBottom - (42 / 50) * plotHeight} stroke="#2D8CFF" strokeWidth="2" strokeDasharray="7 6" />
       <line x1="38" y1={plotBottom} x2="312" y2={plotBottom} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />

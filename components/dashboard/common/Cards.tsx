@@ -28,6 +28,7 @@ export function EnergyCard({
   title,
   unit,
   value,
+  variant,
 }: {
   accent: string;
   arrowAccent?: string;
@@ -38,32 +39,57 @@ export function EnergyCard({
   title: string;
   unit: string;
   value: string;
+  variant: "generated" | "consumed";
 }) {
   const barOpacity =
     barOpacities || [0.1, 0.2, 0.3, 0.4, 0.8, 0.4, 0.2, 0.8, 0.4, 0.3, 0.2];
+  const classes =
+    variant === "generated"
+      ? {
+          card: "generated-energy-card",
+          bg: "generated-energy-card-bg",
+          content: "generated-energy-card-content",
+          title: "generated-energy-card-title",
+          value: "generated-energy-value",
+          arrow: "generated-energy-value-arrow",
+          chartRegion: "generated-energy-chart-region",
+          chart: "generated-bar-chart",
+          footer: "generated-energy-card-footer",
+        }
+      : {
+          card: "consumed-energy-card",
+          bg: "consumed-energy-card-bg",
+          content: "consumed-energy-card-content",
+          title: "consumed-energy-card-title",
+          value: "consumed-energy-value",
+          arrow: "consumed-energy-value-arrow",
+          chartRegion: "consumed-energy-chart-region",
+          chart: "consumed-bar-chart",
+          footer: "consumed-energy-card-footer",
+        };
 
   return (
-    <article className="energy-card">
+    <article className={classes.card}>
       <img
         src="/assets/glass-card.svg"
         alt=""
         aria-hidden="true"
-        className="energy-card-bg"
+        className={classes.bg}
       />
 
-      <div className="energy-card-content">
-        <h2>{title}</h2>
+      <div className={classes.content}>
+        <h2 className={classes.title}>{title}</h2>
 
-        <div className="energy-value flex items-baseline">
+        <div className={`${classes.value} flex items-baseline`}>
           <strong>{value}</strong>
           <span>{unit}</span>
-          <svg className="energy-value-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <svg className={classes.arrow} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
             <path d="M9 15V3M13.5 7.5L9 3L4.5 7.5" stroke={arrowAccent || accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
 
-        <div className="energy-chart-region flex w-full flex-col">
-          <div className="bar-chart flex items-end" aria-hidden="true">
+        <div className={`${classes.chartRegion} flex w-full flex-col`}>
+          <div className={`${classes.chart} flex items-end`} aria-hidden="true">
             {bars.map((height, index) => (
               <i
                 key={title + index}
@@ -76,7 +102,7 @@ export function EnergyCard({
             ))}
           </div>
 
-          <p>{footer}</p>
+          <p className={classes.footer}>{footer}</p>
         </div>
       </div>
     </article>

@@ -29,7 +29,7 @@ export function LoginScreen({ onLogin }: { onLogin: () => void }) {
         <img className="size-full object-cover" src="/assets/images/overview-login-microgrid.gif" alt="" />
       </div>
       <div className="login-content w-full px-6 pb-0 pt-[31px] md:w-full md:max-w-[520px] md:justify-self-center md:p-12">
-        <h1 className="m-0 font-jakarta text-[23px] font-bold leading-normal text-white">Welcome Back ...</h1>
+        <h1 className="m-0 font-jakarta text-[24px] font-bold leading-normal text-white">Welcome Back ...</h1>
         <div className="credential-fields mt-8 flex flex-col gap-3">
           <label className="glass-control flex h-14 w-full items-center rounded-[18px] px-5 backdrop-blur-[21px]">
             <span className="sr-only">User name</span>
@@ -41,7 +41,7 @@ export function LoginScreen({ onLogin }: { onLogin: () => void }) {
           </label>
         </div>
         <button className="primary-button mt-6 flex h-14 w-full items-center justify-center rounded-full bg-primary-gradient font-jakarta text-base font-bold text-white" onClick={onLogin} type="button">Login</button>
-        <label className="requirements-check mt-4 flex items-center gap-2.5 font-inter text-[10px] leading-4 text-white/70">
+        <label className="requirements-check mt-4 flex items-center gap-2.5 font-inter text-[12px] font-normal leading-[18px] text-white">
           <input type="checkbox" />
           <span>Accept all the requirements that we have provided</span>
         </label>

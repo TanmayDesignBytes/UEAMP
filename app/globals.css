@@ -86,7 +86,11 @@
  * it so these values are NOT converted to rem (which would be circular).
  */
 html {
-  font-size: clamp(12.5px, 4vw, 16px);
+  /* Fluid root: 4vw scales the whole rem-based layout with the viewport.
+     Lower bound 12.5px protects small phones (<400px). Upper bound 17px lets
+     the design keep growing proportionally up to ~430px phones so it fills the
+     width instead of freezing at 393px and showing odd side margins. */
+  font-size: clamp(12.5px, 4vw, 17px);
 }
 
 html,
@@ -94,7 +98,9 @@ body {
   width: 100%;
   min-height: 100%;
   margin: 0;
-  overflow-x: hidden;
+  /* clip (not hidden) prevents horizontal scroll WITHOUT creating a scroll
+     container, which would break position: sticky on descendants */
+  overflow-x: clip;
   background: #000;
 }
 
@@ -347,25 +353,28 @@ img { display: block; max-width: 100%; }
   width: 100%;
   max-width: 397px;
   margin: 0 auto;
-  padding: 0 16px 26px 17px;
+  padding: 0 12px 26px 12px;
 }
 
 .dashboard-grid { width: 100%; }
 
 .figma-statusbar {
+  visibility: hidden;
   display: flex;
-  height: 12px;
+  height: 35px;
+  padding: 0 1px;
   align-items: center;
   justify-content: space-between;
   color: #e2ebf4;
   font-family: Inter, sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .figma-statusbar div { display: flex; align-items: center; gap: 18px; }
 .figma-statusbar img:first-child { width: 24px; height: 24px; }
-.figma-statusbar img:last-child { width: 22px; height: 17px; }
+.figma-statusbar img:last-child { width: 24px; height: 17px; }
 
 .overview-header {
   display: flex;
@@ -375,72 +384,129 @@ img { display: block; max-width: 100%; }
   padding: 0 4px;
 }
 
-.overview-header h1,
-.overview-header p,
-.genset-status p,
 .glass-card h2,
 .glass-card p { margin: 0; }
 
-.overview-header h1 {
+.overview-user-copy {
+  display: block;
+}
+
+.overview-user-name {
+  --overview-header-part: user-name;
+  margin: -20px 0 12px 4px;
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 20px;
 }
 
-.overview-header p {
-  margin-top: 0;
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 12px;
-  line-height: 18px;
+.overview-user-greeting {
+  --overview-header-part: user-greeting;
+  margin: 2px 0 0 4px;
+  font-weight: 400;
+  font-style:normal;
+  font-family: "Poppins";
+  font-size: 14px;
+  line-height: normal;
 }
 
-.weather-pill {
+.genset-user-copy {
+  transform: translate(-2px, -3px);
+}
+
+.genset-user-copy h1 {
+  width: 115px;
+  height: 27px;
+  color: #fff;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -1.26px;
+}
+
+.genset-user-copy p {
+  width: 116px;
+  height: 21px;
+  transform: translate(-2px, -2px);
+  color: #fff;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.overview-weather-pill {
+  --overview-header-part: weather-pill;
   position: relative;
+  margin: -14px 0 0 0;
   display: flex;
-  width: 72px;
+  width: 78px;
   height: 40px;
   padding: 15px 35px 10px 10px;
   align-items: center;
   justify-content: flex-start;
   border-radius: 50px;
-  background: rgba(148, 149, 152, 0.2);
+  background: rgba(148, 149, 152, 0.20);
   box-shadow: none;
   color: #fff;
   font-family: Inter, sans-serif;
   font-size: 12px;
 }
 
-.weather-pill span {
+.overview-weather-value {
+  --overview-header-part: weather-value;
   position: static;
+  font-family: Inter;
   display: block;
+  font-size: 12px;
+  font-style: normal;
   width: 27px;
-  height: 15px;
+  height: 16px;
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.84px;
   transform: none;
+  color: #fff;
 }
 
-.weather-pill img {
+.overview-weather-icon {
+  --overview-header-part: weather-icon;
   position: absolute;
-  top: 8px;
-  right: 10px;
+  top: 4px;
+  right: 13px;
   width: 24px;
   height: 24px;
 }
+.genset-content .overview-weather-pill {
+  transform: translateY(14px);
+}
 
-.genset-status {
+.solar-content .overview-weather-pill {
+  transform: translateY(18px);
+}
+.overview-genset-status {
+  --overview-header-part: genset-status;
   display: flex;
   height: auto;
   margin-top: 16px;
+  margin-left: 8px;
+  font-weight: 500;
+  font-size: 10px;
+  font-family: Inter;
   padding: 0 4px;
+  color: #fff;
+  font-style: normal;
+  line-height: normal;
   align-items: center;
   gap: 8px;
   background: transparent;
 }
 
-.genset-status > span {
+.overview-genset-status-dot {
+  --overview-header-part: genset-status-dot;
   position: relative;
   flex: 0 0 12px;
   width: 12px;
@@ -450,18 +516,13 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 8px #39f48a;
 }
 
-.genset-status > span::before,
-.genset-status > span::after {
-  content: none;
-}
-
-.genset-status > span::before {
+.overview-genset-status-dot::before {
   inset: 0;
   background: rgba(76, 237, 133, 0.8);
   filter: blur(4px);
 }
 
-.genset-status > span::after {
+.overview-genset-status-dot::after {
   top: 2.5px;
   left: 2.5px;
   width: 11px;
@@ -469,7 +530,9 @@ img { display: block; max-width: 100%; }
   background: #4ced85;
 }
 
-.genset-status p {
+.overview-genset-status-text {
+  --overview-header-part: genset-status-text;
+  margin: 0;
   font-family: Inter, sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -486,6 +549,57 @@ img { display: block; max-width: 100%; }
 .genset-summary-grid > .genset-rectangle-card {
   width: 172px;
   height: 100px;
+}
+
+.genset-generated-value strong {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.genset-generated-summary-card {
+  transform: translate(-3px, 6px);
+}
+
+.genset-generated-value {
+  transform: translate(6px, -7px);
+}
+
+.genset-generated-title {
+  transform: translate(4px, -8px);
+}
+
+.genset-generated-value b {
+  display: inline-block;
+  transform: translateX(3px);
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.genset-generated-title {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.genset-generated-footer {
+  transform: translate(-8px, 4px);
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .genset-small-stat-card h2,
@@ -522,7 +636,7 @@ img { display: block; max-width: 100%; }
 
 .genset-rectangle-card small + strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 @media (min-width: 900px) {
@@ -547,6 +661,38 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(21px);
 }
 
+.genset-summary-grid > .genset-saving-card,
+.genset-summary-grid > .genset-def-card {
+  width: calc(100% + 12px);
+  height: 104px;
+}
+
+.genset-summary-grid > .genset-saving-card {
+  transform: translate(-6px, 8px);
+}
+
+.genset-summary-grid > .genset-def-card {
+  transform: translate(-6px, 6px);
+}
+
+.genset-saving-card__copy {
+  transform: translate(4px, 1px);
+}
+
+.genset-saving-card__copy h2 small {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.genset-def-card__copy {
+  transform: translateY(4px);
+}
+
 .genset-small-stat-card::before {
   position: absolute;
   inset: 0;
@@ -569,6 +715,7 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+  transform: translateY(-4px);
 }
 
 .genset-rectangle-card::before {
@@ -585,11 +732,26 @@ img { display: block; max-width: 100%; }
   z-index: 1;
 }
 
-.genset-fuel-card {
+.genset-summary-grid > .genset-fuel-card,
+.genset-summary-grid > .genset-load-card {
+  width: calc(100% + 12px);
+}
+
+.genset-summary-grid > .genset-fuel-card {
+  transform: translate(-8px, 3px);
+}
+
+.genset-summary-grid > .genset-load-card {
+  transform: translate(-6px, 3px);
+}
+
+.genset-fuel-card,
+.genset-load-card {
   padding: 19px 14px 20px 17px;
 }
 
-.genset-fuel-card__content {
+.genset-fuel-card__content,
+.genset-load-card__content {
   display: flex;
   width: 100%;
   height: 100%;
@@ -598,23 +760,33 @@ img { display: block; max-width: 100%; }
   gap: 8px;
 }
 
-.genset-fuel-card__copy {
+.genset-fuel-card__copy,
+.genset-load-card__copy {
   min-width: 0;
+  transform: translate(4px, -8px);
 }
 
-.genset-fuel-card h2 {
+.genset-fuel-card h2,
+.genset-load-card h2 {
   font-size: 14px;
   line-height: 18px;
 }
 
-.genset-fuel-card small {
+.genset-fuel-card small,
+.genset-load-card small {
   line-height: 12px;
 }
 
-.genset-fuel-card strong {
+.genset-fuel-card strong,
+.genset-load-card strong {
   margin-top: 19px;
   font-size: 28px;
   line-height: 30px;
+  transform: translateY(16px);
+}
+
+.genset-load-card img {
+  transform: translateY(-8px);
 }
 
 .genset-fuel-gauge {
@@ -691,14 +863,21 @@ img { display: block; max-width: 100%; }
   z-index: 1;
 }
 
+.genset-summary-grid > .genset-starts-card {
+  width: calc(100% + 4px);
+  transform: translate(-3px, 3px);
+}
+
 .genset-running-time-card {
   position: relative;
+  width: calc(100% + 4px);
   overflow: hidden;
   border: 0;
   background: transparent;
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+  transform: translate(-4px, 2px);
 }
 
 .genset-running-time-card-bg {
@@ -748,6 +927,7 @@ img { display: block; max-width: 100%; }
   font-family: Inter, sans-serif;
   opacity: 0.85;
   overflow: visible;
+  transform: translateX(-6px);
 }
 
 .hero-metric strong,
@@ -794,6 +974,7 @@ img { display: block; max-width: 100%; }
   --connector-height: 42px;
   left: 10%;
   top: 40%;
+  transform: translate(-26px, -1px);
 }
 
 .hero-metric::after,
@@ -864,6 +1045,7 @@ img { display: block; max-width: 100%; }
   gap: 0;
   margin-top: 32px;
   padding: 0;
+  transform: translateY(8px);
 }
 
 .glass-card {
@@ -882,13 +1064,14 @@ img { display: block; max-width: 100%; }
   font-weight: 700;
 }
 
-.energy-card {
+.generated-energy-card {
   position: relative;
+  left: -4px;
   display: flex;
   min-width: 0;
-  width: 184px;
-  max-width: 184px;
-  height: 222px;
+  width: 188px;
+  max-width: 188px;
+  height: 226px;
   padding: 15px 24px;
   flex-direction: column;
   align-items: center;
@@ -901,7 +1084,26 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
 }
 
-.energy-card-bg {
+.consumed-energy-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  width: 188px;
+  max-width: 188px;
+  height: 226px;
+  padding: 15px 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  overflow: hidden;
+  border-radius: 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.generated-energy-card-bg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -913,7 +1115,19 @@ img { display: block; max-width: 100%; }
   user-select: none;
 }
 
-.energy-card-content {
+.consumed-energy-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.generated-energy-card-content {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -925,7 +1139,19 @@ img { display: block; max-width: 100%; }
   gap: 10px;
 }
 
-.energy-card h2 {
+.consumed-energy-card-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.generated-energy-card-title {
   width: 100%;
   min-height: 18px;
   min-width: 0;
@@ -935,53 +1161,122 @@ img { display: block; max-width: 100%; }
   line-height: normal;
 }
 
-.overview-content .energy-card h2 {
+.consumed-energy-card-title {
+  width: 100%;
+  min-height: 18px;
+  min-width: 0;
+  align-self: stretch;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: normal;
+}
+
+.overview-content .generated-energy-card-title {
   width: 124px;
   height: 18px;
   min-height: 18px;
+  color: #fff;
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
   align-self: flex-start;
   font-size: 14px;
   font-weight: 700;
   line-height: normal;
-  transform: translateX(8px);
+  transform: translateX(7px);
+
 }
 
-.overview-content .energy-value {
-  transform: translateX(6px);
+.overview-content .consumed-energy-card-title {
+  width: 124px;
+  height: 18px;
+  min-height: 18px;
+  color: #fff;
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  transform: translateX(7px);
 }
 
-.energy-value {
+.overview-content .generated-energy-value {
+  transform: translateX(-7px);
+}
+
+.overview-content .consumed-energy-value {
+  transform: translateX(-2px);
+}
+
+.generated-energy-value {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 12px;
   width: 124px;
   height: 48px;
   margin-top: 0;
   white-space: nowrap;
 }
 
-.energy-value strong {
+.consumed-energy-value {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 124px;
+  height: 48px;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.generated-energy-value strong {
   font-family: Inter, sans-serif;
   font-size: 40px;
   font-weight: 600;
-  line-height: 48px;
+  line-height: normal;
 }
 
-.energy-value span {
+.consumed-energy-value strong {
+  font-family: Inter, sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.generated-energy-value span {
   font-family: Inter, sans-serif;
   font-size: 20px;
   font-weight: 600;
+  font-style: normal;
+  color: #fff;
+  line-height: normal;
 }
 
-.energy-value-arrow {
+.consumed-energy-value span {
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  color: #fff;
+  line-height: normal;
+}
+
+.generated-energy-value-arrow {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
   margin-left: -1px;
-  transform: translateY(3px);
+  transform: translate(-10px);
 }
 
-.bar-chart {
+.consumed-energy-value-arrow {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin-left: -1px;
+  transform: translate(-10px);
+}
+
+.generated-bar-chart {
   display: flex;
   width: 115px;
   height: 64px;
@@ -991,13 +1286,29 @@ img { display: block; max-width: 100%; }
   gap: 4px;
 }
 
-.bar-chart i {
+.consumed-bar-chart {
+  display: flex;
+  width: 115px;
+  height: 64px;
+  margin: 0 auto;
+  align-items: end;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.generated-bar-chart i {
   flex: 0 0 6.6667px;
   min-height: 8px;
   border-radius: 2px 2px 0 0;
 }
 
-.energy-chart-region {
+.consumed-bar-chart i {
+  flex: 0 0 6.6667px;
+  min-height: 8px;
+  border-radius: 2px 2px 0 0;
+}
+
+.generated-energy-chart-region {
   position: static;
   display: flex;
   width: 124px;
@@ -1010,9 +1321,37 @@ img { display: block; max-width: 100%; }
   margin-top: 13px; /* value -> bars gap = 10px flex gap + 13px = 23px (Figma) */
 }
 
-.energy-chart-region > p {
+.consumed-energy-chart-region {
+  position: static;
+  display: flex;
+  width: 124px;
+  min-width: 124px;
+  height: 90px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 13px; /* value -> bars gap = 10px flex gap + 13px = 23px (Figma) */
+}
+
+.generated-energy-card-footer {
   margin: 0;
+  width: 115px;
+  height: 18px;
   font-style: normal;
+  white-space: nowrap;
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  font-family: "Plus Jakarta Sans";
+  transform: translate(2px, 2px);
+}
+
+.consumed-energy-card-footer {
+  margin: 0;
+  /* font-style: normal;
   padding-top: 0;
   white-space: nowrap;
   text-align: left;
@@ -1021,25 +1360,40 @@ img { display: block; max-width: 100%; }
   font-weight: 400;
   line-height: normal;
   font-family: "Plus Jakarta Sans";
-  padding-left: 5px;
+  padding-left: 5px; */
+    width: 115px;
+  height: 18px;
+  font-style: normal;
+  white-space: nowrap;
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  font-family: "Plus Jakarta Sans";
+  transform: translate(2px, 2px);
 }
 
 .economics-card,
 .performance-card,
 .co2-card,
 .maintenance-card {
-  margin-top: 5px;
+  margin-top: 6px;
   padding: 17px;
 }
 
 .economics-card {
   position: relative;
   height: 142px;
+  /* -2px offsets the SVG shadow-bleed (10px below the energy cards + 2px above
+     this card) so the VISIBLE gap is 10px, matching Figma */
   margin-top: -2px;
   padding: 0;
   border: none;
   background: transparent;
   box-shadow: none;
+  overflow: visible;
+  transform: translateY(8px);
 }
 
 .economics-card::after {
@@ -1048,10 +1402,11 @@ img { display: block; max-width: 100%; }
 
 .economics-card-bg {
   position: absolute;
-  inset: 0;
+  top: 2px;
+  left: 0;
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 4px);
   max-width: none;
   object-fit: fill;
   pointer-events: none;
@@ -1066,8 +1421,8 @@ img { display: block; max-width: 100%; }
 
 .economics-card h2 {
   position: absolute;
-  top: 20px;
-  left: 25px;
+  top: 25px;
+  left: 26px;
   width: 126px;
   height: 18px;
   margin: 0;
@@ -1080,8 +1435,8 @@ img { display: block; max-width: 100%; }
 
 .economics-values {
   position: absolute;
-  top: 53px;
-  left: 25px;
+  top: 58px;
+  left: 26px;
   display: flex;
   width: 302px;
   box-sizing: border-box;
@@ -1171,9 +1526,14 @@ img { display: block; max-width: 100%; }
 }
 
 .genset-energy-title {
-  width: 244px;
-  height: 30px;
-  margin: 21px 0 20px 5px;
+  /* sticky pinned title on scroll (same behavior as Power Output overview) */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 21px 0 12px 1px;
+  background: transparent;
   color: #f2f2f2;
   font-family: Poppins, sans-serif;
   font-size: 20px;
@@ -1184,11 +1544,11 @@ img { display: block; max-width: 100%; }
 .genset-energy-card {
   position: relative;
   display: flex;
-  width: calc(100% + 4px);
-  min-height: 641px;
+  width: calc(100% + 6px);
+  min-height: 0;
   margin-right: -2px;
   margin-left: -2px;
-  padding: 28px 20px 26px;
+  padding: 20px 28px;
   flex-direction: column;
   align-items: center;
   gap: 12px;
@@ -1198,6 +1558,12 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+.genset-energy-content > .genset-energy-card {
+  width: calc(100% + 16px);
+  margin-right: -8px;
+  margin-left: -8px;
 }
 
 .genset-energy-card::after {
@@ -1511,7 +1877,7 @@ img { display: block; max-width: 100%; }
 .solar-frequency-card {
   position: relative;
   display: flex;
-  width: 100%;
+  width: calc(100% + 4px);
   height: 95px;
   min-height: 95px;
   margin-top: 0;
@@ -1527,6 +1893,7 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+  transform: translateY(-4px);
 }
 
 .solar-frequency-card::before {
@@ -1612,6 +1979,7 @@ img { display: block; max-width: 100%; }
 .solar-power-factor-card {
   position: relative;
   display: flex;
+  width: calc(100% + 4px);
   height: 95px;
   min-width: 0;
   padding: 19px 15px 20px 16.5px;
@@ -1621,6 +1989,7 @@ img { display: block; max-width: 100%; }
   border: 0;
   background: transparent;
   box-shadow: none;
+  transform: translate(-2px, -4px);
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
 }
@@ -1709,6 +2078,7 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+  transform: translateY(-7px);
 }
 
 .solar-average-voltage-card::before {
@@ -1816,7 +2186,9 @@ img { display: block; max-width: 100%; }
 
 .solar-current-card {
   position: relative;
+  width: calc(100% + 4px);
   height: 100px;
+  justify-self: end;
   padding: 15px 16.5px 22px 15px;
   align-items: center;
   justify-content: space-between;
@@ -1826,6 +2198,7 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+  transform: translate(3.5px, -10px);
 }
 
 .solar-current-card::before {
@@ -1844,7 +2217,9 @@ img { display: block; max-width: 100%; }
 
 .solar-module-temp-card {
   position: relative;
+  width: calc(100% + 4px);
   height: 100px;
+  justify-self: start;
   padding: 15px 14px 13px 14.5px;
   align-items: center;
   justify-content: space-between;
@@ -1853,6 +2228,7 @@ img { display: block; max-width: 100%; }
   background: transparent;
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
+  transform: translate(-3.5px, -10px);
   backdrop-filter: blur(21px);
 }
 
@@ -1974,6 +2350,7 @@ img { display: block; max-width: 100%; }
   border: 0;
   background: transparent;
   box-shadow: none;
+  transform: translateY(-13px);
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
 }
@@ -2157,7 +2534,7 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   display: flex;
   height: 116px;
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 13px 20px;
   flex-direction: column;
   align-items: flex-start;
@@ -2241,7 +2618,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   display: flex;
   height: 280px;
-  margin-top: 10px;
+  margin-top: 6px;
   padding: 20px;
   flex-direction: column;
   overflow: hidden;
@@ -2458,7 +2835,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   display: flex;
   height: 119px;
-  margin-top: 10px;
+  margin-top: 6px;
   padding: 13px 20px 13px 22px;
   flex-direction: column;
   justify-content: center;
@@ -2565,7 +2942,7 @@ img { display: block; max-width: 100%; }
 
 .genset-engine-metrics {
   display: grid;
-  margin-top: 10px;
+  margin-top: 6px;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-rows: 100px 100px auto;
   gap: 8px;
@@ -2673,11 +3050,13 @@ img { display: block; max-width: 100%; }
 .genset-coolant-card {
   position: relative;
   display: flex;
+  width: calc(100% + 8px);
   height: 100px;
   padding: 20.5px 12px 23.5px;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
+  transform: translateX(-6px);
 }
 
 .genset-frequency-card {
@@ -2703,6 +3082,7 @@ img { display: block; max-width: 100%; }
   height: 100%;
   max-width: none;
   object-fit: fill;
+  transform: none;
   pointer-events: none;
   user-select: none;
 }
@@ -2716,6 +3096,7 @@ img { display: block; max-width: 100%; }
   height: 100%;
   max-width: none;
   object-fit: fill;
+  transform: none;
   pointer-events: none;
   user-select: none;
 }
@@ -2723,11 +3104,13 @@ img { display: block; max-width: 100%; }
 .genset-frequency-card > :not(.genset-frequency-card-bg) {
   position: relative;
   z-index: 1;
+  transform: translateX(6px);
 }
 
 .genset-coolant-card > :not(.genset-coolant-card-bg) {
   position: relative;
   z-index: 1;
+  transform: translateX(6px);
 }
 
 .genset-frequency-card > div,
@@ -2795,6 +3178,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   overflow: hidden;
   display: flex;
+  transform: translateY(2px);
   width: 100%;
   max-width: 357px;
   height: 137px;
@@ -2953,14 +3337,20 @@ img { display: block; max-width: 100%; }
   width: 100%;
 }
 
-.genset-maintenance-dates {
+.genset-maintenance-dates.maintenance-dates {
   width: 100%;
+  transform: translateX(0);
+}
+
+.genset-maintenance-dates .metric:first-child {
+  transform: none;
 }
 
 .genset-mains-voltage-card {
   position: relative;
   overflow: hidden;
   display: flex;
+  transform: translateY(-4px);
   width: 357px;
   max-width: 100%;
   height: 129px;
@@ -3034,6 +3424,7 @@ img { display: block; max-width: 100%; }
   position: relative;
   overflow: hidden;
   display: flex;
+  transform: translateY(-10px);
   width: 357px;
   max-width: 100%;
   height: 344px;
@@ -3134,6 +3525,7 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   gap: 16px;
+  transform: translateY(-16px);
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -3253,16 +3645,20 @@ img { display: block; max-width: 100%; }
 }
 
 .performance-card {
+  position: relative;
+  left: -2px;
   display: flex;
-  width: 100%;
-  height: 175px;
-  margin-top: -2px;
-  padding: 20px;
+  width: calc(100% + 4px);
+  height: 179px;
+  /* offset economics' 10px bottom bleed + this card's 1px top bleed → 10px visible gap */
+  margin-top: -1px;
+  padding: 20px 20px 20px 26px;
   flex-direction: column;
   justify-content: flex-start;
   border: none;
   background: transparent;
   box-shadow: none;
+  transform: translateY(10px);
 }
 
 .performance-card::after {
@@ -3297,6 +3693,7 @@ img { display: block; max-width: 100%; }
   font-weight: 700;
   line-height: normal;
   opacity: 0.85;
+  transform: translate(5px, -2px);
 }
 
 .performance-body {
@@ -3318,6 +3715,7 @@ img { display: block; max-width: 100%; }
   margin: 0;
   padding: 0;
   list-style: none;
+  transform: translate(5px, -2px);
 }
 
 .performance-list li {
@@ -3327,6 +3725,18 @@ img { display: block; max-width: 100%; }
   grid-template-columns: 5px 70px minmax(0, 1fr);
   align-items: center;
   gap: 2px;
+}
+
+.performance-list li:nth-child(2) {
+  transform: translate(-5px, 2px);
+}
+
+.performance-list li:nth-child(1) {
+  transform: translateX(-5px);
+}
+
+.performance-list li:nth-child(3) {
+  transform: translate(-5px, 2px);
 }
 
 .performance-list i {
@@ -3346,6 +3756,10 @@ img { display: block; max-width: 100%; }
   white-space: nowrap;
 }
 
+.performance-list li:nth-child(2) > span {
+  transform: translateX(2px);
+}
+
 .performance-list strong {
   color: #fff;
   font-family: Inter;
@@ -3355,6 +3769,7 @@ img { display: block; max-width: 100%; }
   line-height: 32px;
   white-space: nowrap;
   font-style: normal;
+  transform: translate(-10px, 2px);
 }
 
 .performance-list strong small {
@@ -3368,7 +3783,7 @@ img { display: block; max-width: 100%; }
   height: 101px;
   flex: 0 0 101px;
   align-self: center;
-  transform: translateY(-6px);
+  transform: translate(-5px, -4px);
 }
 
 .donut-chart img {
@@ -3377,11 +3792,17 @@ img { display: block; max-width: 100%; }
 }
 
 .co2-card {
-  height: 142px;
-  padding: 16px 19px;
+  position: relative;
+  left: -2px;
+  width: 100%;
+  height: 146px;
+  /* performance has only ~1px bottom bleed + this card's 2px top bleed → +7px for 10px visible gap */
+  margin-top: 7px;
+  padding: 16px 19px 16px 26px;
   border: none;
   background: transparent;
   box-shadow: none;
+  transform: translateY(14px);
 }
 
 .co2-card::after {
@@ -3392,6 +3813,7 @@ img { display: block; max-width: 100%; }
   width: 296px;
   max-width: 100%;
   z-index: 1;
+  transform: translate(4px, -5px);
 }
 
 .co2-card h2 {
@@ -3418,6 +3840,11 @@ img { display: block; max-width: 100%; }
   line-height: 38px;
 }
 
+.co2-value-unit {
+  display: inline-block;
+  transform: translateX(10px);
+}
+
 .co2-card p {
   display: flex;
   width: 296px;
@@ -3442,20 +3869,21 @@ img { display: block; max-width: 100%; }
 
 .co2-card img {
   position: absolute;
-  top: 36px;
-  right: 19px;
+  top: 42px;
+  right: 28px;
   width: 64px;
   height: 60px;
   z-index: 1;
 }
 
 .co2-card > .co2-card-bg {
-  inset: 0;
-  top: 0;
+  inset: 0 auto 0 4px;
+  top: -2px;
   right: auto;
+  bottom: auto;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 4px);
+  height: calc(100% + 2px);
   max-width: none;
   object-fit: fill;
   pointer-events: none;
@@ -3464,9 +3892,14 @@ img { display: block; max-width: 100%; }
 }
 
 .maintenance-card {
+  position: relative;
+  left: -8px;
   display: flex;
-  height: 215px;
-  padding: 15px 15px 15px 22px;
+  width: calc(100% + 16px);
+  height: 219px;
+  /* co2 has 10px bottom bleed + this card's ~1px top bleed → -1px for 10px visible gap */
+  margin-top: -1px;
+  padding: 15px 15px 15px 26px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -3474,6 +3907,7 @@ img { display: block; max-width: 100%; }
   border: none;
   background: transparent;
   box-shadow: none;
+  transform: translateY(10px);
 }
 
 .maintenance-card::after {
@@ -3501,21 +3935,35 @@ img { display: block; max-width: 100%; }
 .maintenance-card h2 {
   width: 283px;
   height: 18px;
-  line-height: 18px;
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
   opacity: 0.85;
+  transform: none;
+}
+
+.overview-content .maintenance-card h2 {
+  position: relative;
+  top: -2px;
+  left: 16px;
 }
 
 .maintenance-line {
   position: relative;
   display: flex;
-  width: 100%;
-  height: 6.724px;
+  width: 316px;
+  max-width: 100%;
+  height: 6.72414px;
+  align-self: center;
   gap: 6.724px;
   margin: 0;
 }
 
 .maintenance-line > span {
-  height: 6.724px;
+  height: 6.72414px;
   min-width: 0;
   flex: 1 0 0;
   border-radius: 5px;
@@ -3529,7 +3977,7 @@ img { display: block; max-width: 100%; }
 .maintenance-marker {
   position: absolute;
   top: 50%;
-  left: 61%;
+  left: 65.6%;
   width: 17px;
   height: 17px;
   transform: translate(-50%, -50%);
@@ -3555,11 +4003,16 @@ img { display: block; max-width: 100%; }
   grid-template-columns: 158px minmax(0, 1fr);
   column-gap: 37px;
   margin: 0;
+  transform: translateX(16px);
 }
 
 .maintenance-dates .metric {
   align-items: flex-start;
   gap: 12px;
+}
+
+.overview-content .maintenance-dates .metric:first-child {
+  transform: none;
 }
 
 .maintenance-dates .metric span {
@@ -3570,18 +4023,44 @@ img { display: block; max-width: 100%; }
   line-height: 24px;
 }
 
+.maintenance-dates .metric:first-child > span,
+.maintenance-dates .metric:last-child > span {
+  width: 70px;
+  height: 24px;
+  color: #98a2b3;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
 .maintenance-dates .metric strong {
+  width: 106px;
+  height: 32px;
   color: #fff;
+  text-align: center;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 24px;
+  font-style: normal;
   font-weight: 500;
   line-height: 32px;
 }
 
+.maintenance-dates .metric:last-child strong {
+  color: #fff;
+}
+
 .maintenance-dates .metric small {
+  display: flex;
+  width: 81px;
+  height: 20px;
+  flex-direction: column;
+  justify-content: center;
   color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 12px;
+  font-style: normal;
   font-weight: 500;
   line-height: 28px;
   opacity: 0.9;
@@ -3595,9 +4074,7 @@ img { display: block; max-width: 100%; }
   margin: 0 auto;
   padding: 0 15px calc(40px + env(safe-area-inset-bottom));
   color: #fff;
-  background:
-    radial-gradient(circle at 48% 4%, rgba(45, 140, 255, 0.16), transparent 28%),
-    linear-gradient(156deg, #000 -19.24%, #010319 84.68%, #020515 84.69%);
+  background: linear-gradient(156deg, #000 -19.24%, #010319 84.68%, #020515 84.69%);
 }
 
 .solar-header {
@@ -3616,24 +4093,58 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-header h1 {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 18px;
+  color: #fff;
+  font-family: Poppins, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -1.26px;
 }
 
 .solar-header p {
   margin-top: 2px;
+  color: #fff;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.solar-header .weather-pill {
+  position: relative;
+  display: flex;
+  width: 72px;
+  height: 40px;
+  padding: 15px 35px 10px 10px;
+  align-items: center;
+  border-radius: 50px;
+  background: rgba(148, 149, 152, 0.20);
+  color: #fff;
+  font-family: Inter, sans-serif;
   font-size: 12px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: normal;
+  letter-spacing: -0.84px;
+}
+
+.solar-header .weather-pill img {
+  position: absolute;
+  top: 4px;
+  right: 13px;
+  width: 24px;
+  height: 24px;
 }
 
 .solar-running {
-  height: 18px;
+  height: 21px;
   color: #fff;
-  font-size: 10px;
-  font-weight: 500;
+  gap: 12px;
+  font-family: Poppins, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .solar-running span {
@@ -3742,6 +4253,7 @@ img { display: block; max-width: 100%; }
 .solar-generated-card > div:first-child {
   display: flex;
   flex: 0 0 149px;
+  height: 98px;
   flex-direction: column;
   align-items: flex-start;
   gap: 7px;
@@ -3756,11 +4268,39 @@ img { display: block; max-width: 100%; }
 }
 
 .solar-card-label {
-  color: rgba(255, 255, 255, 0.92);
+  color: #fff;
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.solar-generated-card > div:first-child > div strong {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.solar-generated-card > div:first-child > div span {
+  color: #fff;
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.solar-generated-card > div:first-child > p:last-child {
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
   font-weight: 400;
-  line-height: 18px;
+  line-height: normal;
 }
 
 .mini-bar-chart {
@@ -3794,9 +4334,9 @@ img { display: block; max-width: 100%; }
   height: 137px;
   padding: 20px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
+  gap: 14px;
   align-self: stretch;
   border: 0;
   background: transparent;
@@ -3823,8 +4363,9 @@ img { display: block; max-width: 100%; }
   width: 100%;
   grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr) 72px;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 0;
+  transform: translateY(-4px);
 }
 
 .solar-grid-divider {
@@ -4095,6 +4636,7 @@ img { display: block; max-width: 100%; }
   padding: 16px 19px;
   border: 0;
   background: transparent;
+  transform: translateY(0);
 }
 
 .solar-co2-card.co2-card h2 {
@@ -4137,15 +4679,20 @@ img { display: block; max-width: 100%; }
 }
 
 .power-content {
-  width: min(90%, 393px);
+  width: min(100%, 393px);
   min-height: 100dvh;
   margin: 0 auto;
-  padding: 0 2px 16px;
+  padding: 0 13px 16px 19px;
 }
 
 .power-title {
-  width: 244px;
-  margin: 21px 0 28px 4px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 21px 0 12px 4px;
+  background: transparent;
   color: #f2f2f2;
   font-family: Poppins, sans-serif;
   font-size: 20px;
@@ -4172,6 +4719,7 @@ img { display: block; max-width: 100%; }
 .alert-page-header h1 {
   width: 244px;
   margin: 0;
+  transform: translate(-2px, -8px);
   color: #f2f2f2;
   font-family: Poppins, sans-serif;
   font-size: 20px;
@@ -4179,10 +4727,14 @@ img { display: block; max-width: 100%; }
   line-height: 30px;
 }
 
+.alert-page-header .period-select-wrap {
+  transform: translate(-3px, -7px);
+}
+
 .alert-list {
   display: flex;
   width: 100%;
-  margin-top: 26px;
+  margin-top: 22px;
   flex-direction: column;
   gap: 8px;
 }
@@ -4191,8 +4743,9 @@ img { display: block; max-width: 100%; }
   position: relative;
   overflow: hidden;
   display: flex;
-  width: 100%;
-  height: 106px;
+  width: calc(100% + 8px);
+  height: 108px;
+  margin-left: -4px;
   padding: 20px 15px;
   flex-direction: column;
   justify-content: center;
@@ -4225,6 +4778,9 @@ img { display: block; max-width: 100%; }
 }
 
 .alert-card__heading {
+  position: relative;
+  top: 4px;
+  transform: translate(4px, -5px);
   display: flex;
   width: 100%;
   height: 20px;
@@ -4249,6 +4805,7 @@ img { display: block; max-width: 100%; }
 
 .alert-card__heading time {
   margin-left: auto;
+  transform: translate(-2px, 0);
   color: rgba(255, 255, 255, 0.85);
   font-family: Inter, sans-serif;
   font-size: 11px;
@@ -4258,9 +4815,10 @@ img { display: block; max-width: 100%; }
 }
 
 .alert-card p {
-  width: 281px;
+  width: 277px;
   max-width: calc(100% - 25px);
   margin: 0 0 0 25px;
+  transform: translate(4px, 0);
   color: rgba(255, 255, 255, 0.85);
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 14px;
@@ -4285,6 +4843,16 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
   -webkit-backdrop-filter: blur(21px);
   backdrop-filter: blur(21px);
+}
+
+/* Guarantee the inter-card gap applies (reliable CSS, not a Tailwind arbitrary
+   class). ~8px margin + ~1px frame bleed each side = ~10px visible gap,
+   matching the Overview page. Mobile only; the desktop grid handles spacing. */
+@media (max-width: 899px) {
+  .power-output-card--trends,
+  .power-output-card--peak {
+    margin-top: 6px;
+  }
 }
 
 .power-output-card::before {
@@ -4362,9 +4930,9 @@ img { display: block; max-width: 100%; }
 
 .period-select span {
   font-family: Inter, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  line-height: 16px;
+  line-height: normal;
 }
 
 .period-select img { width: 11px; height: 5px; }
@@ -4455,6 +5023,15 @@ img { display: block; max-width: 100%; }
   font-size: 9px;
   font-weight: 500;
   line-height: 30px;
+}
+
+.power-output-chart--bars .power-axis-label--y {
+  font-size: 8px;
+}
+
+.power-output-chart--bars .power-axis-label--x {
+  fill: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
 }
 
 .power-series-control {
@@ -4552,16 +5129,13 @@ img { display: block; max-width: 100%; }
   left: 0;
   width: 100%;
   max-width: none;
-  height: calc(85px + env(safe-area-inset-bottom));
+  height: calc(95px + env(safe-area-inset-bottom));
   margin: 0;
-  padding: 12px 25px calc(17px + env(safe-area-inset-bottom));
-  border: 2px solid transparent;
+  padding: 16px 25px calc(17px + env(safe-area-inset-bottom));
+  border: 2px solid var(--cardlin, #101828);
   border-bottom: 0;
   border-radius: 16px 16px 0 0;
-  background:
-    linear-gradient(87deg, rgba(255, 255, 255, 0.08) -8.23%, rgba(255, 255, 255, 0.04) 103.92%) padding-box,
-    linear-gradient(rgba(1, 4, 16, 0.92), rgba(1, 4, 16, 0.92)) padding-box,
-    linear-gradient(76deg, #101828 0%, #475467 100%) border-box;
+  background: linear-gradient(87deg, rgba(255, 255, 255, 0.08) -8.23%, rgba(255, 255, 255, 0.04) 103.92%);
   box-shadow: none;
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
@@ -4588,15 +5162,16 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: center;
+  transform: translateY(8px);
 }
 
 .nav-active-indicator {
   position: absolute;
   z-index: 1;
-  top: -8px;
+  top: -5px;
   left: calc(50% - 155px);
-  width: 36px;
-  height: 4px;
+  width: 37px;
+  height: 5px;
   border-radius: 100px;
   background: #fff;
   transition: left 180ms ease;
@@ -4753,6 +5328,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   place-items: center;
   background: transparent;
+  transform: translateY(-4px);
 }
 
 .nav-home__glow {
@@ -4761,20 +5337,14 @@ img { display: block; max-width: 100%; }
   width: 56px;
   height: 56px;
   place-items: center;
-  border: 1px solid rgba(111, 175, 255, 0.7);
+  border: none;
   border-radius: 50%;
-  background: linear-gradient(45deg, rgba(55, 147, 255, 0.22) 0%, rgba(55, 147, 255, 0.1) 100%);
-  box-shadow: 0 0 14px rgba(55, 147, 255, 0.24), inset 0 0 18px rgba(55, 147, 255, 0.1);
+  background: linear-gradient(45deg, rgba(7, 107, 225, 0.2) 0%, rgba(55, 147, 255, 0.2) 100%);
+  box-shadow: none;
 }
 
 .nav-home__glow::before {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(55, 147, 255, 0.22) 0%, rgba(55, 147, 255, 0) 70%);
-  filter: blur(7px);
+  content: none;
 }
 
 .nav-home__glow img {
@@ -4826,8 +5396,8 @@ img { display: block; max-width: 100%; }
 .quick-menu__item {
   position: absolute;
   display: flex;
-  width: 60px;
-  height: 60px;
+  width: 61px;
+  height: 61px;
   padding: 7px 4px 5px;
   flex-direction: column;
   align-items: center;
@@ -4835,9 +5405,9 @@ img { display: block; max-width: 100%; }
   gap: 4px;
   border: 0;
   border-radius: 50%;
-  /* Figma: fill = --card-fill (linear gradient), 1px border = --card-border
-     (radial gradient). Built in CSS instead of the ellipse-frame.svg so it
-     scales cleanly. The gradient border is drawn by the ::before ring below. */
+  /* Figma glass: --card-fill frosted fill; the shiny gradient border (bright at
+     top-left + bottom-right) is drawn by the ::before ring below.
+     Backdrop-filter keeps the frosted-glass blur. */
   background: var(--card-fill);
   color: #fff;
   font-family: Inter, sans-serif;
@@ -4847,14 +5417,18 @@ img { display: block; max-width: 100%; }
   box-shadow: none;
 }
 
-/* 1px gradient border ring (mask-out technique — a plain border can't be a gradient) */
+/* Shiny gradient border: bright at top-left + bottom-right, faint elsewhere
+   (matches Figma's diagonal glass shine). Drawn as a masked-out ring. */
 .quick-menu__item::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  padding: 1px;
-  background: var(--card-border);
+  padding: 1.5px;
+  background:
+    radial-gradient(65% 65% at 16% 16%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 55%),
+    radial-gradient(65% 65% at 84% 84%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(255, 255, 255, 0.08);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -4881,8 +5455,9 @@ img { display: block; max-width: 100%; }
   position: relative;
   z-index: 1;
   font-size: 10px;
-  font-weight: 400;
-  line-height: 12px;
+  font-weight: 300;
+  line-height: normal;
+  text-align: center;
 }
 
 .quick-menu__item--overview {
@@ -4905,7 +5480,7 @@ img { display: block; max-width: 100%; }
   width: min(100%, 393px);
   min-height: 100dvh;
   margin: 0 auto;
-  padding: 0 16px calc(120px + env(safe-area-inset-bottom));
+  padding: 0 9px calc(120px + env(safe-area-inset-bottom)) 15px;
 }
 
 .scoped-empty-screen {
@@ -4928,10 +5503,14 @@ img { display: block; max-width: 100%; }
 
 .settings-list {
   display: flex;
-  width: 100%;
+  width: 369px;
+  max-width: 100%;
   margin-top: 28px;
+  padding: 2px 4px 5px;
   flex-direction: column;
+  align-items: center;
   gap: 13px;
+  border-radius: 20px;
 }
 
 .settings-card {
@@ -4941,9 +5520,10 @@ img { display: block; max-width: 100%; }
   display: flex;
   width: 100%;
   height: 68px;
-  padding: 0 20px;
+  padding: 25px 5px;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   border: 0;
   border-radius: 20px;
   background: transparent;
@@ -4959,12 +5539,7 @@ img { display: block; max-width: 100%; }
 }
 
 .settings-card::before {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: url("/assets/settings-card-frame.svg") center / 100% 100% no-repeat;
-  content: "";
-  pointer-events: none;
+  content: none;
 }
 
 .settings-card > * {
@@ -4973,10 +5548,44 @@ img { display: block; max-width: 100%; }
 }
 
 .settings-card img {
+  position: absolute;
+  top: 22px;
+  right: 20px;
   display: block;
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
+}
+
+.settings-card span {
+  width: 331px;
+  max-width: calc(100% - 34px);
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  opacity: 0.85;
+}
+
+.settings-card--danger {
+  color: #ff6b4a;
+}
+
+.settings-card--danger span {
+  color: #fff;
+}
+
+.settings-card__logout-icon {
+  position: absolute;
+  top: 22px;
+  right: 23px;
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  color: #ff6b4a;
 }
 
 .settings-card:focus-visible {
@@ -5028,6 +5637,131 @@ img { display: block; max-width: 100%; }
   display: block;
   width: 35px;
   height: 35px;
+}
+
+.app-settings-fields {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.app-settings-field {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-settings-label {
+  margin: 0;
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  opacity: 0.85;
+}
+
+.app-settings-label--notification {
+  transform: translate(2px, -8px);
+}
+
+.app-settings-control {
+  position: relative;
+  display: flex;
+  isolation: isolate;
+  width: 100%;
+  height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 25px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 20px;
+  background: var(--card-fill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  color: rgba(255, 255, 255, 0.85);
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+}
+
+.app-settings-control::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--card-border, #fff);
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.app-settings-control > * {
+  position: relative;
+  z-index: 1;
+}
+
+.app-settings-notification-control {
+  width: calc(100% + 4px);
+  appearance: none;
+  text-align: left;
+  transform: translate(2px, -2px);
+}
+
+.app-settings-toggle {
+  display: flex;
+  width: 44px;
+  height: 26px;
+  flex: 0 0 44px;
+  align-items: center;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background 160ms ease;
+}
+
+.app-settings-toggle > span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 160ms ease;
+}
+
+.app-settings-toggle--on {
+  background: #21a17d;
+}
+
+.app-settings-toggle--on > span {
+  transform: translateX(16px);
+}
+
+.app-settings-unit-control {
+  width: calc(100% + 4px);
+  padding: 20px 25px;
+  transform: translate(2px, 4px);
+}
+
+.app-settings-unit-control svg {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;
 }
 
 .report-fields {
@@ -5287,13 +6021,22 @@ img { display: block; max-width: 100%; }
   overscroll-behavior-y: contain;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
-  scrollbar-color: rgba(255, 255, 255, 0.52) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
-.report-picker__options::-webkit-scrollbar { width: 4px; }
-.report-picker__options::-webkit-scrollbar-track { background: transparent; }
-.report-picker__options::-webkit-scrollbar-thumb { border-radius: 10px; background: rgba(255, 255, 255, 0.52); }
+.report-picker__options::-webkit-scrollbar { display: none; }
+
+.report-picker__scroll-thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 7px;
+  height: 157px;
+  border-radius: 100px;
+  background: rgba(217, 217, 217, 0.5);
+  pointer-events: none;
+  will-change: transform;
+}
 
 .report-picker__options label {
   display: flex;
@@ -5349,6 +6092,7 @@ img { display: block; max-width: 100%; }
   background: #fff;
 }
 
+.report-picker__options input:disabled,
 .report-picker__options input:disabled + span { opacity: 0.42; }
 
 .report-picker--time .report-picker__options {
@@ -5375,10 +6119,18 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 374px) {
-  .energy-card { padding-right: 18px; padding-left: 18px; }
-  .energy-value { gap: 5px; }
-  .energy-value strong { font-size: 36px; }
-  .energy-value span { font-size: 18px; }
+  .generated-energy-card { padding-right: 18px; padding-left: 18px; }
+
+  .consumed-energy-card { padding-right: 18px; padding-left: 18px; }
+  .generated-energy-value { gap: 5px; }
+
+  .consumed-energy-value { gap: 5px; }
+  .generated-energy-value strong { font-size: 36px; }
+
+  .consumed-energy-value strong { font-size: 36px; }
+  .generated-energy-value span { font-size: 18px; }
+
+  .consumed-energy-value span { font-size: 18px; }
   .performance-body { gap: 24px; }
 
   .power-content {
@@ -5564,7 +6316,7 @@ img { display: block; max-width: 100%; }
 
 .power-output-card--trends {
   height: 386px;
-  margin-top: 10px;
+  margin-top: -6px;
   gap: 16px;
   padding: 20px;
   justify-content: center;
@@ -5646,7 +6398,7 @@ img { display: block; max-width: 100%; }
 
 .power-output-card--peak {
   height: 255px;
-  margin-top: 10px;
+  margin-top: 2px;
   padding: 20px;
   gap: 16px;
   justify-content: center;
@@ -5808,7 +6560,10 @@ img { display: block; max-width: 100%; }
   }
 
   .power-title {
+    position: static;
     margin: 3px 0 0 4px;
+    padding: 0;
+    background: none;
   }
 
   .power-output-card,
@@ -5910,8 +6665,9 @@ img { display: block; max-width: 100%; }
 }
 
 .power-output-card--energy .power-card-header h2 {
-  width: 206px;
-  flex: 0 0 206px;
+  width: auto;
+  flex: 0 1 auto;
+  min-width: 0;
   font-size: 13px;
   line-height: normal;
 }
@@ -6166,7 +6922,10 @@ img { display: block; max-width: 100%; }
   }
 
   .genset-energy-title {
+    position: static;
     margin: 3px 0 0 4px;
+    padding: 0;
+    background: none;
   }
 
   .genset-energy-card {
@@ -6344,9 +7103,18 @@ img { display: block; max-width: 100%; }
     align-content: start;
   }
 
-  .overview-content > .figma-statusbar,
-  .overview-content > .overview-header,
-  .overview-content > .genset-status {
+  .overview-content > .figma-statusbar {
+    --overview-grid-item: statusbar;
+    grid-column: 1 / -1;
+  }
+
+  .overview-content > .overview-header {
+    --overview-grid-item: header;
+    grid-column: 1 / -1;
+  }
+
+  .overview-content > .overview-genset-status {
+    --overview-grid-item: genset-status;
     grid-column: 1 / -1;
   }
 
@@ -6374,7 +7142,12 @@ img { display: block; max-width: 100%; }
     padding: 0;
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    height: clamp(190px, 16vw, 224px);
+  }
+
+
+  .overview-content .consumed-energy-card {
     height: clamp(190px, 16vw, 224px);
   }
 
@@ -6711,8 +7484,13 @@ img { display: block; max-width: 100%; }
     margin: 0;
   }
 
-  .overview-content > .overview-header,
-  .overview-content > .genset-status {
+  .overview-content > .overview-header {
+    --overview-grid-item: header-wide;
+    max-width: none;
+  }
+
+  .overview-content > .overview-genset-status {
+    --overview-grid-item: genset-status-wide;
     max-width: none;
   }
 
@@ -6734,7 +7512,13 @@ img { display: block; max-width: 100%; }
     gap: 18px;
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    height: 210px;
+    padding: 20px 28px;
+  }
+
+
+  .overview-content .consumed-energy-card {
     height: 210px;
     padding: 20px 28px;
   }
@@ -6849,7 +7633,12 @@ img { display: block; max-width: 100%; }
     gap: 20px;
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    height: 230px;
+  }
+
+
+  .overview-content .consumed-energy-card {
     height: 230px;
   }
 
@@ -6880,9 +7669,18 @@ img { display: block; max-width: 100%; }
     overflow-x: hidden;
   }
 
-  .overview-content > .figma-statusbar,
-  .overview-content > .overview-header,
-  .overview-content > .genset-status {
+  .overview-content > .figma-statusbar {
+    --overview-grid-item: desktop-statusbar;
+    grid-column: 1 / -1;
+  }
+
+  .overview-content > .overview-header {
+    --overview-grid-item: desktop-header;
+    grid-column: 1 / -1;
+  }
+
+  .overview-content > .overview-genset-status {
+    --overview-grid-item: desktop-genset-status;
     grid-column: 1 / -1;
   }
 
@@ -6922,7 +7720,14 @@ img { display: block; max-width: 100%; }
     padding: 0;
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    height: 220px;
+    min-width: 0;
+    padding: 22px 26px;
+  }
+
+
+  .overview-content .consumed-energy-card {
     height: 220px;
     min-width: 0;
     padding: 22px 26px;
@@ -7034,7 +7839,12 @@ img { display: block; max-width: 100%; }
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    height: 230px;
+  }
+
+
+  .overview-content .consumed-energy-card {
     height: 230px;
   }
 }
@@ -7559,7 +8369,8 @@ img { display: block; max-width: 100%; }
 }
 
 .overview-content .maintenance-card {
-  height: 215px;
+  width: calc(100% + 16px);
+  height: 219px;
   min-height: 0;
   aspect-ratio: auto;
   margin-top: -2px;
@@ -7846,7 +8657,8 @@ img { display: block; max-width: 100%; }
 }
 
 @media (min-width: 900px) {
-  .overview-content .energy-card-bg,
+  .overview-content .generated-energy-card-bg,
+  .overview-content .consumed-energy-card-bg,
   .overview-content .economics-card-bg,
   .overview-content .performance-card-bg,
   .overview-content .co2-card-bg,
@@ -7880,7 +8692,8 @@ img { display: block; max-width: 100%; }
   }
 
   :is(
-    .overview-content .energy-card,
+    .overview-content .generated-energy-card,
+  .overview-content .consumed-energy-card,
     .overview-content .economics-card,
     .overview-content .performance-card,
     .overview-content .co2-card,
@@ -7920,13 +8733,20 @@ img { display: block; max-width: 100%; }
     backdrop-filter: blur(21px);
   }
 
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
+    width: 100%;
+    max-width: none;
+  }
+
+
+  .overview-content .consumed-energy-card {
     width: 100%;
     max-width: none;
   }
 
   :is(
-    .overview-content .energy-card,
+    .overview-content .generated-energy-card,
+  .overview-content .consumed-energy-card,
     .overview-content .economics-card,
     .overview-content .performance-card,
     .overview-content .co2-card,
@@ -7975,7 +8795,8 @@ img { display: block; max-width: 100%; }
   }
 
   :is(
-    .overview-content .energy-card,
+    .overview-content .generated-energy-card,
+  .overview-content .consumed-energy-card,
     .overview-content .economics-card,
     .overview-content .performance-card,
     .overview-content .co2-card,
@@ -8057,12 +8878,17 @@ img { display: block; max-width: 100%; }
 }
 
 @media (min-width: 900px) {
-  .overview-content .energy-card {
+  .overview-content .generated-energy-card {
     align-items: stretch;
     padding: 22px 28px;
   }
 
-  .overview-content .energy-card-content {
+  .overview-content .consumed-energy-card {
+    align-items: stretch;
+    padding: 22px 28px;
+  }
+
+  .overview-content .generated-energy-card-content {
     display: grid;
     grid-template-columns: minmax(128px, max-content) minmax(150px, 1fr);
     grid-template-rows: auto 1fr auto;
@@ -8071,13 +8897,30 @@ img { display: block; max-width: 100%; }
     justify-items: start;
   }
 
-  .overview-content .energy-card h2 {
+
+  .overview-content .consumed-energy-card-content {
+    display: grid;
+    grid-template-columns: minmax(128px, max-content) minmax(150px, 1fr);
+    grid-template-rows: auto 1fr auto;
+    column-gap: clamp(18px, 3vw, 42px);
+    align-items: center;
+    justify-items: start;
+  }
+
+  .overview-content .generated-energy-card-title {
     grid-column: 1 / -1;
     width: auto;
     align-self: start;
   }
 
-  .overview-content .energy-value {
+
+  .overview-content .consumed-energy-card-title {
+    grid-column: 1 / -1;
+    width: auto;
+    align-self: start;
+  }
+
+  .overview-content .generated-energy-value {
     grid-column: 1;
     grid-row: 2;
     width: auto;
@@ -8086,7 +8929,17 @@ img { display: block; max-width: 100%; }
     margin-top: 0;
   }
 
-  .overview-content .energy-chart-region {
+
+  .overview-content .consumed-energy-value {
+    grid-column: 1;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .overview-content .generated-energy-chart-region {
     grid-column: 2;
     grid-row: 2 / 4;
     width: 100%;
@@ -8098,12 +8951,36 @@ img { display: block; max-width: 100%; }
     gap: 10px;
   }
 
-  .overview-content .bar-chart {
+
+  .overview-content .consumed-energy-chart-region {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    margin-top: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .overview-content .generated-bar-chart {
     width: min(180px, 100%);
     height: 78px;
   }
 
-  .overview-content .energy-chart-region > p {
+
+  .overview-content .consumed-bar-chart {
+    width: min(180px, 100%);
+    height: 78px;
+  }
+
+  .overview-content .generated-energy-card-footer {
+    text-align: center;
+  }
+
+
+  .overview-content .consumed-energy-card-footer {
     text-align: center;
   }
 
@@ -9388,7 +10265,20 @@ img { display: block; max-width: 100%; }
  * Desktop (>= 900px) keeps its fixed grid heights untouched.
  */
 @media (max-width: 899px) {
-  .power-content .power-output-card--energy,
+  .genset-content .genset-summary-grid {
+    transform: translateY(5px);
+  }
+
+  .alert-content .alert-list {
+    gap: 8px;
+  }
+
+  .power-content .power-output-card--energy {
+    width: 100%;
+    min-height: 408px;
+    margin-left: 0;
+  }
+
   .power-content .power-output-card--peak {
     height: auto;
   }
@@ -9406,8 +10296,8 @@ img { display: block; max-width: 100%; }
 
   .power-content .power-output-chart--bars {
     height: auto;
-    aspect-ratio: 321 / 181;
-    flex: 0 0 auto;
+    min-height: 0;
+    flex: 1 1 auto;
   }
 
   .power-content .power-output-chart--peak {
@@ -9418,47 +10308,564 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 374px) {
-  .power-content .power-output-card--trends {
-    width: calc(100% + 12px);
-    max-width: calc(100% + 12px);
-    height: 366px;
-    min-height: 366px;
-    margin-right: -6px;
-    margin-left: -6px;
-    gap: 12px;
-    padding: 18px 12px;
+  /* ==================== MAIN TRENDS CARD ==================== */
+  .power-content > .power-output-card--trends {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: clamp(360px, 96vw, 400px) !important;
+    min-height: 0 !important;
+    margin: 8px 0 0 !important;
+    padding: 18px 14px !important;
+    align-self: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
   }
 
-  .power-content .power-output-card--trends .power-card-header {
-    padding-right: 4px;
-    padding-left: 4px;
+  /* Glass / background effect */
+  .power-content > .power-output-card--trends::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
   }
 
-  .power-content .power-output-card--trends .power-card-header h2 {
+  /* Header sizing (kept from prior fix so the title/period-select don't overflow) */
+  .power-content > .power-output-card--trends .power-card-header {
+    flex-shrink: 0 !important;
+    margin-bottom: 4px !important;
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+  }
+
+  .power-content > .power-output-card--trends .power-card-header h2 {
     width: 216.546px;
     flex: 0 1 216.546px;
     font-size: 14px;
     line-height: normal;
   }
 
-  .power-content .power-output-card--trends .period-select,
-  .power-content .power-output-card--trends .period-select-wrap {
+  .power-content > .power-output-card--trends .period-select,
+  .power-content > .power-output-card--trends .period-select-wrap {
     width: 96.454px;
     height: 30px;
     flex-basis: 96.454px;
   }
 
-  .power-content .power-output-card--trends .power-output-chart--bars {
-    height: 176px;
-    aspect-ratio: auto;
-    flex: 0 0 176px;
+  /* ==================== CHART ==================== */
+  .power-content > .power-output-card--trends .power-output-chart--bars {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    aspect-ratio: unset !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .power-content .power-output-card--trends .power-trends-legend {
-    height: 76px;
-    flex-basis: 76px;
-    margin-top: 0;
-    padding: 10px 12px;
-    row-gap: 9px;
+  /* ==================== LEGEND / TOGGLES ==================== */
+  .power-content > .power-output-card--trends .power-trends-legend {
+    width: 100% !important;
+    height: auto !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 12px 16px !important;
   }
+
+  /* ==================== PEAK DEMAND CARD SPACING ==================== */
+  .power-content > .power-output-card--peak {
+    margin-top: 8px !important;
+  }
+}
+
+/* Peak Demand mobile card — Figma Dev Mode values. */
+@media (max-width: 899px) {
+  .power-content .power-output-card--peak {
+    width: 100%;
+    height: 255px;
+    min-height: 255px;
+    padding: 20px;
+    gap: 16px;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    border: 0;
+    border-radius: 20px;
+    background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(21px);
+    backdrop-filter: blur(21px);
+  }
+
+  .power-content .power-output-card--peak::before {
+    content: "";
+  }
+
+  .power-content .power-output-card--peak .power-card-header {
+    width: 100%;
+    height: 30px;
+    flex: 0 0 30px;
+    align-items: center;
+  }
+
+  .power-content .power-output-card--peak .power-card-header h2 {
+    width: 216.546px;
+    height: 18px;
+    flex: 0 1 216.546px;
+    color: #fff;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: normal;
+    opacity: 0.85;
+  }
+
+  .power-content .power-output-card--peak .power-output-chart--peak {
+    width: 321px;
+    max-width: 100%;
+    height: 169px;
+    flex: 0 0 169px;
+    margin: 0;
+  }
+
+  .power-content .power-output-card--peak .power-axis-label--y {
+    fill: #d0d5dd;
+    font-family: Inter, sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 30px;
+  }
+
+  .power-content .power-output-card--peak .power-axis-label--x {
+    fill: rgba(255, 255, 255, 0.8);
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+}
+
+/* Profile Settings page */
+.profile-account-group {
+  transform: translateY(12px);
+}
+
+.profile-account-group .profile-card {
+  width: calc(100% + 12px);
+  padding-bottom: 6px;
+}
+
+.profile-account-group .profile-card > * {
+  transform: translateY(-4px);
+}
+
+.profile-account-group .profile-email-row,
+.profile-account-group .profile-email-value {
+  transform: translateY(-8px);
+}
+
+.profile-security-group {
+  transform: translateY(-4px);
+}
+
+.profile-security-label {
+  transform: translateY(18px);
+}
+
+.profile-security-group .profile-card {
+  width: calc(100% + 10px);
+  transform: translateY(12px);
+}
+
+.profile-security-divider {
+  transform: translateY(-1px);
+}
+
+/* .profile-security-divider {
+  position: relative;
+  top: 15px;
+  margin-top: 0;
+  transform: none;
+} */
+
+.profile-reset-password {
+  transform: translateY(20px);
+}
+
+.profile-reset-password-arrow {
+  transform: translateX(-22px);
+}
+
+.profile-card {
+  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+  border: 1px solid var(--cardborder, rgba(255, 255, 255, 0.12));
+}
+
+.profile-divider {
+  background: rgba(255, 255, 255, 0.102);
+}
+
+.profile-settings-header {
+  margin-top: 20px;
+}
+
+/* Reset Password fields */
+.reset-password-content {
+  transform: translateY(-10px);
+}
+
+.reset-password-field {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.reset-password-field--new {
+  transform: translateY(4px);
+}
+
+.reset-password-field--confirm {
+  transform: translateY(8px);
+}
+
+.reset-password-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.reset-password-control {
+  position: relative;
+  display: flex;
+  width: calc(100% + 4px);
+  margin-left: -2px;
+  height: 64px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  background: var(--cardfill, linear-gradient(124deg, rgba(255, 255, 255, 0) -22.38%, rgba(255, 255, 255, 0.04) 70.38%));
+}
+
+.reset-password-control input {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 20px 64px 20px 25px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.reset-password-control input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+  opacity: 1;
+}
+
+.reset-password-control input.is-svg-masked {
+  color: transparent;
+  caret-color: transparent;
+}
+
+.reset-password-control .reset-password-mask {
+  position: absolute;
+  left: 25px;
+  width: 140px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.reset-password-control button {
+  position: absolute;
+  right: 25px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+}
+
+.reset-password-control button img {
+  width: 24px;
+  height: 24px;
+}
+
+.reset-password-strength {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reset-password-strength__bars {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.reset-password-strength__bars > span {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.149);
+}
+
+.reset-password-strength__bars > .is-active {
+  background: #ffd60a;
+}
+
+.reset-password-strength__label {
+  color: #ffd60a;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.reset-password-requirements {
+  position: relative;
+  top: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.reset-password-requirements h2 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  
+}
+
+.reset-password-requirements ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reset-password-requirements li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.251);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.reset-password-requirement-check {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.reset-password-requirement-check img {
+  width: 10px;
+  height: 10px;
+  opacity: 0.251;
+}
+
+.reset-password-requirements li.is-met {
+  color: rgba(255, 255, 255, 0.749);
+}
+
+.reset-password-requirements li.is-met .reset-password-requirement-check {
+  background: transparent;
+}
+
+.reset-password-requirements li.is-met .reset-password-requirement-check img {
+  width: 16px;
+  height: 16px;
+  opacity: 1;
+}
+
+.reset-password-requirement-text {
+  display: inline-block;
+}
+
+/* Move “One number” independently: translate(horizontal, vertical). */
+.reset-password-requirement-number {
+  transform: translate(0, 2);
+}
+
+/* Move “One special character” independently: translate(horizontal, vertical). */
+.reset-password-requirement-special {
+  transform: translate(0, 2);
+}
+
+.reset-password-submit {
+  position: relative;
+  top: 32px;
+  display: flex;
+  width: 100%;
+  height: 64px;
+  margin-top: 8px;
+  padding: 20px 25px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 100px;
+  background: var(--col, linear-gradient(45deg, #005be4 0%, #3793ff 100%));
+  color: #fff;
+  text-align: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.reset-password-submit::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: url("/assets/settings/update-password-border.svg") center / 100% 100% no-repeat;
+  content: "";
+  pointer-events: none;
+}
+
+.ambient-temperature-degree-unit {
+  display: inline-block;
+  transform: translateX(4px);
+}
+
+/* Move the Wind Speed text without moving its card or icon. */
+.weather-metric-text-wind {
+  transform: translate(0, 0);
+}
+
+.weather-metric-title-wind {
+  transform: translate(0, 4px);
+}
+
+.weather-metric-value-wind {
+  transform: translate(0, 4px);
+}
+
+/* Move the Humidity text without moving its card or icon. */
+.weather-metric-text-humidity {
+  transform: translate(0, 4px);
+}
+
+.weather-metric-title-humidity {
+  transform: translate(0, 0);
+}
+
+.weather-metric-value-humidity {
+  transform: translate(0, 0);
+}
+
+/* Move 12 independently. */
+.weather-metric-number-wind {
+  display: inline-block;
+  transform: translate(0, -4);
+}
+
+/* Move km/h independently. */
+.weather-metric-suffix-wind {
+  display: inline-block;
+  transform: translate(4, -4);
+}
+
+/* Move 65 independently. */
+.weather-metric-number-humidity {
+  display: inline-block;
+  transform: translate(0, -4);
+}
+
+/* Move % independently. */
+.weather-metric-suffix-humidity {
+  display: inline-block;
+  transform: translate(3, -4);
+}
+
+.weather-metric-icon-wind {
+  transform: translate(0, 0);
+}
+
+.weather-metric-icon-humidity {
+  transform: translateX(-6px);
+}
+
+.weekly-forecast-day-active {
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+  border-radius: 16px;
+  transform: translateX(-2px);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.24);
+}
+
+/* Move Sunday's high temperature independently. */
+.weekly-forecast-high-sun {
+  display: inline-block;
+  transform: translate(-2px, -4);
+}
+
+/* Move Sunday's low temperature independently. */
+.weekly-forecast-low-sun {
+  display: inline-block;
+  transform: translate(-2px, -6px);
+}
+
+.weekly-forecast-high-mon {
+  display: inline-block;
+  transform: translate(-2px, -4px);
+}
+
+.weekly-forecast-low-mon {
+  display: inline-block;
+  transform: translate(-2px, -6px);
+}
+
+.weekly-forecast-high-tue {
+  display: inline-block;
+  transform: translate(-2px, -4px);
+}
+
+.weekly-forecast-low-tue {
+  display: inline-block;
+  transform: translate(-2px, -6px);
+}
+
+.weekly-forecast-high-wed {
+  display: inline-block;
+  transform: translate(1px, -4px);
+}
+
+.weekly-forecast-low-wed {
+  display: inline-block;
+  transform: translate(1px, -6px);
 }

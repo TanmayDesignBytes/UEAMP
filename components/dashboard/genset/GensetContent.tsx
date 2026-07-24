@@ -6,28 +6,29 @@ import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 
 const generatedBars = [34, 52, 44, 67, 83, 55, 31, 72, 86, 49, 38];
 
-export function GensetContent() {
+export function GensetContent({ onOpenAmbientTemperature }: { onOpenAmbientTemperature: () => void }) {
   useDevLifecycleLog(7);
 
   return (
     <div className="genset-content mx-auto min-h-dvh w-full max-w-[393px] px-[15px] pb-4 font-jakarta text-white">
       <StatusBar />
       <header className="mt-3 flex items-start justify-between px-1">
-        <div>
+        <div className="genset-user-copy">
           <h1 className="m-0 text-base font-semibold leading-5">Hi User Name</h1>
           <p className="m-0 text-xs leading-[18px]">Good Afternoon!</p>
         </div>
-        <div className="weather-pill">
-          <span>{"74\u00b0 F"}</span><img src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
-        </div>
+        <button className="overview-weather-pill" type="button" onClick={onOpenAmbientTemperature} aria-label="Open ambient temperature details">
+          <span className="overview-weather-value">{"74\u00b0 F"}</span>
+          <img className="overview-weather-icon" src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
+        </button>
       </header>
-      <div className="genset-page-status mt-4 flex items-center gap-2 px-1 text-[10px]">
-        <span className="size-3 rounded-full bg-[#39f48a] shadow-[0_0_8px_#39f48a]" />
+      <div className="genset-page-status mt-4 flex items-center gap-2.5 px-1 text-[10px] text-white">
+        <span className="size-3 rounded-full bg-[#4CED85] shadow-[0_0_8px_#4CED85]" />
         <span>Genset Running</span>
       </div>
 
-      <div className="genset-hero relative mt-8 h-[298px] w-full overflow-hidden">
-        <img className="size-full object-cover" src="/assets/genset/microgrid.gif" alt="Live genset microgrid" />
+      <div className="genset-hero relative mt-5 aspect-[91/68] w-full overflow-hidden">
+        <img className="size-full object-cover mix-blend-screen" src="/assets/genset/microgrid.gif" alt="Live genset microgrid" />
         <div className="genset-hero__metric absolute right-[70px] top-4 rounded bg-[#5d606b]/80 px-2 py-1 font-inter text-[8px] leading-3 shadow-lg">
           <strong className="block font-medium">28.2 kWh</strong>
           <span>20.1 kg - CO₂</span>
@@ -37,24 +38,24 @@ export function GensetContent() {
       <div className="genset-summary-grid mt-8 grid grid-cols-2 gap-2.5">
         <article className="genset-generated-summary-card relative row-span-2 mt-2 flex h-[210px] flex-col rounded-[20px] px-[17px] py-5 backdrop-blur-[21px]">
           <img className="pointer-events-none absolute -left-[6px] -top-[6px] h-[222px] w-[184px] max-w-none" src="/assets/genset/energy-card.svg" alt="" aria-hidden="true" />
-          <div className="relative z-[1] flex items-baseline gap-1.5"><strong className="font-inter text-[34px] font-semibold leading-[38px]">35</strong><b className="text-lg">kWh</b></div>
-          <h2 className="relative z-[1] m-0 text-sm font-bold">Energy Generated</h2>
+          <div className="genset-generated-value relative z-[1] flex items-baseline gap-1.5"><strong>35</strong><b>kWh</b></div>
+          <h2 className="genset-generated-title relative z-[1] m-0">Energy Generated</h2>
           <div className="genset-generated-bars relative z-[1] mt-auto flex h-[88px] items-end justify-between gap-1 px-1" aria-hidden="true">
             {generatedBars.map((height, index) => <i className="w-[7px] rounded-sm bg-white" key={index} style={{ height: `${height}%`, opacity: index === 6 ? 1 : .38 + (index % 3) * .12 }} />)}
           </div>
-          <p className="relative z-[1] m-0 mt-2 text-center text-xs">18 kWh Yesterday</p>
+          <p className="genset-generated-footer relative z-[1] m-0 mt-2 text-center">18 kWh Yesterday</p>
         </article>
 
-        <GensetCard className="genset-small-stat-card h-[100px] px-[17px] py-5">
+        <GensetCard className="genset-small-stat-card genset-saving-card h-[100px] px-[17px] py-5">
           <div className="flex h-full items-center justify-between gap-2">
-            <div><h2 className="m-0 text-sm font-bold">Saving <small className="text-[10px] font-normal">(By Day)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">234</strong></div>
+            <div className="genset-saving-card__copy"><h2 className="m-0 text-sm font-bold">Saving <small className="text-[10px] font-normal">(By Day)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">234</strong></div>
             <div className="grid size-10 place-items-center rounded-full bg-[#79869b]/20 text-[30px] font-semibold leading-none text-[#187bf0]">₹</div>
           </div>
         </GensetCard>
 
-        <GensetCard className="genset-small-stat-card h-[100px] px-[17px] py-5">
+        <GensetCard className="genset-small-stat-card genset-def-card h-[100px] px-[17px] py-5">
           <div className="flex h-full items-center justify-between gap-2">
-            <div><h2 className="m-0 text-sm font-bold">DEF <small className="text-[10px] font-normal">(Healthy)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">25%</strong></div>
+            <div className="genset-def-card__copy"><h2 className="m-0 text-sm font-bold">DEF <small className="text-[10px] font-normal">(Healthy)</small></h2><strong className="font-inter text-[28px] font-semibold leading-[34px]">25%</strong></div>
             <ProgressRing />
           </div>
         </GensetCard>
@@ -66,14 +67,14 @@ export function GensetContent() {
           </div>
         </GensetCard>
 
-        <GensetCard className="genset-rectangle-card h-[100px] px-3 py-3">
-          <div className="flex h-full items-center justify-between gap-[18px]">
-            <div><h2 className="m-0 text-sm font-bold">Load</h2><small className="block text-[10px]">(Optimal)</small><strong className="mt-2 block font-inter text-2xl font-semibold leading-[30px]">25%</strong></div>
+        <GensetCard className="genset-rectangle-card genset-load-card h-[100px]">
+          <div className="genset-load-card__content">
+            <div className="genset-load-card__copy"><h2 className="m-0 text-sm font-bold">Load</h2><small className="block text-[10px]">(Optimal)</small><strong className="mt-2 block font-inter text-2xl font-semibold leading-[30px]">25%</strong></div>
             <LoadGauge />
           </div>
         </GensetCard>
 
-        <GensetCard className="genset-wide-rectangle-card col-span-2 h-[116px] px-5 py-[13px]">
+        <GensetCard className="genset-wide-rectangle-card genset-starts-card col-span-2 h-[116px] px-5 py-[13px]">
           <img className="genset-wide-rectangle-card-bg" src="/assets/genset/no-starts-card-frame.svg" alt="" aria-hidden="true" />
           <div className="relative z-[1] flex h-full items-center gap-3">
             <div className="min-w-0 flex-1">

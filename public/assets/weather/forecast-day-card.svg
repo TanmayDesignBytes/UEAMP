@@ -1,0 +1,9 @@
+<svg width="72" height="124" viewBox="0 0 72 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-42" y="-42" width="156" height="208"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(21px);clip-path:url(#forecast-card-clip);height:100%;width:100%"></div></foreignObject>
+<rect data-figma-bg-blur-radius="42" x="1" y="1" width="70" height="122" rx="15" fill="url(#forecast-card-fill)" fill-opacity="0.1" stroke="url(#forecast-card-border)" stroke-width="2"/>
+<defs>
+<clipPath id="forecast-card-clip" transform="translate(42 42)"><rect x="1" y="1" width="70" height="122" rx="15"/></clipPath>
+<linearGradient id="forecast-card-fill" x1="-31.1" y1="16.9" x2="61.5" y2="106.2" gradientUnits="userSpaceOnUse"><stop offset="0.0001" stop-color="white" stop-opacity="0"/><stop offset="1" stop-color="white" stop-opacity="0.39"/></linearGradient>
+<radialGradient id="forecast-card-border" cx="0" cy="0" r="1" gradientTransform="matrix(80 0 0 80 36 62)" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+</defs>
+</svg>

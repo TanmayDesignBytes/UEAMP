@@ -1,0 +1,7 @@
+<svg width="97" height="30" viewBox="0 0 97 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="95.4535" height="29" rx="14.5" fill="url(#week-fill)" fill-opacity="0.1" stroke="url(#week-border)"/>
+<defs>
+<linearGradient id="week-fill" x1="-43.7582" y1="3.64286" x2="-17.0332" y2="60.809" gradientUnits="userSpaceOnUse"><stop offset="0.0001" stop-color="white" stop-opacity="0"/><stop offset="1" stop-color="white" stop-opacity="0.39"/></linearGradient>
+<radialGradient id="week-border" cx="0" cy="0" r="1" gradientTransform="matrix(-61.5373 -20.8286 66.9663 -9.76531 48.2268 15)" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+</defs>
+</svg>

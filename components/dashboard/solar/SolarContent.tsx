@@ -5,7 +5,7 @@ import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 
 const generatedBars = [45, 64, 78, 58, 88, 72, 39, 23, 65, 82, 61, 44];
 
-export function SolarContent() {
+export function SolarContent({ onOpenAmbientTemperature }: { onOpenAmbientTemperature: () => void }) {
   useDevLifecycleLog(8);
 
   return (
@@ -16,10 +16,10 @@ export function SolarContent() {
           <h1>Hi User Name</h1>
           <p>Good Afternoon!</p>
         </div>
-        <div className="weather-pill">
-          <span>{"74\u00b0 F"}</span>
-          <img src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
-        </div>
+        <button className="overview-weather-pill" type="button" onClick={onOpenAmbientTemperature} aria-label="Open ambient temperature details">
+          <span className="overview-weather-value">{"74\u00b0 F"}</span>
+          <img className="overview-weather-icon" src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
+        </button>
       </header>
 
       <div className="solar-running mt-2 flex items-center gap-2">

@@ -3,19 +3,19 @@ import { StatusBar } from "@/components/dashboard/common/StatusBar";
 import { overviewAssets } from "@/components/dashboard/constants";
 import { useDevLifecycleLog } from "@/components/dashboard/devDiagnostics";
 
-export function OverviewContent() {
+export function OverviewContent({ onOpenAmbientTemperature }: { onOpenAmbientTemperature: () => void }) {
   useDevLifecycleLog(6);
 
   return (
     <div className="overview-content w-full px-[15px] pb-4">
         <StatusBar />
-        <OverviewHeader />
+        <OverviewHeader onOpenAmbientTemperature={onOpenAmbientTemperature} />
         <GensetStatus />
         <MicrogridHero />
         <div className="dashboard-grid w-full md:grid md:grid-cols-2 md:gap-4 xl:grid-cols-3 xl:gap-[18px]">
           <div className="energy-grid grid grid-cols-2 gap-2 md:col-span-full xl:col-span-2">
-            <EnergyCard title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" arrowAccent="#35FFC9" barAccent="#ffffff" bars={[75, 50, 75, 100, 75, 100, 50, 25, 100, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
-            <EnergyCard title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#FF7E53" bars={[75, 50, 75, 100, 75, 100, 50, 25, 75, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
+            <EnergyCard variant="generated" title="Energy Generated" value="35" unit="kWh" footer="18 kWh Yesterday" accent="#35ffcd" arrowAccent="#35FFC9" barAccent="#ffffff" bars={[75, 50, 75, 100, 75, 100, 50, 25, 100, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
+            <EnergyCard variant="consumed" title="Energy Consumed" value="14" unit="kWh" footer="10 kWh Yesterday" accent="#fff1c1" arrowAccent="#FF7E53" bars={[75, 50, 75, 100, 75, 100, 50, 25, 75, 100, 75, 50]} barOpacities={[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.6, 0.6, 0.5, 0.4]} />
           </div>
           <GlassCard className="economics-card">
             <img className="economics-card-bg" src="/assets/Rectangle 52.svg" alt="" aria-hidden="true" />
@@ -41,11 +41,11 @@ export function OverviewContent() {
             </div>
             </div>
           </GlassCard>
-          <GlassCard className="co2-card relative flex h-[134px] w-full items-center px-[22px] py-[15px]">
+          <GlassCard className="co2-card relative flex w-full items-center">
           <img className="co2-card-bg" src="/assets/Rectangle 52.svg" alt="" aria-hidden="true" />
           <div>
             <h2>CO2 Emission Avoided</h2>
-            <strong>1,248 Tons</strong>
+            <strong>1,248<span className="co2-value-unit"> Tons</span></strong>
             <svg className="co2-divider" xmlns="http://www.w3.org/2000/svg" width="169" height="1" viewBox="0 0 169 1" fill="none" aria-hidden="true">
               <path d="M0.5 0.5H167.529" stroke="white" strokeOpacity="0.1" strokeLinecap="round" />
             </svg>
@@ -76,20 +76,28 @@ export function OverviewContent() {
   );
 }
 
-function OverviewHeader() {
+function OverviewHeader({ onOpenAmbientTemperature }: { onOpenAmbientTemperature: () => void }) {
   return (
-    <header className="overview-header mt-3 flex w-full items-start justify-between">
-      <div><h1>Hi User Name</h1><p>Good Afternoon!</p></div>
-      <div className="weather-pill flex items-center justify-center rounded-full">
-        <span>{"74\u00b0 F"}</span>
-        <img src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
+    <header className="overview-header">
+      <div className="overview-user-copy">
+        <h1 className="overview-user-name">Hi User Name</h1>
+        <p className="overview-user-greeting">Good Afternoon!</p>
       </div>
+      <button className="overview-weather-pill" type="button" onClick={onOpenAmbientTemperature} aria-label="Open ambient temperature details">
+        <span className="overview-weather-value">{"74\u00b0 F"}</span>
+        <img className="overview-weather-icon" src={overviewAssets + "/cloud_sun.svg"} alt="Partly cloudy" />
+      </button>
     </header>
   );
 }
 
 function GensetStatus() {
-  return <div className="genset-status"><span /><p>Genset Running</p></div>;
+  return (
+    <div className="overview-genset-status">
+      <span className="overview-genset-status-dot" />
+      <p className="overview-genset-status-text">Genset Running</p>
+    </div>
+  );
 }
 
 function MicrogridHero() {
